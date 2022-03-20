@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6563391174425938264
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6563391174425938270}
+  - component: {fileID: 6563391174425938271}
+  m_Layer: 0
+  m_Name: MainSceneRes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6563391174425938270
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6563391174425938264}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.1308384, y: 0.13280159, z: 5.8673005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6563391174425938271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6563391174425938264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8fe09b65bcfab94ba55df3f4a4d5010, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  NPCHand: {fileID: 0}
+  cube:
+  - {fileID: 643240200599229207, guid: cd60214396271014ea04a5688903b434, type: 3}
+  - {fileID: -2705848785905655753, guid: 167bbd74cfdcf0b44a7e350fdeaeb6eb, type: 3}
+  - {fileID: 2256854677573603236, guid: 244332ce944ffbc4d8b6b1c7294ffda1, type: 3}
+  - {fileID: 5717219699441570848, guid: 28a17b0a589c3c94fb4fe14f4d923853, type: 3}
+  - {fileID: -1788767918806168380, guid: ae4cce7d400a7b449b8b859208fa29d6, type: 3}
+  - {fileID: -3009453882647499600, guid: ea78259103442024ebdcbfbfe7261e56, type: 3}
+  - {fileID: 501871225879299477, guid: bb903bc18dda96341ba1e6a11ec85020, type: 3}
+  - {fileID: -339008998280201871, guid: f031268e140b2674eab59fa6801a10e9, type: 3}
+  - {fileID: 5423663226400250809, guid: c611491e7115fce43a6f2432c536be8c, type: 3}
+  - {fileID: 5075622039033714064, guid: fc90cf271ff6b2147bfbb4af46612194, type: 3}
+  - {fileID: -7606988015120101024, guid: ecd0384fb25d87a4caf85b21acf76ea4, type: 3}
+  - {fileID: 5150243404317499738, guid: 1168af2992d2375459c3fff3568dd525, type: 3}
+  - {fileID: 3398587801518595414, guid: e390a097f3776f84f88712ecc949e366, type: 3}
+  npc: {fileID: 0}
+  NPC_animator: {fileID: 0}
+  Instantiate_Cube: {fileID: 0}
+  eyeCamera: {fileID: 0}
+  speechClip: []
+  PutPosition: {fileID: 0}
+  vrCamera: {fileID: 2887044486039926314, guid: ee63eb86de35357458678e0680192fe7,
+    type: 3}
+  MainSceneUI: {fileID: 0}

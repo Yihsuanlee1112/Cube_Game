@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c668ff6794d36ea49bdcb7ad57cce451
+labels:
+- InverseKinematics
+- IK
+- CCD
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 9997
+  icon: {fileID: 2800000, guid: 79450243724744b44820e5468e418048, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

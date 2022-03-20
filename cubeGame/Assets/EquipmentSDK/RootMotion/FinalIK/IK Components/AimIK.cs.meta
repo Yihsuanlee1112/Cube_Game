@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f96e37add4f51ed47b060320ee013b62
+labels:
+- InverseKinematics
+- IK
+- Aim
+- AimingSystem
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 9997
+  icon: {fileID: 2800000, guid: 14a4d69b319a04b75bb03f351a174cec, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

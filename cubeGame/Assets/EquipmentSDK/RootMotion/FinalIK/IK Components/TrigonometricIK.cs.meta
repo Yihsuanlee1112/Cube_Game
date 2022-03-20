@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1c6ddbb01099cd54e8c36d39b2dc1950
+labels:
+- InverseKinematics
+- IK
+- LimbIK
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 9997
+  icon: {fileID: 2800000, guid: ff34b0ecb22e7466fbd0a856b7a00621, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

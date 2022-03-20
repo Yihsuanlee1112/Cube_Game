@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - cube
+  - Boundary
+  - Build
+  - table
+  - button
+  - floor
+  - question
+  - hand
+  - body
+  - cuboid
+  - cuboid3
+  - cube2
+  - RPS
+  - projectile
+  - FxTemporaire
+  - QuestionArea
+  - q
+  - userHand
+  - Rock4P
+  - Scissors4P
+  - Paper4P
+  - Rock2P
+  - Scissors2P
+  - Paper2P
+  - Result
+  - FirstRoundRock4P
+  - FirstRoundScissors4P
+  - FirstRoundPaper4P
+  - ThirdRoundSciccors4P
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Eye
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
