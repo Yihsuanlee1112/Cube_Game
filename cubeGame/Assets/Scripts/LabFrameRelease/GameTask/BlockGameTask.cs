@@ -104,16 +104,6 @@ public class BlockGameTask : TaskBase
 
     public override IEnumerator TaskStart()
     {
-        //string HandPath = "user_idle/Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 Spine1/Bip01 Spine2/Bip01 Neck/";
-        //GameObject.Find(HandPath +
-        //    "Bip01 L Clavicle/Bip01 L UpperArm/Bip01 L Forearm/Bip01 L Hand").GetComponent<HandsTrigger>().enabled = true;
-        //GameObject.Find(HandPath +
-        //    "Bip01 R Clavicle/Bip01 R UpperArm/Bip01 R Forearm/Bip01 R Hand").GetComponent<HandsTrigger>().enabled = true;
-        //GameObject.Find(HandPath +
-        //    "Bip01 L Clavicle/Bip01 L UpperArm/Bip01 L Forearm/Bip01 L Hand").GetComponent<HandsTriggerLv2>().enabled = false;
-        //GameObject.Find(HandPath +
-        //    "Bip01 R Clavicle/Bip01 R UpperArm/Bip01 R Forearm/Bip01 R Hand").GetComponent<HandsTriggerLv2>().enabled = false;
-
         //TeacherAnimator = GameObject.Find("teacher").GetComponent<Animator>();
         TeacherAnimator.SetBool("isSlouchStandErect", true);
         GameObject.Find("ChooseQuestionCanvas").GetComponent<Canvas>().enabled = false;

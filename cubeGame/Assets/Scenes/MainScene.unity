@@ -2572,6 +2572,11 @@ MonoBehaviour:
   Q3_cube: []
   Q4_cube: []
   Cubes: []
+  Colors:
+  - {r: 1, g: 0.23137255, b: 0.23137255, a: 1}
+  - {r: 0.20392157, g: 0.20392157, b: 0.8784314, a: 1}
+  - {r: 0, g: 0.7058824, b: 0, a: 1}
+  - {r: 1, g: 1, b: 0, a: 1}
   npc1: {fileID: 246050939}
   NPC1_animator: {fileID: 602099464}
   GreenTriggerBall: {fileID: 1291124169532434049}

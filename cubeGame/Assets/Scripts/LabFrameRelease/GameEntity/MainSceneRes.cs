@@ -11,6 +11,7 @@ public class MainSceneRes : GameSceneEntityRes
     public List<BlockEntity> Q3_cube;
     public List<BlockEntity> Q4_cube;
     public List<BlockEntity> Cubes;
+    public List<Color> Colors;
     //public HandsTrigger MyPreCube;
     //public HandsTrigger MyPreCubeIndex;
     public NPCEntity npc1;

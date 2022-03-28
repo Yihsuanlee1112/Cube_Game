@@ -25,8 +25,8 @@ public class GameTaskManager : MonoSingleton<GameTaskManager>, IGameManager
     public void StartGameTask()
     {
         // _queuetasks.ForEach(p => { StartCoroutine(StartGameTaskEnumerator(p)); });
-        StartCoroutine(StartGameTaskEnumerator(_queuetasks[0]));
-        task = 0;
+        StartCoroutine(StartGameTaskEnumerator(_queuetasks[1]));
+        task = 1;
     }
 
 

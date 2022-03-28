@@ -47,6 +47,8 @@ public class Instantiate_Cube : MonoBehaviour
     private void Awake()
     {
         GameEventCenter.AddEvent("InstatiateCube", InstatiateCube);
+        GameEventCenter.AddEvent("InstatiateCubeLv2", InstatiateCubeLv2);
+        GameEventCenter.AddEvent("CubeOnDesk", CubeOnDesk);
     }
     void Start()
     {
@@ -65,6 +67,24 @@ public class Instantiate_Cube : MonoBehaviour
         }
 
         PutCubeOnDesk(BlockGameTask._RandomQuestion - 1);
+    }
+    public void InstatiateCubeLv2()
+    {
+        Cube_Prefabs.Add(Q1_Cube_Prefabs);
+        Cube_Prefabs.Add(Q2_Cube_Prefabs);
+        Cube_Prefabs.Add(Q3_Cube_Prefabs);
+        Cube_Prefabs.Add(Q4_Cube_Prefabs);
+
+        for (int i = 0; i < 4; i++)
+        {
+            Question(i, Cube_Prefabs[i], Parents[i], CubeParents[i]);
+        }
+
+        //PutCubeOnDesk(BlockGameTaskLv2._RandomQuestion - 1);
+    }
+    public void CubeOnDesk()
+    {
+        PutCubeOnDesk(BlockGameTaskLv2._RandomQuestion - 1);
     }
 
     /// <summary>

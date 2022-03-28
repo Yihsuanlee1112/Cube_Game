@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class HandsTrigger : MonoBehaviour
 {
-    private NPCEntity NPCEntity;
     public static BlockEntity MyPreCube;
     private int MyPreCubeIndex;
     public List<BlockEntity> FirstBlock;
-    private RockPaperScissors RockPaperScissors;
     private string FirstCube;
     private List<BlockEntity> Cubes;
     //private bool _NPCRemind;
@@ -34,7 +32,7 @@ public class HandsTrigger : MonoBehaviour
         //拿積木
         if (GameTaskManager.task == 0)
         {
-            Debug.Log(FirstCube);
+            Debug.Log("TaskLv1");
             //拿積木
             if (other.gameObject.tag == "cube" && !PlayerEntity._take &&
                 !other.GetComponent<BlockEntity>()._isChose &&
@@ -169,8 +167,8 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Q1").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q2").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q3").SetActive(false);
-                BlockGameTask._RandomQuestion = 4;
-                BlockGameTask._userChooseQuestion = true;
+                BlockGameTaskLv2._RandomQuestion = 4;
+                BlockGameTaskLv2._userChooseQuestion = true;
             }
             //舉手碰綠球
             else if (other.gameObject.tag == "greenTriggerBall")
@@ -181,7 +179,6 @@ public class HandsTrigger : MonoBehaviour
 
             //猜拳選題目
             //第一輪: 小花贏了，但是慢出(小綠生氣)
-
             else if (other.gameObject.tag == "FirstRoundRock4P")//Paper
             {
                 Debug.Log("LV1!!!!");
@@ -310,11 +307,11 @@ public class HandsTrigger : MonoBehaviour
         }
         else if(GameTaskManager.task == 1)
         {
-            //Debug.Log(FirstBlock[0].name);
+            Debug.Log("TaskLv2");
             Cubes = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes;
             //var MyCube = other.GetComponent<BlockEntity>();//BLockEntity
             //var index = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.IndexOf(MyCube);//int
-            QuestionPicked();
+            QuestionPickedLv2();
             //拿積木
             if (other.gameObject.tag == "cube" && !PlayerEntity._take &&
                 !other.GetComponent<BlockEntity>()._isChose &&
@@ -338,7 +335,7 @@ public class HandsTrigger : MonoBehaviour
 
 
                 //堆積木
-                if (!BlockGameTask._playerRound)
+                if (!BlockGameTaskLv2._playerRound)
                 {
                     //BLockGameTask._NPCRemind = true;
                     Debug.Log("Wrong Action");
@@ -401,7 +398,7 @@ public class HandsTrigger : MonoBehaviour
                 GameEventCenter.DispatchEvent("CubeAns", cube);
                 cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 Debug.Log(cube.transform.position);
-                BlockGameTask._playerRound = false;
+                BlockGameTaskLv2._playerRound = false;
                 PlayerEntity._take = false;
             }
 
@@ -412,8 +409,8 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Q2").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q3").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q4").SetActive(false);
-                BlockGameTask._RandomQuestion = 1;
-                BlockGameTask._userChooseQuestion = true;
+                BlockGameTaskLv2._RandomQuestion = 1;
+                BlockGameTaskLv2._userChooseQuestion = true;
             }
             else if (other.gameObject.tag == "Q2")
             {
@@ -421,8 +418,8 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Q1").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q3").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q4").SetActive(false);
-                BlockGameTask._RandomQuestion = 2;
-                BlockGameTask._userChooseQuestion = true;
+                BlockGameTaskLv2._RandomQuestion = 2;
+                BlockGameTaskLv2._userChooseQuestion = true;
             }
             else if (other.gameObject.tag == "Q3")
             {
@@ -430,8 +427,8 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Q1").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q2").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q4").SetActive(false);
-                BlockGameTask._RandomQuestion = 3;
-                BlockGameTask._userChooseQuestion = true;
+                BlockGameTaskLv2._RandomQuestion = 3;
+                BlockGameTaskLv2._userChooseQuestion = true;
             }
             else if (other.gameObject.tag == "Q4")
             {
@@ -439,24 +436,22 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Q1").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q2").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q3").SetActive(false);
-                BlockGameTask._RandomQuestion = 4;
-                BlockGameTask._userChooseQuestion = true;
+                BlockGameTaskLv2._RandomQuestion = 4;
+                BlockGameTaskLv2._userChooseQuestion = true;
             }
             //舉手碰綠球
             else if (other.gameObject.tag == "greenTriggerBall")
             {
                 Debug.Log("User Raise Hand");
-                BlockGameTask._userRaiseHand = true;
+                BlockGameTaskLv2._userRaiseHand = true;
             }
-
 
             //猜拳選題目
             //第一輪: 小花贏了，但是慢出(小綠生氣)
-
             else if (other.gameObject.tag == "FirstRoundRock4P")//Paper
             {
                 Debug.Log("LV2!!!!");
-                BlockGameTask._UsersChoice = 1;
+                BlockGameTaskLv2._UsersChoice = 1;
                 GameObject.Find("Rock").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Rock collider false");
                 GameEventCenter.DispatchEvent("FirstRoundCloseAnimatorP1P3");
@@ -466,13 +461,12 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("FirstRoundScissors4P").SetActive(false);
                 Debug.Log("Found scissors");
 
-                BlockGameTask._userChooseRPS = true;
-                Debug.Log(BlockGameTask._userChooseRPS);
+                BlockGameTaskLv2._userChooseRPS = true;
                 Debug.Log("User choose rock");
             }
             else if (other.gameObject.tag == "FirstRoundScissors4P")//Rock
             {
-                BlockGameTask._UsersChoice = 0;
+                BlockGameTaskLv2._UsersChoice = 0;
                 GameObject.Find("Scissors").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Scissors collider false");
                 GameEventCenter.DispatchEvent("FirstRoundCloseAnimatorP1P3");
@@ -480,12 +474,12 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("FirstRoundPaper4P").SetActive(false);
                 GameObject.FindGameObjectWithTag("FirstRoundRock4P").SetActive(false);
 
-                BlockGameTask._userChooseRPS = true;
+                BlockGameTaskLv2._userChooseRPS = true;
                 Debug.Log("User choose Scissors");
             }
             else if (other.gameObject.tag == "FirstRoundPaper4P")//Scissors
             {
-                BlockGameTask._UsersChoice = 2;
+                BlockGameTaskLv2._UsersChoice = 2;
                 GameObject.Find("Paper").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Paper collider false");
                 GameEventCenter.DispatchEvent("FirstRoundCloseAnimatorP1P3");
@@ -493,13 +487,13 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("FirstRoundRock4P").SetActive(false);
                 GameObject.FindGameObjectWithTag("FirstRoundScissors4P").SetActive(false);
 
-                BlockGameTask._userChooseRPS = true;
+                BlockGameTaskLv2._userChooseRPS = true;
                 Debug.Log("User choose paper");
             }
             //第二輪:User贏
             else if (other.gameObject.tag == "Rock4P")//Scissors
             {
-                BlockGameTask._UsersChoice = 2;
+                BlockGameTaskLv2._UsersChoice = 2;
                 GameObject.Find("Rock").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Rock collider false");
                 GameEventCenter.DispatchEvent("CloseAnimator4P");
@@ -509,12 +503,12 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Scissors4P").SetActive(false);
                 Debug.Log("Found scissors");
 
-                BlockGameTask._userChooseRPS = true;
+                BlockGameTaskLv2._userChooseRPS = true;
                 Debug.Log("User choose rock");
             }
             else if (other.gameObject.tag == "Scissors4P")//Paper
             {
-                BlockGameTask._UsersChoice = 1;
+                BlockGameTaskLv2._UsersChoice = 0;
                 GameObject.Find("Scissors").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Scissors collider false");
                 GameEventCenter.DispatchEvent("CloseAnimator4P");
@@ -522,12 +516,12 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Paper4P").SetActive(false);
                 GameObject.FindGameObjectWithTag("Rock4P").SetActive(false);
 
-                BlockGameTask._userChooseRPS = true;
+                BlockGameTaskLv2._userChooseRPS = true;
                 Debug.Log("User choose Scissors");
             }
             else if (other.gameObject.tag == "Paper4P")//Rock
             {
-                BlockGameTask._UsersChoice = 0;
+                BlockGameTaskLv2._UsersChoice = 0;
                 GameObject.Find("Paper").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Paper collider false");
                 GameEventCenter.DispatchEvent("CloseAnimator4P");
@@ -535,13 +529,13 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Rock4P").SetActive(false);
                 GameObject.FindGameObjectWithTag("Scissors4P").SetActive(false);
 
-                BlockGameTask._userChooseRPS = true;
+                BlockGameTaskLv2._userChooseRPS = true;
                 Debug.Log("User choose paper");
             }
             //第三輪: 小組內部猜拳，決定順序。User wins
             else if (other.gameObject.tag == "Rock2P")//Scissors
             {
-                BlockGameTask._UsersChoice = 2;
+                BlockGameTaskLv2._UsersChoice = 2;
                 GameObject.Find("Rock").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Rock collider false");
                 GameEventCenter.DispatchEvent("CloseAnimator2P");
@@ -549,12 +543,12 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Paper2P").SetActive(false);
                 GameObject.FindGameObjectWithTag("Scissors2P").SetActive(false);
 
-                BlockGameTask._userChooseRPS = true;
+                BlockGameTaskLv2._userChooseRPS = true;
                 Debug.Log("User choose rock");
             }
             else if (other.gameObject.tag == "Scissors2P")//Paper
             {
-                BlockGameTask._UsersChoice = 1;
+                BlockGameTaskLv2._UsersChoice = 1;
                 GameObject.Find("Scissors").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Scissors collider false");
                 GameEventCenter.DispatchEvent("CloseAnimator2P");
@@ -562,12 +556,12 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Paper2P").SetActive(false);
                 GameObject.FindGameObjectWithTag("Rock2P").SetActive(false);
 
-                BlockGameTask._userChooseRPS = true;
+                BlockGameTaskLv2._userChooseRPS = true;
                 Debug.Log("User choose scissors");
             }
             else if (other.gameObject.tag == "Paper2P")//Rock
             {
-                BlockGameTask._UsersChoice = 0;
+                BlockGameTaskLv2._UsersChoice = 0;
                 GameEventCenter.DispatchEvent("CloseAnimator2P");
                 GameEventCenter.DispatchEvent("TwoPlayerShowResult");
                 GameObject.FindGameObjectWithTag("Rock2P").SetActive(false);
@@ -575,9 +569,10 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.Find("Paper").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Paper collider false");
 
-                BlockGameTask._userChooseRPS = true;
+                BlockGameTaskLv2._userChooseRPS = true;
                 Debug.Log("User choose paper");
             }
+
         }
     }
 
@@ -597,6 +592,26 @@ public class HandsTrigger : MonoBehaviour
             FirstCube = FirstBlock[2].name;
         }
         else if (BlockGameTask._RandomQuestion == 4)
+        {
+            FirstCube = FirstBlock[3].name;
+        }
+    }
+    private void QuestionPickedLv2()
+    {
+        //判斷哪個題目
+        if (BlockGameTaskLv2._RandomQuestion == 1)
+        {
+            FirstCube = FirstBlock[0].name;
+        }
+        else if (BlockGameTaskLv2._RandomQuestion == 2)
+        {
+            FirstCube = FirstBlock[1].name;
+        }
+        else if (BlockGameTaskLv2._RandomQuestion == 3)
+        {
+            FirstCube = FirstBlock[2].name;
+        }
+        else if (BlockGameTaskLv2._RandomQuestion == 4)
         {
             FirstCube = FirstBlock[3].name;
         }

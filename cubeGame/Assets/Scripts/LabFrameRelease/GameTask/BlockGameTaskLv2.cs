@@ -23,7 +23,7 @@ public class BlockGameTaskLv2 : TaskBase
     private AudioClip clip;
     private string MissingCube;
     private int RanNum;
-    private List<Color> ColorsChoosed;
+    private List<Color> Colors;
     //private Animator FourP1Ani, FourP2Ani, FourP3Ani, TwoPAni;
     //private Animator RPS_Animator;
 
@@ -69,6 +69,7 @@ public class BlockGameTaskLv2 : TaskBase
         Q3_cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q3_cube;
         Q4_cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q4_cube;
         Cubes = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes;
+        Colors = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Colors;
         //objectlist = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().ObjectList;
         npc1.npchand = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().NPC1_Hand;
         npc1.speechList = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().speechClip;
@@ -105,16 +106,6 @@ public class BlockGameTaskLv2 : TaskBase
 
     public override IEnumerator TaskStart()
     {
-        //string HandPath = "user_idle/Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 Spine1/Bip01 Spine2/Bip01 Neck/";
-        //GameObject.Find(HandPath+
-        //    "Bip01 L Clavicle/Bip01 L UpperArm/Bip01 L Forearm/Bip01 L Hand").GetComponent<HandsTrigger>().enabled = false;
-        //GameObject.Find(HandPath+
-        //    "Bip01 R Clavicle/Bip01 R UpperArm/Bip01 R Forearm/Bip01 R Hand").GetComponent<HandsTrigger>().enabled = false;
-        //GameObject.Find(HandPath+
-        //    "Bip01 L Clavicle/Bip01 L UpperArm/Bip01 L Forearm/Bip01 L Hand").GetComponent<HandsTriggerLv2>().enabled = true;
-        //GameObject.Find(HandPath+
-        //    "Bip01 R Clavicle/Bip01 R UpperArm/Bip01 R Forearm/Bip01 R Hand").GetComponent<HandsTriggerLv2>().enabled = true;
-        //TeacherAnimator = GameObject.Find("teacher").GetComponent<Animator>();
         TeacherAnimator.SetBool("isSlouchStandErect", true);
         GameObject.Find("ChooseQuestionCanvas").GetComponent<Canvas>().enabled = false;
         for (int i = 1; i < 5; i++)
@@ -126,7 +117,7 @@ public class BlockGameTaskLv2 : TaskBase
         //GameAudioController.Instance.PlayOneShot(npc.speechList[0]);
         //yield return new WaitForSeconds(1.5f);
         //yield return new WaitForSeconds(2);
-
+        
         //打招呼
         yield return SayHello();
         yield return new WaitForSeconds(1.5f);
@@ -156,11 +147,9 @@ public class BlockGameTaskLv2 : TaskBase
         do
         {
             Debug.Log("User choose RPS");
-            Debug.Log(_userChooseRPS);
             yield return new WaitUntil(() => _userChooseRPS);
-            Debug.Log(_userChooseRPS);
         } while (!_userChooseRPS);
-        
+
         yield return new WaitForSeconds(1);
         GameEventCenter.DispatchEvent("FirstRoundCloseAnimatorP2");//小花慢出
         GameEventCenter.DispatchEvent("FirstRoundFourPlayerShowResultP2");
@@ -213,7 +202,6 @@ public class BlockGameTaskLv2 : TaskBase
         {
             GameObject.FindWithTag("RPS").SetActive(false);
         }
-
         //XXX那一組猜拳贏了，你可以先選一張圖。你要選第幾張圖?
         yield return Teacher_AskUserWhichPic();
         yield return new WaitForSeconds(1.5f);
@@ -231,9 +219,8 @@ public class BlockGameTaskLv2 : TaskBase
         yield return new WaitForSeconds(2);
 
         //User跟對面NPC猜拳
-        GameEventCenter.DispatchEvent("InstatiateCube");
+        GameEventCenter.DispatchEvent("InstatiateCubeLv2");
         GameEventCenter.DispatchEvent("AddCubesToList");
-        GameEventCenter.DispatchEvent("User_MissingOneCubeLv2");
         //小花: 沒贏也沒關係，每一張圖我都喜歡
         clip = Resources.Load<AudioClip>("AudioClip/Flower_ItsOkTolose");
         GameAudioController.Instance.PlayOneShot(clip);
@@ -247,11 +234,11 @@ public class BlockGameTaskLv2 : TaskBase
         clip = Resources.Load<AudioClip>("AudioClip/NPC_SayRPS");
         GameAudioController.Instance.PlayOneShot(clip);
         Debug.Log(clip.length);
-        while (!_userChooseRPS)
+        do
         {
             Debug.Log("User choose RPS");
             yield return new WaitUntil(() => _userChooseRPS);
-        }
+        } while (!_userChooseRPS);
         yield return new WaitForSeconds(2);
 
         GameObject.FindWithTag("Result").SetActive(false);
@@ -267,6 +254,7 @@ public class BlockGameTaskLv2 : TaskBase
 
         //User choose two colors
         yield return UserChooseColor();
+        GameEventCenter.DispatchEvent("User_MissingOneCubeLv2");
         //開始堆積木
         _StartTobuild = true;
         while (!_BlockFinished)
@@ -454,19 +442,18 @@ public class BlockGameTaskLv2 : TaskBase
         yellow = new Color(255, 255, 0);
         //User : 我想要藍色和紅色 [語音辨識] 
         //NPC: 蛤~我也想要紅色[故意跟user一樣]，那我們來猜拳
-        ColorsChoosed[0] = red;
-        ColorsChoosed[1] = blue;
-        foreach (Color color in ColorsChoosed)
+        Color UserChoice1 = red;
+        Color UserChoice2 = blue;
+        foreach (BlockEntity cube in Cubes)
         {
-            foreach (BlockEntity cube in Cubes)
+            Debug.Log(cube + "!!!!!!!!!!!!!!!!!!!!!!");
+            if (UserChoice1 == cube.GetComponent<Color>() || UserChoice2 == cube.GetComponent<Color>())
             {
-                if (color == cube.GetComponent<Color>())
-                {
-                    cube._isUserColor = true;
-                }
+                Debug.Log(cube.GetComponent<Color>());
+                cube._isUserColor = true;
             }
         }
-            yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(5);
     }
     IEnumerator UserNeedsACube()
     {
