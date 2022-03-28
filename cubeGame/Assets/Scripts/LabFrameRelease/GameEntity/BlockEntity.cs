@@ -5,6 +5,7 @@ using UnityEngine;
 public class BlockEntity : GameEntityBase
 {
     public bool _isChose = false;
+    public bool _isUserColor = false;
     public Transform ansTransform;
     public override void EntityDispose()
     {

@@ -993,7 +993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Describe: 
-  animator: {fileID: 0}
+  animator: {fileID: 415400829555931181}
   speechList: []
   npchand: {fileID: 415400829764692877}
 --- !u!1 &415400829563177901

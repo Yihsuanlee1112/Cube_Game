@@ -393,6 +393,7 @@
     <Compile Include="Assets\Scripts\MyScripts\DragCube.cs" />
     <Compile Include="Assets\Scripts\MyScripts\FreezWhenFinPut.cs" />
     <Compile Include="Assets\Scripts\MyScripts\HandsTrigger.cs" />
+    <Compile Include="Assets\Scripts\MyScripts\HandsTriggerLv2.cs" />
     <Compile Include="Assets\Scripts\MyScripts\Instantiate_Cube.cs" />
     <Compile Include="Assets\Scripts\MyScripts\putCube.cs" />
     <Compile Include="Assets\Scripts\MyScripts\QuadTriggerDisabled.cs" />

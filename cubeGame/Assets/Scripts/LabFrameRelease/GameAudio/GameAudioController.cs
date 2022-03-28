@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using LabData;
 using UnityEngine;
 
-public class GameAudioController : MonoSingleton<GameAudioController> {
+public class GameAudioController : MonoSingleton<GameAudioController>
+{
 
     public GameObject LoopPlay(AudioClip clip)
     {
@@ -22,7 +23,7 @@ public class GameAudioController : MonoSingleton<GameAudioController> {
     /// <param name="target"></param>
     /// <param name="volume"></param>
     /// <param name="maxDistance"></param>
-    public void PlayOneShot(AudioClip clip, GameObject target,float volume=0.5f,float maxDistance=3f)
+    public void PlayOneShot(AudioClip clip, GameObject target, float volume = 0.5f, float maxDistance = 3f)
     {
         var audioSource = target.AddComponent<AudioSource>();
         audioSource.spatialBlend = 1;
@@ -48,9 +49,8 @@ public class GameAudioController : MonoSingleton<GameAudioController> {
     {
         float time = audioSource.clip.length;
         audioSource.Play();
-
         yield return new WaitForSeconds(time);
         DestroyImmediate(audioSource.gameObject);
     }
-   
+
 }

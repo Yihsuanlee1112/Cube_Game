@@ -5,7 +5,7 @@ using UnityEngine;
 public class MainSceneRes : GameSceneEntityRes
 {
     public PlayerEntity player;
-    public GameObject NPCHand;
+    public GameObject NPC1_Hand;
     public List<BlockEntity> Q1_cube;
     public List<BlockEntity> Q2_cube;
     public List<BlockEntity> Q3_cube;
@@ -13,8 +13,10 @@ public class MainSceneRes : GameSceneEntityRes
     public List<BlockEntity> Cubes;
     //public HandsTrigger MyPreCube;
     //public HandsTrigger MyPreCubeIndex;
-    public NPCEntity npc;
-    public Animator NPC_animator;
+    public NPCEntity npc1;
+    public Animator NPC1_animator;
+    public GameObject GreenTriggerBall;
+    public Animator TeacherAnimator;
     public Instantiate_Cube Instantiate_Cube;
     public RockPaperScissors RockPaperScissors;
     public CameraEntity eyeCamera;

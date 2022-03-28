@@ -8,15 +8,30 @@ public class Instantiate_Cube : MonoBehaviour
     [Header("Question Prefabs")]
     //[System.NonSerialized]
     public List<GameObject> Question_Prefabs;
+
     [Header("Cube Prefabs")]
     public List<GameObject> Q1_Cube_Prefabs;
     public List<GameObject> Q2_Cube_Prefabs;
     public List<GameObject> Q3_Cube_Prefabs;
     public List<GameObject> Q4_Cube_Prefabs;
+    public List<List<GameObject>> Cube_Prefabs = new List<List<GameObject>>();
+
     [Header("Cubes")]
     public List<GameObject> AllCubePrefabs;
     public List<GameObject> Cubes;
     Vector3 position;
+
+    [Header("積木和題目的父物件")]
+    public List<GameObject> Parents;
+    float interval = 0.079f; //3.623-3.544 但好像間隔不平均(?
+
+    [Header("桌子的位置")]
+    public List<GameObject> Desks;
+
+    [Header("積木的父物件")]
+    public List<GameObject> CubeParents;
+
+
     //public int RandomQuestion = Random.Range(1, 4);
     //public int RandomQuestion = 2;
 
@@ -35,219 +50,76 @@ public class Instantiate_Cube : MonoBehaviour
     }
     void Start()
     {
-        //GetComponent<GameObject>().CompareTag("question")
-        //玩家可選題目
-        //int RandomQuestion = 1;
-        //int RandomQuestion = Random.Range(1, 4);
-        //if (RandomQuestion == 1)
-        //{
-        //    Question_1();
-        //    print("Q1");
-        //}
-        //if (RandomQuestion == 2)
-        //{
-        //    Question_2();
-        //    print("Q2");
-        //}
-        //if (RandomQuestion == 3)
-        //{
-        //    Question_3();
-        //    print("Q3");
-        //}
-        //if (RandomQuestion == 4)
-        //{
-        //    Question_4();
-        //    print("Q4");
-        //}
-        // position = new Vector3((float)0.98, (float)0.36, (float)-7.5);
-        //Cubes.Add(Instantiate(Cube_Prefabs[10], position, Quaternion.identity));
-        //foreach(GameObject cube in Cubes){
-        //    print(this.Cubes+"okok");
-        //    if(cube == null)
-        //    Cubes.RemoveAll(item => item == null);
-        //}
+
     }
     public void InstatiateCube()
     {
-        if (BlockGameTask.RandomQuestion == 1)
+        Cube_Prefabs.Add(Q1_Cube_Prefabs);
+        Cube_Prefabs.Add(Q2_Cube_Prefabs);
+        Cube_Prefabs.Add(Q3_Cube_Prefabs);
+        Cube_Prefabs.Add(Q4_Cube_Prefabs);
+
+        for (int i = 0; i < 4; i++)
         {
-            Question_1();
-            print("Q1");
+            Question(i, Cube_Prefabs[i], Parents[i], CubeParents[i]);
         }
-        if (BlockGameTask.RandomQuestion == 2)
+
+        PutCubeOnDesk(BlockGameTask._RandomQuestion - 1);
+    }
+
+    /// <summary>
+    /// 生成題目和積木(其位置都是以放在user桌上為基準)，再依據不同題目包在對應的父物件底下(目的是可以改變父物件位置放在NPC桌上)
+    /// </summary>
+    /// <param name="PicNum"></param>
+    /// <param name="PicPos"></param>
+    /// <param name="CubePrefabs"></param>
+    /// <param name="CubesInitPos"></param>
+    /// <param name="Parent"></param>
+    public void Question(int PicNum, List<GameObject> CubePrefabs, GameObject Parent, GameObject CubeParent)
+    {
+        Vector3 PicsPos = new Vector3((float)0.0, (float)0.0, (float)0.0);
+        Vector3 CubesPos = new Vector3((float)0.0, (float)0.0, (float)0.0);
+
+        GameObject picInstantiate = Instantiate(Question_Prefabs[PicNum], PicsPos, Quaternion.Euler(0, 180, 0)); // 因為場景X和Z方向不同，所以4張圖統一轉向
+        picInstantiate.transform.SetParent(Parent.transform);
+
+        foreach (GameObject cube in CubePrefabs)
         {
-            Question_2();
-            print("Q2");
+            CubesPos.z = CubesPos.z + interval;
+            GameObject cubeInstantiate = Instantiate(cube, CubesPos, Quaternion.identity);
+            cubeInstantiate.transform.SetParent(CubeParent.transform);
+            /*
+            if (PicNum+1 == BlockGameTask.RandomQuestion)
+            {
+                // user的積木放在MainSceneRes的Cubes裡面才能判斷順序
+                BlockGameTask.Cubes.Add(cubeInstantiate.GetComponent<BlockEntity>());
+            }
+            */
         }
-        if (BlockGameTask.RandomQuestion == 3)
+    }
+
+    /// <summary>
+    /// 根據user的選擇把其他組的積木放在桌上
+    /// </summary>
+    /// <param name="PicNum"> user選擇的圖片編號 </param>
+    public void PutCubeOnDesk(int PicNum)
+    {
+        int otherDesk = 1;
+        for (int i = 0; i < 4; i++)
         {
-            Question_3();
-            print("Q3");
+            if (i == PicNum)
+            {
+                //整個搬過去
+                Parents[i].transform.position = Desks[0].transform.position;
+                //設定積木的位置，題目是GetChild(0)
+                Parents[i].transform.GetChild(0).transform.position = Desks[0].transform.GetChild(0).transform.position;
+            }
+            else
+            {
+                Parents[i].transform.position = Desks[otherDesk].transform.position;
+                Parents[i].transform.GetChild(0).transform.position = Desks[otherDesk].transform.GetChild(0).transform.position;
+                otherDesk++;
+            }
         }
-        if (BlockGameTask.RandomQuestion == 4)
-        {
-            Question_4();
-            print("Q4");
-        }
     }
-
-    
-    //生成(Cube, 物件的位置:生成點的位置, 物件的旋轉值:生成點的旋轉值);
-        //Instantiate實例化(要生成的物件, 物件位置, 物件旋轉值)
-    public void Question_1()
-    {
-        //生成題目
-        Vector3 Question1_position = new Vector3((float)1.345, (float)0.2889, (float)3.9);
-        Instantiate(Question_Prefabs[0], Question1_position, Quaternion.Euler(0, 180, 0));
-
-        //要生成的物件。
-        position = new Vector3((float)0.98, (float)0.36, (float)3.544);
-        Cubes.Add(Instantiate(Q1_Cube_Prefabs[0], position, Quaternion.identity));
-       
-        position = new Vector3((float)0.98, (float)0.36, (float)3.623);
-        Cubes.Add(Instantiate(Q1_Cube_Prefabs[1], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)3.702);
-        Cubes.Add(Instantiate(Q1_Cube_Prefabs[2], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)3.782);
-        Cubes.Add(Instantiate(Q1_Cube_Prefabs[3], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)3.856);
-        Cubes.Add(Instantiate(Q1_Cube_Prefabs[4], position, Quaternion.identity));
-
-        //rotation = Quaternion.Euler(new Vector3(Random.Range(0.0f, 90.0f), Random.Range(0.0f, 90.0f), 0));
-        position = new Vector3((float)0.98, (float)0.36, (float)3.936);
-        Cubes.Add(Instantiate(Q1_Cube_Prefabs[5], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)4.034);
-        Cubes.Add(Instantiate(Q1_Cube_Prefabs[6], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)4.147);
-        Cubes.Add(Instantiate(Q1_Cube_Prefabs[7], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)4.225);
-        Cubes.Add(Instantiate(Q1_Cube_Prefabs[8], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)4.312);
-        Cubes.Add(Instantiate(Q1_Cube_Prefabs[9], position, Quaternion.identity));
-    }
-    public void Question_2()
-    {
-        //生成題目
-        Vector3 Question2_position = new Vector3((float)1.355, (float)0.2889, (float)3.8);
-        Instantiate(Question_Prefabs[1], Question2_position, Quaternion.Euler(0, -90, 0));
-
-        //要生成的物件。
-        position = new Vector3((float)0.98, (float)0.36, (float)3.544);
-        Cubes.Add(Instantiate(Q2_Cube_Prefabs[0], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)3.623);
-        Cubes.Add(Instantiate(Q2_Cube_Prefabs[1], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)3.702);
-        Cubes.Add(Instantiate(Q2_Cube_Prefabs[2], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)3.782);
-        Cubes.Add(Instantiate(Q2_Cube_Prefabs[3], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)3.856);
-        Cubes.Add(Instantiate(Q2_Cube_Prefabs[4], position, Quaternion.identity));
-
-        //rotation = Quaternion.Euler(new Vector3(Random.Range(0.0f, 90.0f), Random.Range(0.0f, 90.0f), 0));
-        position = new Vector3((float)0.98, (float)0.36, (float)3.936);
-        Cubes.Add(Instantiate(Q2_Cube_Prefabs[5], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)4.034);
-        Cubes.Add(Instantiate(Q2_Cube_Prefabs[6], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)4.147);
-        Cubes.Add(Instantiate(Q2_Cube_Prefabs[7], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)4.225);
-        Cubes.Add(Instantiate(Q2_Cube_Prefabs[8], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)4.312);
-        Cubes.Add(Instantiate(Q2_Cube_Prefabs[9], position, Quaternion.identity));
-    }
-    public void Question_3()
-    {
-        //生成題目
-        Vector3 Question3_position = new Vector3((float)1.5, (float)0.2889, (float)4.05);
-        Instantiate(Question_Prefabs[2], Question3_position, Quaternion.Euler(0, 180, 0));
-
-        //要生成的物件。
-        position = new Vector3((float)0.98, (float)0.36, (float)3.544);
-        Cubes.Add(Instantiate(Q3_Cube_Prefabs[0], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)3.623);
-        Cubes.Add(Instantiate(Q3_Cube_Prefabs[1], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)3.702);
-        Cubes.Add(Instantiate(Q3_Cube_Prefabs[2], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)3.782);
-        Cubes.Add(Instantiate(Q3_Cube_Prefabs[3], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)3.856);
-        Cubes.Add(Instantiate(Q3_Cube_Prefabs[4], position, Quaternion.identity));
-
-        //rotation = Quaternion.Euler(new Vector3(Random.Range(0.0f, 90.0f), Random.Range(0.0f, 90.0f), 0));
-        position = new Vector3((float)0.98, (float)0.36, (float)3.936);
-        Cubes.Add(Instantiate(Q3_Cube_Prefabs[5], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)4.034);
-        Cubes.Add(Instantiate(Q3_Cube_Prefabs[6], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)4.147);
-        Cubes.Add(Instantiate(Q3_Cube_Prefabs[7], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)4.225);
-        Cubes.Add(Instantiate(Q3_Cube_Prefabs[8], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)4.312);
-        Cubes.Add(Instantiate(Q3_Cube_Prefabs[9], position, Quaternion.identity));
-    }
-    public void Question_4()
-    {
-        //生成題目
-        Vector3 Question3_position = new Vector3((float)1.375, (float)0.2889, (float)3.75);
-        Instantiate(Question_Prefabs[3], Question3_position, Quaternion.Euler(0, 180, 0));
-
-        //要生成的物件。
-        position = new Vector3((float)0.98, (float)0.36, (float)3.544);
-        Cubes.Add(Instantiate(Q4_Cube_Prefabs[0], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)3.623);
-        Cubes.Add(Instantiate(Q4_Cube_Prefabs[1], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)3.702);
-        Cubes.Add(Instantiate(Q4_Cube_Prefabs[2], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)3.782);
-        Cubes.Add(Instantiate(Q4_Cube_Prefabs[3], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)3.856);
-        Cubes.Add(Instantiate(Q4_Cube_Prefabs[4], position, Quaternion.identity));
-
-        //rotation = Quaternion.Euler(new Vector3(Random.Range(0.0f, 90.0f), Random.Range(0.0f, 90.0f), 0));
-        position = new Vector3((float)0.98, (float)0.36, (float)3.936);
-        Cubes.Add(Instantiate(Q4_Cube_Prefabs[5], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)4.034);
-        Cubes.Add(Instantiate(Q4_Cube_Prefabs[6], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)4.147);
-        Cubes.Add(Instantiate(Q4_Cube_Prefabs[7], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)4.225);
-        Cubes.Add(Instantiate(Q4_Cube_Prefabs[8], position, Quaternion.identity));
-
-        position = new Vector3((float)0.98, (float)0.36, (float)4.312);
-        Cubes.Add(Instantiate(Q4_Cube_Prefabs[9], position, Quaternion.identity));
-    }
-    
 }
-
-
-

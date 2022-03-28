@@ -9,7 +9,7 @@ public class GameTaskManager : MonoSingleton<GameTaskManager>, IGameManager
     int IGameManager.Weight => GobalData.GameTaskManagerWeight;
 
     private List<TaskBase> _queuetasks;
-
+    public static int task = 0;
     void IGameManager.ManagerInit()
     {
         _queuetasks = TaskFanctory.GetCurrentScopeTasks();
@@ -26,6 +26,7 @@ public class GameTaskManager : MonoSingleton<GameTaskManager>, IGameManager
     {
         // _queuetasks.ForEach(p => { StartCoroutine(StartGameTaskEnumerator(p)); });
         StartCoroutine(StartGameTaskEnumerator(_queuetasks[0]));
+        task = 0;
     }
 
 

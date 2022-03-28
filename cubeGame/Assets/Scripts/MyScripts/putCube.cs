@@ -53,19 +53,19 @@ public class putCube : MonoBehaviour
             answerCube.transform.parent = null;
 
             // 入口
-            if (BlockGameTask.RandomQuestion == 1) 
+            if (BlockGameTask._RandomQuestion == 1) 
             { 
                 checkFormer.CheckQ1Former(answerCube);
             }
-            else if (BlockGameTask.RandomQuestion == 2) 
+            else if (BlockGameTask._RandomQuestion == 2) 
             { 
                 checkFormer.CheckQ2Former(answerCube);
             }
-            else if (BlockGameTask.RandomQuestion == 3) 
+            else if (BlockGameTask._RandomQuestion == 3) 
             { 
                 checkFormer.CheckQ3Former(answerCube);
             }
-            else if (BlockGameTask.RandomQuestion == 4) 
+            else if (BlockGameTask._RandomQuestion == 4) 
             { 
                 checkFormer.CheckQ4Former(answerCube);
             }

@@ -33,6 +33,10 @@ TagManager:
   - FirstRoundScissors4P
   - FirstRoundPaper4P
   - ThirdRoundSciccors4P
+  - Q1
+  - Q2
+  - Q3
+  - Q4
   layers:
   - Default
   - TransparentFX

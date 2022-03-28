@@ -18,20 +18,14 @@ public class RockPaperScissors : MonoBehaviour
     {
         GameEventCenter.AddEvent("FourPlayerRPS", FourPlayerRPS);
         GameEventCenter.AddEvent("TwoPlayerRPS", TwoPlayerRPS);
-        GameEventCenter.AddEvent("FourPlayerShowRockResult", FourPlayerShowRockResult);
-        GameEventCenter.AddEvent("FourPlayerShowPaperResult", FourPlayerShowPaperResult);
-        GameEventCenter.AddEvent("FourPlayerShowScissorsResult", FourPlayerShowScissorsResult);
-        GameEventCenter.AddEvent("TwoPlayerShowRockResult", TwoPlayerShowRockResult);
-        GameEventCenter.AddEvent("TwoPlayerShowPaperResult", TwoPlayerShowPaperResult);
-        GameEventCenter.AddEvent("TwoPlayerShowScissorsResult", TwoPlayerShowScissorsResult);
+        GameEventCenter.AddEvent("FourPlayerShowResult", FourPlayerShowResult);
+        GameEventCenter.AddEvent("TwoPlayerShowResult", TwoPlayerShowResult);
         GameEventCenter.AddEvent("CloseAnimator2P", CloseAnimator2P);
         GameEventCenter.AddEvent("CloseAnimator4P", CloseAnimator4P);
-        GameEventCenter.AddEvent("FirstRoundCloseAnimator4PP1P2", FirstRoundCloseAnimatorP1P2);
-        GameEventCenter.AddEvent("FirstRoundCloseAnimatorP3", FirstRoundCloseAnimatorP3);
-        GameEventCenter.AddEvent("FirstRoundFourPlayerShowRockResultP1P2", FirstRoundFourPlayerShowRockResultP1P2);
-        GameEventCenter.AddEvent("FirstRoundFourPlayerShowPaperResultP1P2", FirstRoundFourPlayerShowPaperResultP1P2);
-        GameEventCenter.AddEvent("FirstRoundFourPlayerShowScissorsResultP1P2", FirstRoundFourPlayerShowScissorsResultP1P2);
-        GameEventCenter.AddEvent("FirstRoundFourPlayerShowResultP3", FirstRoundFourPlayerShowResultP3);
+        GameEventCenter.AddEvent("FirstRoundCloseAnimatorP1P3", FirstRoundCloseAnimatorP1P3);
+        GameEventCenter.AddEvent("FirstRoundCloseAnimatorP2", FirstRoundCloseAnimatorP2);
+        GameEventCenter.AddEvent("FirstRoundFourPlayerShowResultP1P3", FirstRoundFourPlayerShowResultP1P3);
+        GameEventCenter.AddEvent("FirstRoundFourPlayerShowResultP2", FirstRoundFourPlayerShowResultP2);
     }
 
     // Update is called once per frame
@@ -87,7 +81,7 @@ public class RockPaperScissors : MonoBehaviour
         //TwoPAni.GetComponent<Animator>().SetBool("isRPS", true);
         Debug.Log("StartAni");
     }
-    public void FourPlayerShowRockResult()
+    public void FourPlayerShowResult()
     {
 
         //Rock
@@ -103,78 +97,28 @@ public class RockPaperScissors : MonoBehaviour
         FourP3Ani.SetBool("isRPS", false);
 
         position = new Vector3((float)-0.1, (float)1.3, (float)2.0);
-        Result = Instantiate(rockPaperScissorsResult[0], position, Quaternion.Euler(0, 15, 0));
+        Result = Instantiate(rockPaperScissorsResult[BlockGameTask._UsersChoice], position, Quaternion.Euler(0, 15, 0));
         Debug.Log(Result);
 
         
         position = new Vector3((float)2.804, (float)1.3, (float)1.8);
-        Result = Instantiate(rockPaperScissorsResult[0], position, Quaternion.Euler(0, -15, 0));
+        Result = Instantiate(rockPaperScissorsResult[BlockGameTask._UsersChoice], position, Quaternion.Euler(0, -15, 0));
         Debug.Log(Result);
 
         
         position = new Vector3((float)4.325, (float)1.3, (float)3.0);
-        Result = Instantiate(rockPaperScissorsResult[0], position, Quaternion.Euler(0, -45, 0));
+        Result = Instantiate(rockPaperScissorsResult[BlockGameTask._UsersChoice], position, Quaternion.Euler(0, -45, 0));
         Debug.Log(Result);
     }
-    public void FourPlayerShowPaperResult()
-    {
-        FourP1Ani.SetBool("isRPS", false);
-        FourP2Ani.SetBool("isRPS", false);
-        FourP3Ani.SetBool("isRPS", false);
-
-        position = new Vector3((float)-0.1, (float)1.3, (float)2.0);
-        Result = Instantiate(rockPaperScissorsResult[1], position, Quaternion.Euler(0, 15, 0));
-        Debug.Log(Result);
-
-        position = new Vector3((float)2.804, (float)1.3, (float)1.8);
-        Result = Instantiate(rockPaperScissorsResult[1], position, Quaternion.Euler(0, -15, 0));
-        Debug.Log(Result);
-
-        position = new Vector3((float)4.325, (float)1.3, (float)3.0);
-        Result = Instantiate(rockPaperScissorsResult[1], position, Quaternion.Euler(0, -45, 0));
-        Debug.Log(Result);
-    }
-    public void FourPlayerShowScissorsResult()
-    {
-        FourP1Ani.SetBool("isRPS", false);
-        FourP2Ani.SetBool("isRPS", false);
-        FourP3Ani.SetBool("isRPS", false);
-
-        position = new Vector3((float)-0.1, (float)1.3, (float)2.0);
-        Result = Instantiate(rockPaperScissorsResult[2], position, Quaternion.Euler(0, 15, 0));
-        Debug.Log(Result);
-
-        position = new Vector3((float)2.804, (float)1.3, (float)1.8);
-        Result = Instantiate(rockPaperScissorsResult[2], position, Quaternion.Euler(0, -15, 0));
-        Debug.Log(Result);
-
-        position = new Vector3((float)4.325, (float)1.3, (float)3.0);
-        Result = Instantiate(rockPaperScissorsResult[2], position, Quaternion.Euler(0, -45, 0));
-        Debug.Log(Result);
-    }
-    public void TwoPlayerShowRockResult()
-    {
-        TwoPAni.SetBool("isRPS", false);
-        position = new Vector3((float)1.378, (float)1.0, (float)3.6);
-        Result = Instantiate(rockPaperScissorsResult[0], position, Quaternion.identity);
-        Debug.Log(Result);
-    }
-    public void TwoPlayerShowPaperResult()
+    public void TwoPlayerShowResult()
     {
         TwoPAni.SetBool("isRPS", false);
 
         position = new Vector3((float)1.378, (float)1.12, (float)3.6);
-        Result = Instantiate(rockPaperScissorsResult[1], position, Quaternion.identity);
+        Result = Instantiate(rockPaperScissorsResult[BlockGameTask._UsersChoice], position, Quaternion.identity);
         Debug.Log(Result);
     }
-    public void TwoPlayerShowScissorsResult()
-    {
-        TwoPAni.SetBool("isRPS", false);
-
-        position = new Vector3((float)1.378, (float)1.12, (float)3.6);
-        Result = Instantiate(rockPaperScissorsResult[2], position, Quaternion.identity);
-        Debug.Log(Result);
-    }
+   
     public void CloseAnimator2P()
     {
         TwoPAni.SetBool("isRPS", false);
@@ -189,98 +133,62 @@ public class RockPaperScissors : MonoBehaviour
         FourP3Ani.SetBool("isRPS", false);
         Debug.Log("4PAniStop");
     }  
-    public void FirstRoundCloseAnimatorP1P2()
+    public void FirstRoundCloseAnimatorP1P3()
     {
         Debug.Log("AniStop!!!!");
 
         FourP1Ani.SetBool("isRPS", false);
-        FourP2Ani.SetBool("isRPS", false);
-        //FourP3Ani.SetBool("isRPS", false);
-        Debug.Log("1Round P1 P2 AniStop");
+        //FourP2Ani.SetBool("isRPS", false);
+        FourP3Ani.SetBool("isRPS", false);
+        Debug.Log("1Round P1 P3 AniStop");
     }
-    public void FirstRoundCloseAnimatorP3()
+    public void FirstRoundCloseAnimatorP2()
     {
         Debug.Log("AniStop!!!!");
 
         //FourP1Ani.SetBool("isRPS", false);
+        FourP2Ani.SetBool("isRPS", false);
+        //FourP3Ani.SetBool("isRPS", false);
+        Debug.Log("1Round P2 AniStop");
+    }
+    public void FirstRoundFourPlayerShowResultP1P3()
+    {
+        FourP1Ani.SetBool("isRPS", false);
         //FourP2Ani.SetBool("isRPS", false);
         FourP3Ani.SetBool("isRPS", false);
-        Debug.Log("1Round P3 AniStop");
-    }
-    public void FirstRoundFourPlayerShowRockResultP1P2()
-    {
-        FourP1Ani.SetBool("isRPS", false);
-        FourP2Ani.SetBool("isRPS", false);
-        //FourP3Ani.SetBool("isRPS", false);
 
         position = new Vector3((float)-0.1, (float)1.3, (float)2.0);
-        Result = Instantiate(rockPaperScissorsResult[0], position, Quaternion.Euler(0, 15, 0));
-        Debug.Log(Result);
+        Result = Instantiate(rockPaperScissorsResult[BlockGameTask._UsersChoice], position, Quaternion.Euler(0, 15, 0));
+        Debug.Log(Result);//
 
 
-        position = new Vector3((float)2.804, (float)1.3, (float)1.8);
-        Result = Instantiate(rockPaperScissorsResult[0], position, Quaternion.Euler(0, -15, 0));
-        Debug.Log(Result);
-
-
-        //position = new Vector3((float)4.325, (float)1.3, (float)3.0);
-        //Result = Instantiate(rockPaperScissorsResult[0], position, Quaternion.Euler(0, -45, 0));
+        ///position = new Vector3((float)2.804, (float)1.3, (float)1.8);
+        ///Result = Instantiate(rockPaperScissorsResult[0], position, Quaternion.Euler(0, -15, 0));
         //Debug.Log(Result);
+
+
+        position = new Vector3((float)4.325, (float)1.3, (float)3.0);
+        Result = Instantiate(rockPaperScissorsResult[BlockGameTask._UsersChoice], position, Quaternion.Euler(0, -45, 0));
+        Debug.Log(Result);//
     }
-    public void FirstRoundFourPlayerShowPaperResultP1P2()
-    {
-        FourP1Ani.SetBool("isRPS", false);
-        FourP2Ani.SetBool("isRPS", false);
-        //FourP3Ani.SetBool("isRPS", false);
-
-        position = new Vector3((float)-0.1, (float)1.3, (float)2.0);
-        Result = Instantiate(rockPaperScissorsResult[1], position, Quaternion.Euler(0, 15, 0));
-        Debug.Log(Result);
-
-        position = new Vector3((float)2.804, (float)1.3, (float)1.8);
-        Result = Instantiate(rockPaperScissorsResult[1], position, Quaternion.Euler(0, -15, 0));
-        Debug.Log(Result);
-
-        //position = new Vector3((float)4.325, (float)1.3, (float)3.0);
-        //Result = Instantiate(rockPaperScissorsResult[1], position, Quaternion.Euler(0, -45, 0));
-        //Debug.Log(Result);
-    }
-    public void FirstRoundFourPlayerShowScissorsResultP1P2()
-    {
-        FourP1Ani.SetBool("isRPS", false);
-        FourP2Ani.SetBool("isRPS", false);
-        //FourP3Ani.SetBool("isRPS", false);
-
-        position = new Vector3((float)-0.1, (float)1.3, (float)2.0);
-        Result = Instantiate(rockPaperScissorsResult[2], position, Quaternion.Euler(0, 15, 0));
-        Debug.Log(Result);
-
-        position = new Vector3((float)2.804, (float)1.3, (float)1.8);
-        Result = Instantiate(rockPaperScissorsResult[2], position, Quaternion.Euler(0, -15, 0));
-        Debug.Log(Result);
-
-        //position = new Vector3((float)4.325, (float)1.3, (float)3.0);
-        //Result = Instantiate(rockPaperScissorsResult[2], position, Quaternion.Euler(0, -45, 0));
-        //Debug.Log(Result);
-    }
-    public void FirstRoundFourPlayerShowResultP3()
+    
+    public void FirstRoundFourPlayerShowResultP2()
     {
         Debug.Log("小花慢出");
-        int Ran = Random.Range(0, 2);
         //FourP1Ani.SetBool("isRPS", false);
-        //FourP2Ani.SetBool("isRPS", false);
-        FourP3Ani.SetBool("isRPS", false);
+        FourP2Ani.SetBool("isRPS", false);
+        //FourP3Ani.SetBool("isRPS", false);
 
         //position = new Vector3((float)-0.1, (float)1.3, (float)2.0);
         //Result = Instantiate(rockPaperScissorsResult[2], position, Quaternion.Euler(0, 15, 0));
         //Debug.Log(Result);
 
-        //position = new Vector3((float)2.804, (float)1.3, (float)1.8);
-        //Result = Instantiate(rockPaperScissorsResult[2], position, Quaternion.Euler(0, -15, 0));
-        //Debug.Log(Result);
-
-        position = new Vector3((float)4.325, (float)1.3, (float)3.0);
-        Result = Instantiate(rockPaperScissorsResult[Ran], position, Quaternion.Euler(0, -45, 0));
+        position = new Vector3((float)2.804, (float)1.3, (float)1.8);
+        Result = Instantiate(rockPaperScissorsResult[BlockGameTask._UsersChoice], position, Quaternion.Euler(0, -15, 0));
         Debug.Log(Result);
+
+        //position = new Vector3((float)4.325, (float)1.3, (float)3.0);
+        //Result = Instantiate(rockPaperScissorsResult[Ran], position, Quaternion.Euler(0, -45, 0));
+        //Debug.Log(Result);
     }
 }
