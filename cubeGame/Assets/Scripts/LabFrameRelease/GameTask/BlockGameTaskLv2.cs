@@ -143,11 +143,13 @@ public class BlockGameTaskLv2 : TaskBase
 
         //大家一起說剪刀石頭布
         yield return All_NPC_SayRPS();
-
+        _userChooseRPS = false;
         do
         {
             Debug.Log("User choose RPS");
+            Debug.Log(_userChooseRPS);
             yield return new WaitUntil(() => _userChooseRPS);
+            Debug.Log(_userChooseRPS);
         } while (!_userChooseRPS);
 
         yield return new WaitForSeconds(1);
@@ -186,12 +188,15 @@ public class BlockGameTaskLv2 : TaskBase
 
         //大家一起說剪刀石頭布
         yield return All_NPC_SayRPS();
-
+        _userChooseRPS = false;
         do
         {
             Debug.Log("User choose RPS");
+            Debug.Log(_userChooseRPS);
             yield return new WaitUntil(() => _userChooseRPS);
+            Debug.Log(_userChooseRPS);
         } while (!_userChooseRPS);
+
         yield return new WaitForSeconds(3);
 
         for (int i = 0; i < 3; i++)
@@ -218,9 +223,18 @@ public class BlockGameTaskLv2 : TaskBase
         TeacherAnimator.SetBool("isSlouchStandErect", true);
         yield return new WaitForSeconds(2);
 
-        //User跟對面NPC猜拳
+        //User跟對面NPC猜拳**********************************************************************************
         GameEventCenter.DispatchEvent("InstatiateCubeLv2");
+        //GameEventCenter.DispatchEvent("User_MissingOneCubeLv2");
+        GameEventCenter.DispatchEvent("CubeOnDesk");
         GameEventCenter.DispatchEvent("AddCubesToList");
+        foreach (BlockEntity cube in Cubes)
+        {
+            cube.GetComponent<MeshRenderer>().enabled = false;
+            cube.GetComponent<BoxCollider>().isTrigger = true;
+            cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        }
+        
         //小花: 沒贏也沒關係，每一張圖我都喜歡
         clip = Resources.Load<AudioClip>("AudioClip/Flower_ItsOkTolose");
         GameAudioController.Instance.PlayOneShot(clip);
@@ -234,10 +248,13 @@ public class BlockGameTaskLv2 : TaskBase
         clip = Resources.Load<AudioClip>("AudioClip/NPC_SayRPS");
         GameAudioController.Instance.PlayOneShot(clip);
         Debug.Log(clip.length);
+        _userChooseRPS = false;
         do
         {
             Debug.Log("User choose RPS");
+            Debug.Log(_userChooseRPS);
             yield return new WaitUntil(() => _userChooseRPS);
+            Debug.Log(_userChooseRPS);
         } while (!_userChooseRPS);
         yield return new WaitForSeconds(2);
 
@@ -253,8 +270,15 @@ public class BlockGameTaskLv2 : TaskBase
         yield return NPC_YouWinLv2();
 
         //User choose two colors
-        yield return UserChooseColor();
+        yield return UserChooseColor();//**************************
         GameEventCenter.DispatchEvent("User_MissingOneCubeLv2");
+        foreach (BlockEntity cube in Cubes)
+        {
+            cube.GetComponent<MeshRenderer>().enabled = true;
+            cube.GetComponent<BoxCollider>().isTrigger = true;
+            cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+        }
         //開始堆積木
         _StartTobuild = true;
         while (!_BlockFinished)
@@ -449,6 +473,8 @@ public class BlockGameTaskLv2 : TaskBase
             Debug.Log(cube + "!!!!!!!!!!!!!!!!!!!!!!");
             if (UserChoice1 == cube.GetComponent<Color>() || UserChoice2 == cube.GetComponent<Color>())
             {
+                Debug.Log(UserChoice1 + "UserChoice1");
+                Debug.Log(UserChoice2 + " + UserChoice2");
                 Debug.Log(cube.GetComponent<Color>());
                 cube._isUserColor = true;
             }
@@ -527,7 +553,7 @@ public class BlockGameTaskLv2 : TaskBase
         Q1_cube.Add(GameObject.Find("Q1RedCuboid(Clone)").GetComponent<BlockEntity>());
         Q1_cube.Add(GameObject.Find("Q1GreenCuboid(Clone)").GetComponent<BlockEntity>());
         Q1_cube.Add(GameObject.Find("Q1YellowCuboid(Clone)").GetComponent<BlockEntity>());
-        Q1_cube.Add(GameObject.Find("Q1BlueCube(Clone)").GetComponent<BlockEntity>());//missing cube
+        Q1_cube.Add(GameObject.Find("Q1BlueCube(Clone)").GetComponent<BlockEntity>());
         Q1_cube.Add(GameObject.Find("Q1RedCube(Clone)").GetComponent<BlockEntity>());
         Cubes.AddRange(Q1_cube);
     }
@@ -542,7 +568,7 @@ public class BlockGameTaskLv2 : TaskBase
         Q2_cube.Add(GameObject.Find("Q2GreenCuboid_2(Clone)").GetComponent<BlockEntity>());
         Q2_cube.Add(GameObject.Find("Q2YellowCube_2(Clone)").GetComponent<BlockEntity>());
         Q2_cube.Add(GameObject.Find("Q2RedCuboid_1(Clone)").GetComponent<BlockEntity>());
-        Q2_cube.Add(GameObject.Find("Q2RedCuboid_2(Clone)").GetComponent<BlockEntity>());//missing cube
+        Q2_cube.Add(GameObject.Find("Q2RedCuboid_2(Clone)").GetComponent<BlockEntity>());
         Q2_cube.Add(GameObject.Find("Q2BlueCuboid(Clone)").GetComponent<BlockEntity>());
         Cubes.AddRange(Q2_cube);
     }
@@ -557,7 +583,7 @@ public class BlockGameTaskLv2 : TaskBase
         Q3_cube.Add(GameObject.Find("Q3BlueCuboid_3(Clone)").GetComponent<BlockEntity>());
         Q3_cube.Add(GameObject.Find("Q3GreenCube_1(Clone)").GetComponent<BlockEntity>());
         Q3_cube.Add(GameObject.Find("Q3BlueCuboid_4(Clone)").GetComponent<BlockEntity>());
-        Q3_cube.Add(GameObject.Find("Q3YellowCuboid3(Clone)").GetComponent<BlockEntity>());//missing cube
+        Q3_cube.Add(GameObject.Find("Q3YellowCuboid3(Clone)").GetComponent<BlockEntity>());
         Q3_cube.Add(GameObject.Find("Q3GreenCube_2(Clone)").GetComponent<BlockEntity>());
         Cubes.AddRange(Q3_cube);
     }
@@ -572,7 +598,7 @@ public class BlockGameTaskLv2 : TaskBase
         Q4_cube.Add(GameObject.Find("Q4YellowCuboid_1(Clone)").GetComponent<BlockEntity>());
         Q4_cube.Add(GameObject.Find("Q4BlueCuboid_1(Clone)").GetComponent<BlockEntity>());
         Q4_cube.Add(GameObject.Find("Q4GreenCube(Clone)").GetComponent<BlockEntity>());
-        Q4_cube.Add(GameObject.Find("Q4BlueCuboid_2(Clone)").GetComponent<BlockEntity>());//missing cube
+        Q4_cube.Add(GameObject.Find("Q4BlueCuboid_2(Clone)").GetComponent<BlockEntity>());
         Q4_cube.Add(GameObject.Find("Q4YellowCuboid_2(Clone)").GetComponent<BlockEntity>());
         Cubes.AddRange(Q4_cube);
     }

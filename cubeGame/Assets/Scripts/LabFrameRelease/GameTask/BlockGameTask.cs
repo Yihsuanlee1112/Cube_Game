@@ -142,7 +142,7 @@ public class BlockGameTask : TaskBase
 
         //大家一起說剪刀石頭布
         yield return All_NPC_SayRPS();
-
+        _userChooseRPS = false;
         do
         {
             Debug.Log("User choose RPS");
@@ -185,7 +185,7 @@ public class BlockGameTask : TaskBase
         
         //大家一起說剪刀石頭布
         yield return All_NPC_SayRPS();
-
+        _userChooseRPS = false;
         do
         {
             Debug.Log("User choose RPS");
@@ -235,11 +235,12 @@ public class BlockGameTask : TaskBase
         clip = Resources.Load<AudioClip>("AudioClip/NPC_SayRPS");
         GameAudioController.Instance.PlayOneShot(clip);
         Debug.Log(clip.length);
-        while (!_userChooseRPS)
+        _userChooseRPS = false;
+        do
         {
             Debug.Log("User choose RPS");
             yield return new WaitUntil(() => _userChooseRPS);
-        }
+        } while (!_userChooseRPS);
         yield return new WaitForSeconds(2);
         
         GameObject.FindWithTag("Result").SetActive(false);
