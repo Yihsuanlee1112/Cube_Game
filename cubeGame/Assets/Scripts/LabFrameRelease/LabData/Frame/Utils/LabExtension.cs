@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-//using I2.Loc;
 using System.Reflection;
+using I2.Loc;
 using JsonToCsv;
 
 namespace LabData
 {
-    public static class LabExtension 
+    public static class LabExtension
     {
         public static string ToJson(this object o)
         {
@@ -17,25 +17,24 @@ namespace LabData
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 NullValueHandling = NullValueHandling.Include
-                
-            });           
+
+            });
         }
         /// <summary>
         /// 获取这个Key的翻译内容
         /// </summary>
         /// <param name="o"></param>
         /// <returns></returns>
-        /*
         public static string GetTranslation(this string o)
         {
             var translate = LocalizationManager.GetTranslation(o);
             return string.IsNullOrEmpty(translate) ? o : translate;
         }
-        */
+
         public static string ToCsv(this object o)
         {
             //todo
-            var converter = new JsonToCsvConverter();           
+            var converter = new JsonToCsvConverter();
             return converter.Convert(o.ToJson());
         }
 
@@ -66,7 +65,7 @@ namespace LabData
             };
         }
 
-      
+
     }
 
 }

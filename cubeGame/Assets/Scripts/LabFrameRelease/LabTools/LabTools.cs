@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using DataSync;
 //using I2.Loc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Schema;
-using Newtonsoft.Json.Schema.Generation;
+//using Newtonsoft.Json.Linq;
+//using Newtonsoft.Json.Schema;
+//using Newtonsoft.Json.Schema.Generation;
 using UnityEngine;
 
 namespace LabData
@@ -203,24 +203,24 @@ namespace LabData
         /// <param name="t"></param>
         /// <param name="dataName"></param>
         /// <returns></returns>
-        public static T GetDataByString<T>(string file) where T : class
-        {
-            JSchema schema = new JSchemaGenerator().Generate(typeof(T));
-            Debug.Log(schema);
-            JToken token = JToken.Parse(file);
+        //public static T GetDataByString<T>(string file) where T : class
+        //{
+        //    JSchema schema = new JSchemaGenerator().Generate(typeof(T));
+        //    Debug.Log(schema);
+        //    JToken token = JToken.Parse(file);
 
-            if (token.IsValid(schema))
-            {
-                return JsonConvert.DeserializeObject<T>(file);
-            }
-            else
-            {
+        //    if (token.IsValid(schema))
+        //    {
+        //        return JsonConvert.DeserializeObject<T>(file);
+        //    }
+        //    else
+        //    {
 
-                Debug.LogError("字符串不匹配");
-                return null;
-            }
+        //        Debug.LogError("字符串不匹配");
+        //        return null;
+        //    }
 
-        }
+        //}
         /// <summary>
         /// 删除数据文件
         /// </summary>

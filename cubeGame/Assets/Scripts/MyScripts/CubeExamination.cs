@@ -7,7 +7,7 @@ using System;
 public class CubeExamination : MonoBehaviour
 {   
     public Button myStopButton;
-    public GameObject Instantiate;
+    //public GameObject Instantiate;
     public List<GameObject> myCubeList;
     public List<Vector3> CubePosList;
     public List<Color> CubeColorList;
@@ -42,7 +42,7 @@ public class CubeExamination : MonoBehaviour
     {
         myStopButton = GetComponent<Button>();
         //myCubes.Add(GameObject.);// 所有 tag 為 cube 的物件，都會被抓出來存到變數(陣列) myCubes` 中
-        myCubeList =  Instantiate.GetComponent<Instantiate_Cube>().Cubes;
+        //myCubeList =  Instantiate.GetComponent<Instantiate_Cube>().Cubes;
         foreach (GameObject cube in myCubeList)
         {
             print(cube.name);

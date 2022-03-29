@@ -22,7 +22,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_2019_2_10;UNITY_2019_2;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE_WIN;PLATFORM_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_EVENT_QUEUE;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_AR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_4_6;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_VSTU;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;UNITY_POST_PROCESSING_STACK_V2;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_2019_2_10;UNITY_2019_2;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE_WIN;PLATFORM_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_EVENT_QUEUE;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_AR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_4_6;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_VSTU;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;UNITY_POST_PROCESSING_STACK_V2;TextMeshPro;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -289,23 +289,71 @@
     <Reference Include="DataSync">
       <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/Scripts/LabFrameRelease/LabData/DataSync/Assemblies/DataSync.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/Scripts/LabFrameRelease/LabData/DataSync/Assemblies/Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="NLog">
       <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/Scripts/LabFrameRelease/LabData/DataSync/Assemblies/NLog.dll</HintPath>
     </Reference>
     <Reference Include="Autofac">
       <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/Scripts/LabFrameRelease/Third Party/Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json.Schema">
-      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/Scripts/LabFrameRelease/Third Party/Newtonsoft.Json.Schema.dll</HintPath>
-    </Reference>
     <Reference Include="InTheHand.Devices.Bluetooth">
       <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/Scripts/LabFrameRelease/Third Party/32feet/InTheHand.Devices.Bluetooth.dll</HintPath>
     </Reference>
     <Reference Include="Valve.Newtonsoft.Json">
       <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/SteamVR/Input/Plugins/JSON.NET/Valve.Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS_I2Loc.Xcode">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/Plugins/I2/Localization/Scripts/Editor/Unity XCode/UnityEditor.iOS_I2Loc.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.SpeechLib">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/Plugins/Interop.SpeechLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Grpc.Core">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Grpc.Core/lib/net45/Grpc.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Interactive.Async">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/System.Interactive.Async.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Cloud.Speech.V1">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Cloud.Speech.V1.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Api.Gax">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Api.Gax.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Apis.Auth.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Apis.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Grpc.Auth">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Grpc.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Grpc.Core.Api">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Grpc.Core.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Api.CommonProtos">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Api.CommonProtos.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Api.Gax.Grpc">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Api.Gax.Grpc.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Apis.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.LongRunning">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.LongRunning.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>

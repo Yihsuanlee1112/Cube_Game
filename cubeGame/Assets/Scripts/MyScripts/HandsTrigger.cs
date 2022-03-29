@@ -35,26 +35,15 @@ public class HandsTrigger : MonoBehaviour
             Debug.Log("TaskLv1");
             //拿積木
             if (other.gameObject.tag == "cube" && !PlayerEntity._take &&
-                !other.GetComponent<BlockEntity>()._isChose &&
-                GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.Contains(MyCube))
+             !other.GetComponent<BlockEntity>()._isChose &&
+             GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.Contains(MyCube))
             {
                 other.GetComponent<BoxCollider>().isTrigger = false;
                 Debug.Log("Old" + MyPreCube + MyPreCubeIndex);
                 Debug.Log("New" + MyCube + index);
                 Debug.Log(index);//int
                 Debug.Log(index - MyPreCubeIndex);
-
-
-                //判斷是否輪到User
-                if (!other.gameObject.GetComponent<Rigidbody>().isKinematic)
-                {
-                    PlayerEntity._take = false;
-                }
-                else
-                {
-                    PlayerEntity._take = true;
-                }
-
+                
                 //堆積木
                 if (!BlockGameTask._playerRound)
                 {
@@ -101,6 +90,7 @@ public class HandsTrigger : MonoBehaviour
                     Debug.Log(MyPreCube + " " + MyPreCubeIndex);
                 }
 
+               //判斷是否輪到User
                 if (!other.gameObject.GetComponent<Rigidbody>().isKinematic)
                 {
                     PlayerEntity._take = false;
@@ -182,7 +172,7 @@ public class HandsTrigger : MonoBehaviour
             else if (other.gameObject.tag == "FirstRoundRock4P")//Paper
             {
                 Debug.Log("LV1!!!!");
-                BlockGameTask._UsersChoice = 1;
+                BlockGameTask._ShowResult = 1;
                 GameObject.Find("Rock").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Rock collider false");
                 GameEventCenter.DispatchEvent("FirstRoundCloseAnimatorP1P3");
@@ -197,7 +187,7 @@ public class HandsTrigger : MonoBehaviour
             }
             else if (other.gameObject.tag == "FirstRoundScissors4P")//Rock
             {
-                BlockGameTask._UsersChoice = 0;
+                BlockGameTask._ShowResult = 0;
                 GameObject.Find("Scissors").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Scissors collider false");
                 GameEventCenter.DispatchEvent("FirstRoundCloseAnimatorP1P3");
@@ -210,7 +200,7 @@ public class HandsTrigger : MonoBehaviour
             }
             else if (other.gameObject.tag == "FirstRoundPaper4P")//Scissors
             {
-                BlockGameTask._UsersChoice = 2;
+                BlockGameTask._ShowResult = 2;
                 GameObject.Find("Paper").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Paper collider false");
                 GameEventCenter.DispatchEvent("FirstRoundCloseAnimatorP1P3");
@@ -224,7 +214,7 @@ public class HandsTrigger : MonoBehaviour
             //第二輪:User贏
             else if (other.gameObject.tag == "Rock4P")//Scissors
             {
-                BlockGameTask._UsersChoice = 2;
+                BlockGameTask._ShowResult = 2;
                 GameObject.Find("Rock").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Rock collider false");
                 GameEventCenter.DispatchEvent("CloseAnimator4P");
@@ -239,7 +229,7 @@ public class HandsTrigger : MonoBehaviour
             }
             else if (other.gameObject.tag == "Scissors4P")//Paper
             {
-                BlockGameTask._UsersChoice = 1;
+                BlockGameTask._ShowResult = 1;
                 GameObject.Find("Scissors").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Scissors collider false");
                 GameEventCenter.DispatchEvent("CloseAnimator4P");
@@ -252,7 +242,7 @@ public class HandsTrigger : MonoBehaviour
             }
             else if (other.gameObject.tag == "Paper4P")//Rock
             {
-                BlockGameTask._UsersChoice = 0;
+                BlockGameTask._ShowResult = 0;
                 GameObject.Find("Paper").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Paper collider false");
                 GameEventCenter.DispatchEvent("CloseAnimator4P");
@@ -266,7 +256,7 @@ public class HandsTrigger : MonoBehaviour
             //第三輪: 小組內部猜拳，決定順序。User wins
             else if (other.gameObject.tag == "Rock2P")//Scissors
             {
-                BlockGameTask._UsersChoice = 2;
+                BlockGameTask._ShowResult = 2;
                 GameObject.Find("Rock").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Rock collider false");
                 GameEventCenter.DispatchEvent("CloseAnimator2P");
@@ -279,7 +269,7 @@ public class HandsTrigger : MonoBehaviour
             }
             else if (other.gameObject.tag == "Scissors2P")//Paper
             {
-                BlockGameTask._UsersChoice = 1;
+                BlockGameTask._ShowResult = 1;
                 GameObject.Find("Scissors").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Scissors collider false");
                 GameEventCenter.DispatchEvent("CloseAnimator2P");
@@ -292,7 +282,7 @@ public class HandsTrigger : MonoBehaviour
             }
             else if (other.gameObject.tag == "Paper2P")//Rock
             {
-                BlockGameTask._UsersChoice = 0;
+                BlockGameTask._ShowResult = 0;
                 GameEventCenter.DispatchEvent("CloseAnimator2P");
                 GameEventCenter.DispatchEvent("TwoPlayerShowResult");
                 GameObject.FindGameObjectWithTag("Rock2P").SetActive(false);
@@ -323,6 +313,84 @@ public class HandsTrigger : MonoBehaviour
                 Debug.Log(index);//int
                 Debug.Log(index - MyPreCubeIndex);
 
+
+                //堆積木
+                if (!BlockGameTaskLv2._playerRound)
+                {
+                    //BLockGameTask._NPCRemind = true;
+                    Debug.Log("NPCs turn");
+                    //StartCoroutine(NPCEntity.NPCRemind());
+                    GameEventCenter.DispatchEvent("NPCRemind");//輪流拼
+                    PlayerEntity._take = false;
+                    Debug.Log(PlayerEntity._take);
+                    BlockGameTaskLv2._playerRound = false;
+                    Debug.Log(BlockGameTaskLv2._playerRound);
+                }
+                else if (Cubes[index - 1]._isChose && MyCube._isUserColor && BlockGameTaskLv2._playerRound)//成功
+                {
+                    Debug.Log("Sucdeed");
+                    Debug.Log("Catch " + other.name);
+                    Debug.Log("follow hand");
+                    other.GetComponent<BoxCollider>().isTrigger = false;
+                    other.gameObject.GetComponent<Rigidbody>().useGravity = false;
+                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                    other.gameObject.transform.SetParent(gameObject.transform);
+                    MyPreCube = other.GetComponent<BlockEntity>();//BlockEntity
+                    MyPreCubeIndex = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.IndexOf(MyPreCube);//int
+                    Debug.Log(MyPreCube + " " + MyPreCubeIndex);
+                    PlayerEntity._take = true;
+                    Debug.Log(PlayerEntity._take);
+                    BlockGameTaskLv2._playerRound = false;
+                    Debug.Log(BlockGameTaskLv2._playerRound);
+                }
+                else if (Cubes[index - 1]._isChose && MyCube._isUserColor && BlockGameTaskLv2._playerRound && Cubes[index + 1]._isUserColor)//成功, next isUserColor
+                {
+                    Debug.Log("成功, next isUserColor");
+                    Debug.Log("Catch " + other.name);
+                    Debug.Log("follow hand");
+                    other.GetComponent<BoxCollider>().isTrigger = false;
+                    other.gameObject.GetComponent<Rigidbody>().useGravity = false;
+                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                    other.gameObject.transform.SetParent(gameObject.transform);
+                    MyPreCube = other.GetComponent<BlockEntity>();//BlockEntity
+                    MyPreCubeIndex = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.IndexOf(MyPreCube);//int
+                    Debug.Log(MyPreCube + " " + MyPreCubeIndex);
+                    PlayerEntity._take = true;
+                    Debug.Log(PlayerEntity._take);
+                    BlockGameTaskLv2._playerRound = true;
+                    Debug.Log(BlockGameTaskLv2._playerRound);
+                }
+                else if (!Cubes[index - 1]._isChose && MyCube._isUserColor && Cubes[index + 1]._isUserColor &&  BlockGameTaskLv2._playerRound)//player round. wrong order, former first, next isUsercColor
+                {
+                    Debug.Log("player round. wrong order, former first, next isUsercColor");
+                    GameEventCenter.DispatchEvent("NPCRemind_Order");
+                    //StartCoroutine(NPCEntity.NPCRemind());
+                    other.gameObject.transform.parent = null;
+                    other.gameObject.GetComponent<Rigidbody>().useGravity = true;
+                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+                    PlayerEntity._take = false;
+                    Debug.Log(PlayerEntity._take);
+                    BlockGameTaskLv2._playerRound = true;
+                    Debug.Log(BlockGameTaskLv2._playerRound);
+                }
+                else if (!MyCube._isUserColor && BlockGameTaskLv2._playerRound)//player round. NPCs cube, take again,
+                {
+                    Debug.Log("Wrong Cube, its NPCs cube. , take again");
+                    GameEventCenter.DispatchEvent("NPCRemind_Order");
+                    //StartCoroutine(NPCEntity.NPCRemind());
+                    other.gameObject.transform.parent = null;
+                    other.gameObject.GetComponent<Rigidbody>().useGravity = true;
+                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+                    PlayerEntity._take = false;
+                    Debug.Log(PlayerEntity._take);
+                    Debug.Log("Take again");
+                    BlockGameTaskLv2._playerRound = true;
+                    Debug.Log(BlockGameTaskLv2._playerRound);
+                }
                 //判斷是否輪到User
                 if (!other.gameObject.GetComponent<Rigidbody>().isKinematic)
                 {
@@ -332,52 +400,6 @@ public class HandsTrigger : MonoBehaviour
                 {
                     PlayerEntity._take = true;
                 }
-
-
-                //堆積木
-                if (!BlockGameTaskLv2._playerRound)
-                {
-                    //BLockGameTask._NPCRemind = true;
-                    Debug.Log("Wrong Action");
-                    //StartCoroutine(NPCEntity.NPCRemind());
-                    GameEventCenter.DispatchEvent("NPCRemind");//輪流拼
-                }
-                else if (Cubes[index - 1]._isChose && MyCube._isUserColor)//成功
-                {
-                    Debug.Log("Catch " + other.name);
-                    Debug.Log("follow hand");
-                    Debug.Log(gameObject.name);
-                    Debug.Log(other.gameObject.name);
-                    other.GetComponent<BoxCollider>().isTrigger = false;
-                    other.gameObject.GetComponent<Rigidbody>().useGravity = false;
-                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                    other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                    other.gameObject.transform.SetParent(gameObject.transform);
-                    MyPreCube = other.GetComponent<BlockEntity>();//BlockEntity
-                    MyPreCubeIndex = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.IndexOf(MyPreCube);//int
-                    Debug.Log(MyPreCube + " " + MyPreCubeIndex);
-                }
-                else if (!Cubes[index - 1]._isChose && MyCube._isUserColor)//wrong order, former first
-                {
-                    Debug.Log("Wrong Cube, former first");
-                    GameEventCenter.DispatchEvent("NPCRemind_Order");
-                    //StartCoroutine(NPCEntity.NPCRemind());
-                    other.gameObject.transform.parent = null;
-                    other.gameObject.GetComponent<Rigidbody>().useGravity = true;
-                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
-                }
-                else if (!MyCube._isUserColor)//NPCs turn
-                {
-                    Debug.Log("Wrong Cube, former first");
-                    GameEventCenter.DispatchEvent("NPCRemind_Order");
-                    //StartCoroutine(NPCEntity.NPCRemind());
-                    other.gameObject.transform.parent = null;
-                    other.gameObject.GetComponent<Rigidbody>().useGravity = true;
-                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
-                }
-
                 MyCube = MyPreCube;
                 index = MyPreCubeIndex;
                 Debug.Log(MyCube + " " + MyPreCube);
@@ -386,6 +408,7 @@ public class HandsTrigger : MonoBehaviour
             //放積木
             else if (other.gameObject.tag == "q" && PlayerEntity._take)
             {
+                Debug.Log(PlayerEntity._take);
                 Debug.Log("Put toAns");
                 var parent = GameObject.Find("Answer");
                 //var cube = gameObject.transform.GetChild(5).gameObject.GetComponent<BlockEntity>();//hand底下的第6個
@@ -451,11 +474,12 @@ public class HandsTrigger : MonoBehaviour
             else if (other.gameObject.tag == "FirstRoundRock4P")//Paper
             {
                 Debug.Log("LV2!!!!");
-                BlockGameTaskLv2._UsersChoice = 1;
+                BlockGameTaskLv2._ShowResult = 1;
+                Debug.Log(BlockGameTask._ShowResult);
                 GameObject.Find("Rock").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Rock collider false");
                 GameEventCenter.DispatchEvent("FirstRoundCloseAnimatorP1P3");
-                GameEventCenter.DispatchEvent("FirstRoundFourPlayerShowResultP1P3");
+                GameEventCenter.DispatchEvent("FirstRoundFourPlayerShowResultP1P3Lv2");
                 GameObject.FindGameObjectWithTag("FirstRoundPaper4P").SetActive(false);
                 Debug.Log("Found paper");
                 GameObject.FindGameObjectWithTag("FirstRoundScissors4P").SetActive(false);
@@ -466,11 +490,11 @@ public class HandsTrigger : MonoBehaviour
             }
             else if (other.gameObject.tag == "FirstRoundScissors4P")//Rock
             {
-                BlockGameTaskLv2._UsersChoice = 0;
+                BlockGameTaskLv2._ShowResult = 0;
                 GameObject.Find("Scissors").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Scissors collider false");
-                GameEventCenter.DispatchEvent("FirstRoundCloseAnimatorP1P3");
-                GameEventCenter.DispatchEvent("FirstRoundFourPlayerShowResultP1P3");
+                GameEventCenter.DispatchEvent("FirstRoundCloseAnimatorP1P3Lv2");
+                GameEventCenter.DispatchEvent("FirstRoundFourPlayerShowResultP1P3Lv2");
                 GameObject.FindGameObjectWithTag("FirstRoundPaper4P").SetActive(false);
                 GameObject.FindGameObjectWithTag("FirstRoundRock4P").SetActive(false);
 
@@ -479,11 +503,11 @@ public class HandsTrigger : MonoBehaviour
             }
             else if (other.gameObject.tag == "FirstRoundPaper4P")//Scissors
             {
-                BlockGameTaskLv2._UsersChoice = 2;
+                BlockGameTaskLv2._ShowResult = 2;
                 GameObject.Find("Paper").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Paper collider false");
                 GameEventCenter.DispatchEvent("FirstRoundCloseAnimatorP1P3");
-                GameEventCenter.DispatchEvent("FirstRoundFourPlayerShowResultP1P3");
+                GameEventCenter.DispatchEvent("FirstRoundFourPlayerShowResultP1P3Lv2");
                 GameObject.FindGameObjectWithTag("FirstRoundRock4P").SetActive(false);
                 GameObject.FindGameObjectWithTag("FirstRoundScissors4P").SetActive(false);
 
@@ -493,11 +517,11 @@ public class HandsTrigger : MonoBehaviour
             //第二輪:User贏
             else if (other.gameObject.tag == "Rock4P")//Scissors
             {
-                BlockGameTaskLv2._UsersChoice = 2;
+                BlockGameTaskLv2._ShowResult = 2;
                 GameObject.Find("Rock").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Rock collider false");
                 GameEventCenter.DispatchEvent("CloseAnimator4P");
-                GameEventCenter.DispatchEvent("FourPlayerShowResult");
+                GameEventCenter.DispatchEvent("FourPlayerShowResultLv2");
                 GameObject.FindGameObjectWithTag("Paper4P").SetActive(false);
                 Debug.Log("Found paper");
                 GameObject.FindGameObjectWithTag("Scissors4P").SetActive(false);
@@ -508,11 +532,11 @@ public class HandsTrigger : MonoBehaviour
             }
             else if (other.gameObject.tag == "Scissors4P")//Paper
             {
-                BlockGameTaskLv2._UsersChoice = 0;
+                BlockGameTaskLv2._ShowResult = 0;
                 GameObject.Find("Scissors").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Scissors collider false");
                 GameEventCenter.DispatchEvent("CloseAnimator4P");
-                GameEventCenter.DispatchEvent("FourPlayerShowResult");
+                GameEventCenter.DispatchEvent("FourPlayerShowResultLv2");
                 GameObject.FindGameObjectWithTag("Paper4P").SetActive(false);
                 GameObject.FindGameObjectWithTag("Rock4P").SetActive(false);
 
@@ -521,11 +545,11 @@ public class HandsTrigger : MonoBehaviour
             }
             else if (other.gameObject.tag == "Paper4P")//Rock
             {
-                BlockGameTaskLv2._UsersChoice = 0;
+                BlockGameTaskLv2._ShowResult = 0;
                 GameObject.Find("Paper").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Paper collider false");
                 GameEventCenter.DispatchEvent("CloseAnimator4P");
-                GameEventCenter.DispatchEvent("FourPlayerShowResult");
+                GameEventCenter.DispatchEvent("FourPlayerShowResultLv2");
                 GameObject.FindGameObjectWithTag("Rock4P").SetActive(false);
                 GameObject.FindGameObjectWithTag("Scissors4P").SetActive(false);
 
@@ -535,11 +559,11 @@ public class HandsTrigger : MonoBehaviour
             //第三輪: 小組內部猜拳，決定順序。User wins
             else if (other.gameObject.tag == "Rock2P")//Scissors
             {
-                BlockGameTaskLv2._UsersChoice = 2;
+                BlockGameTaskLv2._ShowResult = 2;
                 GameObject.Find("Rock").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Rock collider false");
                 GameEventCenter.DispatchEvent("CloseAnimator2P");
-                GameEventCenter.DispatchEvent("TwoPlayerShowResult");
+                GameEventCenter.DispatchEvent("TwoPlayerShowResultLv2");
                 GameObject.FindGameObjectWithTag("Paper2P").SetActive(false);
                 GameObject.FindGameObjectWithTag("Scissors2P").SetActive(false);
 
@@ -548,11 +572,11 @@ public class HandsTrigger : MonoBehaviour
             }
             else if (other.gameObject.tag == "Scissors2P")//Paper
             {
-                BlockGameTaskLv2._UsersChoice = 1;
+                BlockGameTaskLv2._ShowResult = 1;
                 GameObject.Find("Scissors").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Scissors collider false");
                 GameEventCenter.DispatchEvent("CloseAnimator2P");
-                GameEventCenter.DispatchEvent("TwoPlayerShowResult");
+                GameEventCenter.DispatchEvent("TwoPlayerShowResultLv2");
                 GameObject.FindGameObjectWithTag("Paper2P").SetActive(false);
                 GameObject.FindGameObjectWithTag("Rock2P").SetActive(false);
 
@@ -561,9 +585,9 @@ public class HandsTrigger : MonoBehaviour
             }
             else if (other.gameObject.tag == "Paper2P")//Rock
             {
-                BlockGameTaskLv2._UsersChoice = 0;
+                BlockGameTaskLv2._ShowResult = 0;
                 GameEventCenter.DispatchEvent("CloseAnimator2P");
-                GameEventCenter.DispatchEvent("TwoPlayerShowResult");
+                GameEventCenter.DispatchEvent("TwoPlayerShowResultLv2");
                 GameObject.FindGameObjectWithTag("Rock2P").SetActive(false);
                 GameObject.FindGameObjectWithTag("Scissors2P").SetActive(false);
                 GameObject.Find("Paper").GetComponent<BoxCollider>().enabled = false;

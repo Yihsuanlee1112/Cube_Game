@@ -18,7 +18,7 @@ public class Instantiate_Cube : MonoBehaviour
 
     [Header("Cubes")]
     public List<GameObject> AllCubePrefabs;
-    public List<GameObject> Cubes;
+    public List<BlockEntity> AllCubes;
     Vector3 position;
 
     [Header("積木和題目的父物件")]
@@ -56,7 +56,7 @@ public class Instantiate_Cube : MonoBehaviour
     }
     public void InstatiateCube()
     {
-        Cube_Prefabs.Add(Q1_Cube_Prefabs);
+        Cube_Prefabs.Add(Q1_Cube_Prefabs);//
         Cube_Prefabs.Add(Q2_Cube_Prefabs);
         Cube_Prefabs.Add(Q3_Cube_Prefabs);
         Cube_Prefabs.Add(Q4_Cube_Prefabs);
@@ -97,6 +97,7 @@ public class Instantiate_Cube : MonoBehaviour
     /// <param name="Parent"></param>
     public void Question(int PicNum, List<GameObject> CubePrefabs, GameObject Parent, GameObject CubeParent)
     {
+        AllCubes = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().AllCubes;
         Vector3 PicsPos = new Vector3((float)0.0, (float)0.0, (float)0.0);
         Vector3 CubesPos = new Vector3((float)0.0, (float)0.0, (float)0.0);
 
@@ -108,11 +109,13 @@ public class Instantiate_Cube : MonoBehaviour
             CubesPos.z = CubesPos.z + interval;
             GameObject cubeInstantiate = Instantiate(cube, CubesPos, Quaternion.identity);
             cubeInstantiate.transform.SetParent(CubeParent.transform);
+
+            AllCubes.Add(cubeInstantiate.GetComponent<BlockEntity>());
             /*
-            if (PicNum+1 == BlockGameTask.RandomQuestion)
+            if (PicNum+1 == BlockGameTask._RandomQuestion)
             {
                 // user的積木放在MainSceneRes的Cubes裡面才能判斷順序
-                BlockGameTask.Cubes.Add(cubeInstantiate.GetComponent<BlockEntity>());
+                Cubes.Add(cubeInstantiate.GetComponent<BlockEntity>());
             }
             */
         }

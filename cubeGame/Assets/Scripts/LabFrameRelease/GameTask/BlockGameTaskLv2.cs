@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
-//using SpeechLib;
+using UnityEngine.UI;
+using SpeechLib;
 
 public class BlockGameTaskLv2 : TaskBase
 {
@@ -14,6 +15,7 @@ public class BlockGameTaskLv2 : TaskBase
     private List<BlockEntity> Q2_cube;
     private List<BlockEntity> Q3_cube;
     private List<BlockEntity> Q4_cube;
+    private List<BlockEntity> AllCubes;
     private List<BlockEntity> Cubes;
     //private List<GameObject> objectlist;
     private CameraEntity eyecamera;
@@ -30,7 +32,7 @@ public class BlockGameTaskLv2 : TaskBase
     //private HandsTrigger PlayerHand;
     //private RecognizerEntity recognizerEntity;
     private string focusName;
-    public static int _UsersChoice = 0;
+    public static int _ShowResult = 0;
     public static int _RandomQuestion = 0;
     public static bool _StartTobuild = false;
     public static bool _userChooseRPS = false;
@@ -58,6 +60,7 @@ public class BlockGameTaskLv2 : TaskBase
         GameEventCenter.AddEvent("FindQ3Cubes", FindQ3Cubes);
         GameEventCenter.AddEvent("FindQ4Cubes", FindQ4Cubes);
         GameEventCenter.AddEvent("User_MissingOneCubeLv2", User_MissingOneCubeLv2);
+        GameEventCenter.AddEvent("RandomNumOnQuestion", RandomNumOnQuestion);
         //GameEventCenter.AddEvent("NPC_Remind", NPC_Remind);
         //GameEventCenter.AddEvent("NPC_Remind2", NPC_Remind2);
         //載入MainSceneRes
@@ -69,6 +72,7 @@ public class BlockGameTaskLv2 : TaskBase
         Q3_cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q3_cube;
         Q4_cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q4_cube;
         Cubes = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes;
+        AllCubes = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().AllCubes;
         Colors = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Colors;
         //objectlist = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().ObjectList;
         npc1.npchand = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().NPC1_Hand;
@@ -117,7 +121,7 @@ public class BlockGameTaskLv2 : TaskBase
         //GameAudioController.Instance.PlayOneShot(npc.speechList[0]);
         //yield return new WaitForSeconds(1.5f);
         //yield return new WaitForSeconds(2);
-        
+        /*
         //打招呼
         yield return SayHello();
         yield return new WaitForSeconds(1.5f);
@@ -154,7 +158,7 @@ public class BlockGameTaskLv2 : TaskBase
 
         yield return new WaitForSeconds(1);
         GameEventCenter.DispatchEvent("FirstRoundCloseAnimatorP2");//小花慢出
-        GameEventCenter.DispatchEvent("FirstRoundFourPlayerShowResultP2");
+        GameEventCenter.DispatchEvent("FirstRoundFourPlayerShowResultP2Lv2");
 
 
         yield return new WaitForSeconds(3);
@@ -207,6 +211,7 @@ public class BlockGameTaskLv2 : TaskBase
         {
             GameObject.FindWithTag("RPS").SetActive(false);
         }
+        */
         //XXX那一組猜拳贏了，你可以先選一張圖。你要選第幾張圖?
         yield return Teacher_AskUserWhichPic();
         yield return new WaitForSeconds(1.5f);
@@ -227,14 +232,18 @@ public class BlockGameTaskLv2 : TaskBase
         GameEventCenter.DispatchEvent("InstatiateCubeLv2");
         //GameEventCenter.DispatchEvent("User_MissingOneCubeLv2");
         GameEventCenter.DispatchEvent("CubeOnDesk");
-        GameEventCenter.DispatchEvent("AddCubesToList");
-        foreach (BlockEntity cube in Cubes)
+        GameEventCenter.DispatchEvent("AddCubesToList");//生成數字順序後再Add
+        foreach (BlockEntity cube in AllCubes)
         {
             cube.GetComponent<MeshRenderer>().enabled = false;
-            cube.GetComponent<BoxCollider>().isTrigger = true;
+            cube.GetComponent<BoxCollider>().enabled = false;
             cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         }
-        
+        for(int i = 0; i<10; i++)
+        {
+            GameObject.Find("Question(Clone)").transform.GetChild(i).GetChild(0).GetChild(0).GetComponent<Text>().text = null;
+            Debug.Log("Text null");
+        }
         //小花: 沒贏也沒關係，每一張圖我都喜歡
         clip = Resources.Load<AudioClip>("AudioClip/Flower_ItsOkTolose");
         GameAudioController.Instance.PlayOneShot(clip);
@@ -259,7 +268,7 @@ public class BlockGameTaskLv2 : TaskBase
         yield return new WaitForSeconds(2);
 
         GameObject.FindWithTag("Result").SetActive(false);
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 3; i++)
         {
             GameObject.FindWithTag("RPS").SetActive(false);
         }
@@ -271,14 +280,18 @@ public class BlockGameTaskLv2 : TaskBase
 
         //User choose two colors
         yield return UserChooseColor();//**************************
-        GameEventCenter.DispatchEvent("User_MissingOneCubeLv2");
-        foreach (BlockEntity cube in Cubes)
+        //題目出現數字順序
+        GameEventCenter.DispatchEvent("RandomNumOnQuestion");
+        //AddCubesToList
+        //GameEventCenter.DispatchEvent("AddCubesToList");
+        foreach (BlockEntity cube in AllCubes)
         {
             cube.GetComponent<MeshRenderer>().enabled = true;
-            cube.GetComponent<BoxCollider>().isTrigger = true;
+            cube.GetComponent<BoxCollider>().enabled= true;
             cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         }
+        GameEventCenter.DispatchEvent("User_MissingOneCubeLv2");
         //開始堆積木
         _StartTobuild = true;
         while (!_BlockFinished)
@@ -289,6 +302,8 @@ public class BlockGameTaskLv2 : TaskBase
                 {
                     if (Cubes[RanNum - 1]._isChose && Cubes[RanNum]._isChose && Cubes[RanNum]._isUserColor)
                     {
+                        Debug.Log("PlayerTake: "+PlayerEntity._take);
+                        Debug.Log("PlayerRound: "+_playerRound);
                         Debug.Log(Cubes[RanNum] + "was put.");
                         Debug.Log("User turn");
                         yield return new WaitUntil(() => !_playerRound);
@@ -300,10 +315,13 @@ public class BlockGameTaskLv2 : TaskBase
                     GameObject.Find(MissingCube).GetComponent<MeshRenderer>().enabled = true;
                     GameObject.Find(MissingCube).GetComponent<BoxCollider>().enabled = true;
                 }
-
                 else
+                {
+                    Debug.Log("PlayerTake: " + PlayerEntity._take);
+                    Debug.Log("PlayerRound: " + _playerRound);
                     Debug.Log("User touch Block");
-                yield return new WaitUntil(() => !_playerRound);
+                    yield return new WaitUntil(() => !_playerRound);
+                }
             }
             else  //NPC回合
             {
@@ -316,12 +334,15 @@ public class BlockGameTaskLv2 : TaskBase
                         yield return new WaitForSeconds(7);
                         if (!_npcremind)
                         {
+                            Debug.Log("PlayerTake: " + PlayerEntity._take);
+                            Debug.Log("PlayerRound: " + _playerRound);
                             Debug.Log("NPC putting Block");
                             GameEventCenter.DispatchEvent("CubeAns", cube);
-                            _playerRound = true;
+                            
                         }
                         else
                         {
+                            _playerRound = true;
                             Debug.Log("wait for remind");
                             //clip = Resources.Load<AudioClip>("AudioClip/NPC_Remind");
                             //yield return new WaitForSeconds(clip.length);
@@ -387,6 +408,10 @@ public class BlockGameTaskLv2 : TaskBase
     {
         TeacherAnimator.SetBool("isSlouchStandErect", false);
         TeacherAnimator.SetBool("isAsking", true);
+
+        SpVoice npcsay = new SpVoice();
+        npcsay.Speak(GameDataManager.FlowData.UserName, SpeechVoiceSpeakFlags.SVSFlagsAsync);
+        yield return new WaitForSeconds(1.5f);
         clip = Resources.Load<AudioClip>("AudioClip/Teacher_AskUserWhichPic");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
@@ -457,30 +482,6 @@ public class BlockGameTaskLv2 : TaskBase
         GameObject.Find("ChooseQuestionCanvas").GetComponent<Canvas>().enabled = false;
 
     }
-    IEnumerator UserChooseColor()
-    {
-        Color red, blue, green, yellow;
-        red = new Color(255, 59, 59);
-        blue = new Color(52, 52, 224);
-        green = new Color(0, 180, 0);
-        yellow = new Color(255, 255, 0);
-        //User : 我想要藍色和紅色 [語音辨識] 
-        //NPC: 蛤~我也想要紅色[故意跟user一樣]，那我們來猜拳
-        Color UserChoice1 = red;
-        Color UserChoice2 = blue;
-        foreach (BlockEntity cube in Cubes)
-        {
-            Debug.Log(cube + "!!!!!!!!!!!!!!!!!!!!!!");
-            if (UserChoice1 == cube.GetComponent<Color>() || UserChoice2 == cube.GetComponent<Color>())
-            {
-                Debug.Log(UserChoice1 + "UserChoice1");
-                Debug.Log(UserChoice2 + " + UserChoice2");
-                Debug.Log(cube.GetComponent<Color>());
-                cube._isUserColor = true;
-            }
-        }
-        yield return new WaitForSeconds(5);
-    }
     IEnumerator UserNeedsACube()
     {
         yield return new WaitForSeconds(2);
@@ -507,6 +508,32 @@ public class BlockGameTaskLv2 : TaskBase
         clip = Resources.Load<AudioClip>("AudioClip/Teacher_GiveUserCube");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
+    }
+    IEnumerator UserChooseColor()
+    {
+        Color red, blue, green, yellow;
+        red = new Color(255, 59, 59, 255);
+        blue = new Color((float)0.203, (float)0.203, (float)0.87, 1);
+        green = new Color(0, (float)0.706, 0, 1);
+        yellow = new Color(1, 1, 0, 1);
+        //User : 我想要藍色和紅色 [語音辨識] 
+        //NPC: 蛤~我也想要紅色[故意跟user一樣]，那我們來猜拳
+        Color UserChoice1 = green;
+        Color UserChoice2 = yellow;
+        Debug.Log(UserChoice1 + "UserChoice1");
+        Debug.Log(UserChoice2 + " + UserChoice2");
+        Debug.Log(Cubes[1].GetComponent<MeshRenderer>().material.color);
+        foreach (BlockEntity cube in Cubes)
+        {
+            if (UserChoice1 == cube.GetComponent<MeshRenderer>().material.color || UserChoice2 == cube.GetComponent<MeshRenderer>().material.color)
+            {
+                Debug.Log(UserChoice1 + "UserChoice1");
+                Debug.Log(UserChoice2 + " + UserChoice2");
+                Debug.Log(cube.GetComponent<MeshRenderer>().material.color);
+                cube._isUserColor = true;
+            }
+        }
+        yield return new WaitForSeconds(5);
     }
     public void CheckCube()
     {
@@ -589,7 +616,7 @@ public class BlockGameTaskLv2 : TaskBase
     }
     public void FindQ4Cubes()
     {
-        Debug.Log("find Q1_cube!!!");
+        Debug.Log("find Q4_cube!!!");
         Q4_cube.Add(GameObject.Find("Q4RedCuboid_1(Clone)").GetComponent<BlockEntity>());
         Q4_cube.Add(GameObject.Find("Q4GreenCuboid(Clone)").GetComponent<BlockEntity>());
         Q4_cube.Add(GameObject.Find("Q4RedCuboid_2(Clone)").GetComponent<BlockEntity>());
@@ -601,6 +628,32 @@ public class BlockGameTaskLv2 : TaskBase
         Q4_cube.Add(GameObject.Find("Q4BlueCuboid_2(Clone)").GetComponent<BlockEntity>());
         Q4_cube.Add(GameObject.Find("Q4YellowCuboid_2(Clone)").GetComponent<BlockEntity>());
         Cubes.AddRange(Q4_cube);
+    }
+    public void RandomNumOnQuestion()
+    {
+        int[] randomArray = new int[10];
+        for (int i = 0; i < randomArray.Length; i++)
+        {
+            randomArray[i] = Random.Range(1, 10);  //亂數產生，亂數產生的範圍是1~10
+
+            for (int j = 0; j < i; j++)
+            {
+                while (randomArray[j] == randomArray[i])    //檢查是否與前面產生的數值發生重複，如果有就重新產生
+                {
+                    j = 0;  //如有重複，將變數j設為0，再次檢查 (因為還是有重複的可能)
+                    randomArray[i] = Random.Range(1, 10);   //重新產生，存回陣列，亂數產生的範圍是1~10
+                }
+            }
+        }
+        foreach(BlockEntity cube in Cubes)
+        {
+            for (int i = 0; i < randomArray.Length; i++)
+            {
+                GameObject.Find("Question(Clone)").transform.GetChild(i).GetChild(0).GetChild(0).GetComponent<Text>().text = randomArray[i].ToString();
+                Debug.Log("Text: " + GameObject.Find("Question(Clone)").transform.GetChild(i).GetChild(0).GetChild(0).GetComponent<Text>().text);
+                Debug.Log("RanNum: " + randomArray[i].ToString());
+            }
+        }
     }
     public void User_MissingOneCubeLv2()
     {

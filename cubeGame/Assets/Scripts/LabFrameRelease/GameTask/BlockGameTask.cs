@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
-//using SpeechLib;
+using SpeechLib;
 
 public class BlockGameTask : TaskBase
 {
@@ -29,7 +29,7 @@ public class BlockGameTask : TaskBase
     //private HandsTrigger PlayerHand;
     //private RecognizerEntity recognizerEntity;
     private string focusName;
-    public static int _UsersChoice = 0;
+    public static int _ShowResult = 0;
     public static int _RandomQuestion = 0;
     public static bool _StartTobuild = false;
     public static bool _userChooseRPS = false;
@@ -360,7 +360,7 @@ public class BlockGameTask : TaskBase
     IEnumerator Teacher_AskUserWhichPic()
     {
         TeacherAnimator.SetBool("isSlouchStandErect", false);
-        TeacherAnimator.SetBool("isAsking", true);
+        TeacherAnimator.SetBool("isAsking", true); 
         clip = Resources.Load<AudioClip>("AudioClip/Teacher_AskUserWhichPic");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);

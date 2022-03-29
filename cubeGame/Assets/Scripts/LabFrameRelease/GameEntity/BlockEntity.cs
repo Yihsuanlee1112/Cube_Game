@@ -14,6 +14,12 @@ public class BlockEntity : GameEntityBase
 
     public void ToAns()
     {
+        if(_isUserColor == false)
+        {
+            BlockGameTaskLv2._playerRound = false;
+        }
+        else
+            BlockGameTaskLv2._playerRound = true;
         _isChose = true;
         gameObject.transform.position = ansTransform.position;
         gameObject.transform.rotation = ansTransform.rotation;
