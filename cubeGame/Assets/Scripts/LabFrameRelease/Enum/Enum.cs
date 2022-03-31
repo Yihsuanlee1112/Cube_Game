@@ -6,9 +6,10 @@
 /// </summary>
 public enum Language
 {
+    中文,
     English,
-    简体,
-    繁体
+    简体
+    
 }
 /// <summary>
 /// 提醒方式

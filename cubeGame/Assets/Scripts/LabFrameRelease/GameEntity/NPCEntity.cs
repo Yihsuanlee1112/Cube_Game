@@ -10,7 +10,8 @@ public class NPCEntity : GameEntityBase
 {
     public Action<GameEntityBase> Action;
     public Animator animator;
-    public List<AudioClip> speechList;
+    public List<AudioClip> ChineseSpeechList;
+    public List<AudioClip> EnglishSpeechList;
     public GameObject npchand;
     private GameObject ObjectTaked;
     private AudioClip clip;
@@ -25,6 +26,8 @@ public class NPCEntity : GameEntityBase
     {
         GameEventCenter.AddEvent("NPCRemind", NPCRemind);
         GameEventCenter.AddEvent("NPCRemind_Order", NPCRemind_Order);
+        GameEventCenter.AddEvent("NPCRemindLv2", NPCRemindLv2);
+        GameEventCenter.AddEvent("NPCRemind_OrderLv2", NPCRemind_OrderLv2);
     }
 
     
@@ -47,7 +50,7 @@ public class NPCEntity : GameEntityBase
 
     public void NPCPutObject(Transform puttransform)
     {
-        Debug.Log("NPC put block");
+        Debug.Log("NPCPUTOBJ!!!!!!");
         ObjectTaked.transform.parent = null;
         ObjectTaked.transform.position = puttransform.position;
         ObjectTaked = null;
@@ -62,8 +65,32 @@ public class NPCEntity : GameEntityBase
         //clip = Resources.Load<AudioClip>("AudioClip/NPC_Remind");
         //GameAudioController.Instance.PlayOneShot(clip);
         //yield return new WaitForSeconds(clip.length);
-        GameAudioController.Instance.PlayOneShot(speechList[3]);//NPC_Remind
-        
+        if (GameDataManager.FlowData.Language == Language.中文)
+        {
+            GameAudioController.Instance.PlayOneShot(ChineseSpeechList[0]);//NPC_Remind
+        }
+        else
+        {
+            GameAudioController.Instance.PlayOneShot(EnglishSpeechList[0]);//NPC_Remind
+        }
+    }
+    public void NPCRemindLv2()
+    {
+        Remindcount++;
+        Debug.Log("hello!!!!!");
+        BlockGameTaskLv2._npcremind = true;
+        animator.Play("Talk");
+        //clip = Resources.Load<AudioClip>("AudioClip/NPC_Remind");
+        //GameAudioController.Instance.PlayOneShot(clip);
+        //yield return new WaitForSeconds(clip.length);
+        if (GameDataManager.FlowData.Language == Language.中文)
+        {
+            GameAudioController.Instance.PlayOneShot(ChineseSpeechList[0]);//NPC_Remind
+        }
+        else
+        {
+            GameAudioController.Instance.PlayOneShot(EnglishSpeechList[0]);//NPC_Remind
+        }
     }
     public void NPCRemind_Order()
     {
@@ -71,11 +98,35 @@ public class NPCEntity : GameEntityBase
         Debug.Log("hi!!!!!");
         BlockGameTask._npcremind = true;
         animator.Play("Talk");
-        clip = Resources.Load<AudioClip>("AudioClip/NPC_Remind2");
+        //clip = Resources.Load<AudioClip>("AudioClip/NPC_Remind2");
         //GameAudioController.Instance.PlayOneShot(clip);
         //yield return new WaitForSeconds(clip.length);
-        GameAudioController.Instance.PlayOneShot(speechList[6]);//NPC_Remind_Order
-        Debug.Log("wait for clip.length sec");
-        
+        if (GameDataManager.FlowData.Language == Language.中文)
+        {
+            GameAudioController.Instance.PlayOneShot(ChineseSpeechList[1]);//NPC_Remind_Order
+        }
+        else
+        {
+            GameAudioController.Instance.PlayOneShot(EnglishSpeechList[1]);//NPC_Remind_Order
+        }
+    }
+    public void NPCRemind_OrderLv2()
+    {
+        Remindcount++;
+        Debug.Log("hi!!!!!");
+        BlockGameTaskLv2._npcremind = true;
+        animator.Play("Talk");
+        //clip = Resources.Load<AudioClip>("AudioClip/NPC_Remind2");
+        //GameAudioController.Instance.PlayOneShot(clip);
+        //yield return new WaitForSeconds(clip.length);
+        GameAudioController.Instance.PlayOneShot(ChineseSpeechList[6]);//NPC_Remind_Order
+        if (GameDataManager.FlowData.Language == Language.中文)
+        {
+            GameAudioController.Instance.PlayOneShot(ChineseSpeechList[1]);//NPC_Remind_Order
+        }
+        else
+        {
+            GameAudioController.Instance.PlayOneShot(EnglishSpeechList[1]);//NPC_Remind_Order
+        }
     }
 }

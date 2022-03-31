@@ -56,7 +56,7 @@ public class Instantiate_Cube : MonoBehaviour
     }
     public void InstatiateCube()
     {
-        Cube_Prefabs.Add(Q1_Cube_Prefabs);//
+        Cube_Prefabs.Add(Q1_Cube_Prefabs);
         Cube_Prefabs.Add(Q2_Cube_Prefabs);
         Cube_Prefabs.Add(Q3_Cube_Prefabs);
         Cube_Prefabs.Add(Q4_Cube_Prefabs);
@@ -132,9 +132,9 @@ public class Instantiate_Cube : MonoBehaviour
         {
             if (i == PicNum)
             {
-                //整個搬過去
+                //題目整個搬過去
                 Parents[i].transform.position = Desks[0].transform.position;
-                //設定積木的位置，題目是GetChild(0)
+                //設定積木的位置=>GetChild(0)
                 Parents[i].transform.GetChild(0).transform.position = Desks[0].transform.GetChild(0).transform.position;
             }
             else

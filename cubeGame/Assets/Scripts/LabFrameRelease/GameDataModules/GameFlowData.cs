@@ -29,9 +29,9 @@ namespace GameData
         /// <param name="gameData"></param>
         public GameFlowData(string UserID, Language languageType, string Username)
         {
-            Language = languageType;
-            UserId = UserID;
-            UserName = Username;
+            this.Language = languageType;
+            this.UserId = UserID;
+            this.UserName = Username;
         }
 
         public GameFlowData()

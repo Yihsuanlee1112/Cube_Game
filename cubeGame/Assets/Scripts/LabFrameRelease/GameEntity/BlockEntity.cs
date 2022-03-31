@@ -28,4 +28,14 @@ public class BlockEntity : GameEntityBase
         Debug.Log(gameObject.name);
         Debug.Log("********"+ansTransform.position);
     }
+    public void OtherSroupToAns()
+    {
+        Debug.Log("others put");
+        _isChose = true;
+        gameObject.transform.position = ansTransform.position;
+        gameObject.transform.rotation = ansTransform.rotation;
+        gameObject.transform.localScale = ansTransform.localScale;
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        
+    }
 }

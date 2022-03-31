@@ -371,6 +371,12 @@
     <Reference Include="VectrosityEditor">
       <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/LabDataVisualization/Vectrosity/Vectrosity/Plugins/Editor/VectrosityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Interop.SpeechLib">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/Plugins/Interop.SpeechLib.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS_I2Loc.Xcode">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/Plugins/I2/Localization/Scripts/Editor/Unity XCode/UnityEditor.iOS_I2Loc.Xcode.dll</HintPath>
+    </Reference>
     <Reference Include="DataSync.Core">
       <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/Scripts/LabFrameRelease/LabData/DataSync/Assemblies/DataSync.Core.dll</HintPath>
     </Reference>
@@ -389,29 +395,38 @@
     <Reference Include="Valve.Newtonsoft.Json">
       <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/SteamVR/Input/Plugins/JSON.NET/Valve.Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.iOS_I2Loc.Xcode">
-      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/Plugins/I2/Localization/Scripts/Editor/Unity XCode/UnityEditor.iOS_I2Loc.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="Interop.SpeechLib">
-      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/Plugins/Interop.SpeechLib.dll</HintPath>
-    </Reference>
-    <Reference Include="Grpc.Core">
-      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Grpc.Core/lib/net45/Grpc.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Interactive.Async">
-      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/System.Interactive.Async.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.Cloud.Speech.V1">
-      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Cloud.Speech.V1.dll</HintPath>
+    <Reference Include="Google.Api.CommonProtos">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Api.CommonProtos.dll</HintPath>
     </Reference>
     <Reference Include="Google.Api.Gax">
       <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Api.Gax.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Auth.PlatformServices">
-      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Apis.Auth.PlatformServices.dll</HintPath>
+    <Reference Include="Google.Api.Gax.Grpc">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Api.Gax.Grpc.dll</HintPath>
     </Reference>
     <Reference Include="Google.Apis.Auth">
       <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Apis.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Apis.Auth.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Apis.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Cloud.Speech.V1">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Cloud.Speech.V1.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.LongRunning">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.LongRunning.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="Grpc.Auth">
       <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Grpc.Auth.dll</HintPath>
@@ -419,29 +434,14 @@
     <Reference Include="Grpc.Core.Api">
       <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Grpc.Core.Api.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Api.CommonProtos">
-      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Api.CommonProtos.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.Api.Gax.Grpc">
-      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Api.Gax.Grpc.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.Apis.Core">
-      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Apis.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.Apis.PlatformServices">
-      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Apis.PlatformServices.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.Protobuf">
-      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Protobuf.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis">
-      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.Apis.dll</HintPath>
+    <Reference Include="System.Interactive.Async">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/System.Interactive.Async.dll</HintPath>
     </Reference>
-    <Reference Include="Google.LongRunning">
-      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Google.LongRunning.dll</HintPath>
+    <Reference Include="Grpc.Core">
+      <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Assets/UnityGoogleStreamingSpeechToText-0.1.8/Plugins/Grpc.Core/lib/net45/Grpc.Core.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>C:/Users/wmlab/Desktop/堆積木遊戲/cubeGame/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
@@ -810,6 +810,10 @@
       <Project>{6EA5CDC1-5FEE-F0E2-B107-F21228B4B4FD}</Project>
       <Name>SteamVR_Actions</Name>
     </ProjectReference>
+    <ProjectReference Include="Google Cloud Streaming Speech-to-Text.Runtime.csproj">
+      <Project>{BAAD8BA9-83FD-61E7-7748-827F74B4F224}</Project>
+      <Name>Google Cloud Streaming Speech-to-Text.Runtime</Name>
+    </ProjectReference>
     <ProjectReference Include="SteamVR_Input_Editor.csproj">
       <Project>{F199A0F0-153B-6157-7327-7412DF82030F}</Project>
       <Name>SteamVR_Input_Editor</Name>
@@ -817,6 +821,10 @@
     <ProjectReference Include="SteamVR_Editor.csproj">
       <Project>{1C816D68-0FC4-CA02-BFDC-8F9BF4713693}</Project>
       <Name>SteamVR_Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Google Cloud Streaming Speech-to-Text.Editor.csproj">
+      <Project>{0528D430-5CB9-6DB1-9D6F-FDC6032679E1}</Project>
+      <Name>Google Cloud Streaming Speech-to-Text.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="SteamVR.csproj">
       <Project>{75FBB608-27E5-F469-7593-E530BEA7DCB4}</Project>
