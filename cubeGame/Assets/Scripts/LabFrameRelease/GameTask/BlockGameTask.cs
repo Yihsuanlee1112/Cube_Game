@@ -283,10 +283,10 @@ public class BlockGameTask : TaskBase
         while (!_BlockFinished)
         { 
             _StartTobuild = true;
-            while (_StartTobuild) 
-            {
-                yield return OtherGroupBuildBlock();
-            }
+           // while (_StartTobuild) 
+            //{
+            //    yield return OtherGroupBuildBlock();
+            //}
             if (_playerRound)  //玩家回合
             {
                 if (Cubes[RanNum-1]._isChose)
