@@ -12,7 +12,7 @@ public class NPCEntity : GameEntityBase
     public Animator animator;
     public List<AudioClip> ChineseSpeechList;
     public List<AudioClip> EnglishSpeechList;
-    public GameObject npchand;
+    public GameObject npc1hand;
     private GameObject ObjectTaked;
     private AudioClip clip;
     public static int Remindcount = 0;
@@ -42,9 +42,9 @@ public class NPCEntity : GameEntityBase
     {
         Debug.Log("NPC touch block");
         Debug.Log(gameObject.name);
-        gameObject.transform.position = npchand.transform.position;
+        gameObject.transform.position = npc1hand.transform.position;
         gameObject.transform.parent = null;
-        gameObject.transform.SetParent(npchand.transform);
+        gameObject.transform.SetParent(npc1hand.transform);
         ObjectTaked = gameObject;
     }
 

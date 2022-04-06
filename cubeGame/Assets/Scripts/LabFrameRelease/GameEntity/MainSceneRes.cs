@@ -29,7 +29,7 @@ public class MainSceneRes : GameSceneEntityRes
     public List<Color> Colors;
 
     [Header("Animator")]
-    public Animator TeacherAnimator;
+    public Animator HostAnimator;
     public Animator NPC1_animator;
     public Animator KidA, KidB, KidC, KidD, KidE, KidF;
 

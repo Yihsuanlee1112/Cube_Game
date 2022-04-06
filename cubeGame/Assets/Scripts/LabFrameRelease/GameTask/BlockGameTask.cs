@@ -8,7 +8,7 @@ public class BlockGameTask : TaskBase
 {
     private PlayerEntity player;
     private NPCEntity npc1;
-    private Animator TeacherAnimator;
+    private Animator HostAnimator;
     private Animator KidA, KidB, KidC, KidD, KidE, KidF;
     private GameObject GreenTriggerBall;
     private List<BlockEntity> Q1_cube;
@@ -74,11 +74,11 @@ public class BlockGameTask : TaskBase
         cube_GB= GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().cube_GB;
         cube_GC = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().cube_GC;
         //objectlist = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().ObjectList;
-        npc1.npchand = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().NPC1_Hand;
+        npc1.npc1hand = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().NPC1_Hand;
         npc1.ChineseSpeechList = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().ChineseSpeechClip;
         npc1.EnglishSpeechList = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().EnglishSpeechClip;
         npc1.animator = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().NPC1_animator;
-        TeacherAnimator = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().TeacherAnimator;
+        HostAnimator = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().HostAnimator;
         KidA = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().KidA;
         KidB = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().KidB;
         KidC = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().KidC;
@@ -125,9 +125,9 @@ public class BlockGameTask : TaskBase
         {
             audioClipRootPath = "AudioClip/English/";
         }
-        
-        //TeacherAnimator = GameObject.Find("teacher").GetComponent<Animator>();
-        TeacherAnimator.SetBool("isSlouchStandErect", true);
+
+        //HostAnimator = GameObject.Find("host").GetComponent<Animator>();
+        HostAnimator.SetBool("isSlouchStandErect", true);
         GameObject.Find("ChooseQuestionCanvas").GetComponent<Canvas>().enabled = false;
         for (int i = 1; i < 5; i++)
         {
@@ -138,7 +138,7 @@ public class BlockGameTask : TaskBase
         //GameAudioController.Instance.PlayOneShot(npc.speechList[0]);
         //yield return new WaitForSeconds(1.5f);
         //yield return new WaitForSeconds(2);
-        /*
+        
         //打招呼
         yield return SayHello();
         yield return new WaitForSeconds(1.5f);
@@ -195,13 +195,13 @@ public class BlockGameTask : TaskBase
         yield return new WaitForSeconds(3);
 
         //第二次 User贏
-        TeacherAnimator.SetBool("isStandingAndTalking", true);
+        HostAnimator.SetBool("isStandingAndTalking", true);
         //記得聽到布的時候，要一起出拳喔，不然贏了會不算喔，要再重猜一次
         clip = Resources.Load<AudioClip>(audioClipRootPath+"Host_RemindRPSOnTime");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         Debug.Log("主持人說再玩一次");
-        TeacherAnimator.SetBool("isStandingAndTalking", false);
+        HostAnimator.SetBool("isStandingAndTalking", false);
         GameEventCenter.DispatchEvent("FourPlayerRPS");
         GameObject.Find("FourPlayerChoose(Clone)/Canvas").SetActive(true);
         GameObject.Find("FourPlayerChoose(Clone)/Canvas2").SetActive(false);
@@ -224,7 +224,7 @@ public class BlockGameTask : TaskBase
         {
             GameObject.FindWithTag("RPS").SetActive(false);
         }
-        */
+        
         //XXX那一組猜拳贏了，你可以先選一張圖。你要選第幾張圖?
         yield return Teacher_AskUserWhichPic();
         yield return new WaitForSeconds(1.5f);
@@ -232,13 +232,13 @@ public class BlockGameTask : TaskBase
         yield return UserChooseQuestion();
         yield return new WaitForSeconds(1);
         //其他沒有贏的組，老師一組發一張圖案
-        TeacherAnimator.SetBool("isSlouchStandErect", false);
-        TeacherAnimator.SetBool("isStandingAndTalking", true);
+        HostAnimator.SetBool("isSlouchStandErect", false);
+        HostAnimator.SetBool("isStandingAndTalking", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath+"Teacher_GiveQuestionToOtherGroups");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        TeacherAnimator.SetBool("isStandingAndTalking", false);
-        TeacherAnimator.SetBool("isSlouchStandErect", true);
+        HostAnimator.SetBool("isStandingAndTalking", false);
+        HostAnimator.SetBool("isSlouchStandErect", true);
         yield return new WaitForSeconds(2);
         
         //User跟對面NPC猜拳
@@ -283,10 +283,10 @@ public class BlockGameTask : TaskBase
         while (!_BlockFinished)
         { 
             _StartTobuild = true;
-           // while (_StartTobuild) 
-            //{
-            //    yield return OtherGroupBuildBlock();
-            //}
+            while (_StartTobuild) 
+            {
+                yield return OtherGroupBuildBlock();
+            }
             if (_playerRound)  //玩家回合
             {
                 if (Cubes[RanNum-1]._isChose)
@@ -353,41 +353,41 @@ public class BlockGameTask : TaskBase
     }
     IEnumerator SayHello()
     {
-        TeacherAnimator.SetBool("isSlouchStandErect", false);
-        TeacherAnimator.SetBool("isSayingHello", true);
+        HostAnimator.SetBool("isSlouchStandErect", false);
+        HostAnimator.SetBool("isSayingHello", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_SayHi");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         Debug.Log(clip);
         Debug.Log("打完招呼");
-        TeacherAnimator.SetBool("isSayingHello", false);
-        TeacherAnimator.SetBool("isSlouchStandErect", true);
+        HostAnimator.SetBool("isSayingHello", false);
+        HostAnimator.SetBool("isSlouchStandErect", true);
         yield return null;
     }
     IEnumerator Teacher_Opening()
     {
-        TeacherAnimator.SetBool("isSlouchStandErect", false);
-        TeacherAnimator.SetBool("isStandingAndTalking", true);
+        HostAnimator.SetBool("isSlouchStandErect", false);
+        HostAnimator.SetBool("isStandingAndTalking", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath+"Teacher_Opening");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         Debug.Log(audioClipRootPath+"Teacher_Opening" + clip.length);
         Debug.Log("老師開完場");
-        TeacherAnimator.SetBool("isStandingAndTalking", false);
-        TeacherAnimator.SetBool("isSlouchStandErect", true);
+        HostAnimator.SetBool("isStandingAndTalking", false);
+        HostAnimator.SetBool("isSlouchStandErect", true);
         yield return null;
     }
     IEnumerator Teacher_Introduction()
     {
-        TeacherAnimator.SetBool("isSlouchStandErect", false);
-        TeacherAnimator.SetBool("isStandingAndTalking", true);
+        HostAnimator.SetBool("isSlouchStandErect", false);
+        HostAnimator.SetBool("isStandingAndTalking", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath+"Teacher_Introduction");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         Debug.Log(audioClipRootPath+"Teacher_Introduction" + clip.length);
         Debug.Log("老師說完遊戲規則");
-        TeacherAnimator.SetBool("isStandingAndTalking", false);
-        TeacherAnimator.SetBool("isSlouchStandErect", true);
+        HostAnimator.SetBool("isStandingAndTalking", false);
+        HostAnimator.SetBool("isSlouchStandErect", true);
         yield return null;
     }
     IEnumerator Host_RemindAllToSayRPS()
@@ -400,8 +400,8 @@ public class BlockGameTask : TaskBase
     }
     IEnumerator Teacher_AskUserWhichPic()
     {
-        TeacherAnimator.SetBool("isSlouchStandErect", false);
-        TeacherAnimator.SetBool("isAsking", true);
+        HostAnimator.SetBool("isSlouchStandErect", false);
+        HostAnimator.SetBool("isAsking", true);
         SpVoice npcsay = new SpVoice();
         npcsay.Speak(GameDataManager.FlowData.UserName, SpeechVoiceSpeakFlags.SVSFlagsAsync);
         yield return new WaitForSeconds(1.5f);
@@ -410,21 +410,21 @@ public class BlockGameTask : TaskBase
         yield return new WaitForSeconds(clip.length);
         Debug.Log(audioClipRootPath+"Teacher_AskUserWhichPic" + clip.length);
         Debug.Log("老師問完選圖");
-        TeacherAnimator.SetBool("isAsking", false);
-        TeacherAnimator.SetBool("isSlouchStandErect", true);
+        HostAnimator.SetBool("isAsking", false);
+        HostAnimator.SetBool("isSlouchStandErect", true);
         yield return null;
     }
     IEnumerator Teacher_LV1Remind()
     {
-        TeacherAnimator.SetBool("isSlouchStandErect", false);
-        TeacherAnimator.SetBool("isStandingAndTalking", true);
+        HostAnimator.SetBool("isSlouchStandErect", false);
+        HostAnimator.SetBool("isStandingAndTalking", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath+"Teacher_LV1Remind");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         Debug.Log(audioClipRootPath+"Teacher_LV1Remind" + clip.length);
         Debug.Log("老師提醒規則");
-        TeacherAnimator.SetBool("isStandingAndTalking", false);
-        TeacherAnimator.SetBool("isSlouchStandErect", true);
+        HostAnimator.SetBool("isStandingAndTalking", false);
+        HostAnimator.SetBool("isSlouchStandErect", true);
         yield return null;
     }
     IEnumerator NPC_YouWin()
