@@ -267,7 +267,7 @@ public class BlockGameTask : TaskBase
         yield return new WaitForSeconds(2);
         
         GameObject.FindWithTag("Result").SetActive(false);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
         {
             GameObject.FindWithTag("RPS").SetActive(false);
         }
@@ -512,9 +512,34 @@ public class BlockGameTask : TaskBase
     }
     IEnumerator OtherGroupBuildBlock()
     {
-        yield return LeftGroupBuildBlock();
-        yield return MiddleGroupBuildBlock();
-        yield return RightGroupBuildBlock();
+        //yield return LeftGroupBuildBlock();
+        //yield return MiddleGroupBuildBlock();
+        //yield return RightGroupBuildBlock();
+        foreach (BlockEntity cube in cube_GA)//LeftDesk
+        {
+            if (_RoundA)  //玩家回合
+            {
+                KidA.Play("Puzzle");
+                GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                KidB.Play("Puzzle");
+                GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                KidC.Play("Puzzle");
+                GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                yield return new WaitForSeconds(7);
+                _RoundA = false;
+            }
+            else
+            {
+                KidD.Play("Puzzle");
+                GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                KidE.Play("Puzzle");
+                GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                KidF.Play("Puzzle");
+                GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                yield return new WaitForSeconds(7);
+                _RoundA = true;
+            }
+        }
         yield return null;
     }
     IEnumerator LeftGroupBuildBlock()

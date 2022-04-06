@@ -109,8 +109,8 @@ public class HandsTrigger : MonoBehaviour
             {
                 Debug.Log("Put toAns");
                 var parent = GameObject.Find("Answer");
-                var cube = gameObject.transform.GetChild(5).gameObject.GetComponent<BlockEntity>();//hand底下的第6個
-                //var cube = gameObject.transform.GetChild(0).gameObject.GetComponent<BlockEntity>();//FakeHand
+                //var cube = gameObject.transform.GetChild(5).gameObject.GetComponent<BlockEntity>();//hand底下的第6個
+                var cube = gameObject.transform.GetChild(0).gameObject.GetComponent<BlockEntity>();//FakeHand
                 Debug.Log(parent);
                 Debug.Log(cube);
                 cube.GetComponent<Rigidbody>().useGravity = true;

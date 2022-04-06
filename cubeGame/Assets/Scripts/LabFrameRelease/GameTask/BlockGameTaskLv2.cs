@@ -273,7 +273,7 @@ public class BlockGameTaskLv2 : TaskBase
         yield return new WaitForSeconds(2);
 
         GameObject.FindWithTag("Result").SetActive(false);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
         {
             GameObject.FindWithTag("RPS").SetActive(false);
         }
