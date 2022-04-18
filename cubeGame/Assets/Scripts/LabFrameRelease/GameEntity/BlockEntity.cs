@@ -12,21 +12,46 @@ public class BlockEntity : GameEntityBase
 
     }
 
-    public void ToAns()
+    public void ToAnsLv1()
     {
         if(_isUserColor == false)
         {
-            BlockGameTaskLv2._playerRound = false;
+            BlockGameTask._playerRound = false;
         }
         else
-            BlockGameTaskLv2._playerRound = true;
+        {
+            BlockGameTask._playerRound = true;
+        }
+            
         _isChose = true;
+        BlockGameTask.RecentOrder++;
         gameObject.transform.position = ansTransform.position;
         gameObject.transform.rotation = ansTransform.rotation;
         gameObject.transform.localScale = ansTransform.localScale;
         gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         Debug.Log(gameObject.name);
         Debug.Log("********"+ansTransform.position);
+    }
+    public void ToAnsLv2()
+    {
+        if (_isUserColor == false)
+        {
+            BlockGameTaskLv2._playerRound = false;
+        }
+        else
+        {
+            BlockGameTaskLv2._playerRound = true;
+        }
+       
+        _isChose = true;
+        BlockGameTaskLv2.RecentOrder++;
+        Debug.Log("RecentOrder: " + BlockGameTaskLv2.RecentOrder);
+        gameObject.transform.position = ansTransform.position;
+        gameObject.transform.rotation = ansTransform.rotation;
+        gameObject.transform.localScale = ansTransform.localScale;
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        Debug.Log(gameObject.name);
+        Debug.Log("********" + ansTransform.position);
     }
     public void OtherSroupToAns()
     {

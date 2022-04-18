@@ -7,6 +7,13 @@ using SpeechLib;
 public class BlockGameTask : TaskBase
 {
     private PlayerEntity player;
+    private GameObject userLeftHandTrigger;
+    private GameObject userRightHandTrigger;
+    private List<GameObject> Q1_QuestionCube;
+    private List<GameObject> Q2_QuestionCube;
+    private List<GameObject> Q3_QuestionCube;
+    private List<GameObject> Q4_QuestionCube;
+    private List<GameObject> QuestionCube;
     private NPCEntity npc1;
     private Animator HostAnimator;
     private Animator KidA, KidB, KidC, KidD, KidE, KidF;
@@ -30,6 +37,8 @@ public class BlockGameTask : TaskBase
     private string audioClipRootPath;
     private string focusName;
 
+    public static GameObject KidShouldPut;
+    public static int RecentOrder = 1;
     public static bool _RoundA = true;
     public static int _ShowResult = 0;
     public static int _RandomQuestion = 0;
@@ -58,20 +67,32 @@ public class BlockGameTask : TaskBase
         GameEventCenter.AddEvent("FindQ2Cubes", FindQ2Cubes);
         GameEventCenter.AddEvent("FindQ3Cubes", FindQ3Cubes);
         GameEventCenter.AddEvent("FindQ4Cubes", FindQ4Cubes);
+        GameEventCenter.AddEvent("KidsShouldPut", KidsShouldPut);
+        GameEventCenter.AddEvent("FindQ1_QuestionCubes", FindQ1_QuestionCubes);
+        GameEventCenter.AddEvent("FindQ2_QuestionCubes", FindQ2_QuestionCubes);
+        GameEventCenter.AddEvent("FindQ3_QuestionCubes", FindQ3_QuestionCubes);
+        GameEventCenter.AddEvent("FindQ4_QuestionCubes", FindQ4_QuestionCubes);
         GameEventCenter.AddEvent("User_MissingOneCube", User_MissingOneCube);
         //GameEventCenter.AddEvent("NPC_Remind", NPC_Remind);
         //GameEventCenter.AddEvent("NPC_Remind2", NPC_Remind2);
         //載入MainSceneRes
         player = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().player;
+        userLeftHandTrigger = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().userLeftHandTrigger;
+        userRightHandTrigger = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().userRightHandTrigger;
         npc1 = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().npc1;
         GreenTriggerBall = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().GreenTriggerBall;
+        Q1_QuestionCube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q1_QuestionCube;
+        Q2_QuestionCube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q2_QuestionCube;
+        Q3_QuestionCube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q3_QuestionCube;
+        Q4_QuestionCube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q4_QuestionCube;
+        QuestionCube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().QuestionCube;
         Q1_cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q1_cube;
         Q2_cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q2_cube;
         Q3_cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q3_cube;
         Q4_cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q4_cube;
         Cubes = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes;
         cube_GA = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().cube_GA;
-        cube_GB= GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().cube_GB;
+        cube_GB = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().cube_GB;
         cube_GC = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().cube_GC;
         //objectlist = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().ObjectList;
         npc1.npc1hand = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().NPC1_Hand;
@@ -116,6 +137,7 @@ public class BlockGameTask : TaskBase
 
     public override IEnumerator TaskStart()
     {
+        GameObject ChooseQuestionCanvas = GameObject.Find("ChooseQuestionCanvas");
         //語言選擇
         if (GameDataManager.FlowData.Language == Language.中文)
         {
@@ -126,19 +148,22 @@ public class BlockGameTask : TaskBase
             audioClipRootPath = "AudioClip/English/";
         }
 
-        //HostAnimator = GameObject.Find("host").GetComponent<Animator>();
         HostAnimator.SetBool("isSlouchStandErect", true);
-        GameObject.Find("ChooseQuestionCanvas").GetComponent<Canvas>().enabled = false;
-        for (int i = 1; i < 5; i++)
-        {
-            GameObject.FindGameObjectWithTag("Q" + i).GetComponent<BoxCollider>().enabled = false;
-        }
+
+        ChooseQuestionCanvas.SetActive(true);
+        //GameObject.Find("ChooseQuestionCanvas").GetComponent<Canvas>().enabled = false;
+        userRightHandTrigger.GetComponent<BoxCollider>().enabled = false;
+        userLeftHandTrigger.GetComponent<BoxCollider>().enabled = false;
+        //for (int i = 1; i < 5; i++)
+        //{
+        //    GameObject.FindGameObjectWithTag("Q" + i).GetComponent<BoxCollider>().enabled = false;
+        //}
         //邀請小朋友一起堆積木
         //npc.animator.Play("Talk");
         //GameAudioController.Instance.PlayOneShot(npc.speechList[0]);
         //yield return new WaitForSeconds(1.5f);
         //yield return new WaitForSeconds(2);
-        
+        /*
         //打招呼
         yield return SayHello();
         yield return new WaitForSeconds(1.5f);
@@ -154,15 +179,13 @@ public class BlockGameTask : TaskBase
         
         //語音辨識
         
-        //RandomQuestion = 4;//user選的題目
-
         //User跟其他三組猜拳
         //第一次 小花慢出(NPC生氣)
-
         GameEventCenter.DispatchEvent("FourPlayerRPS");//猜拳動畫
         GameObject.Find("FourPlayerChoose(Clone)/Canvas2").SetActive(true);
         GameObject.Find("FourPlayerChoose(Clone)/Canvas").SetActive(false);
-
+        userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
+        userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
         //大家一起說剪刀石頭布
         yield return All_NPC_SayRPS();
         _userChooseRPS = false;
@@ -171,13 +194,13 @@ public class BlockGameTask : TaskBase
             Debug.Log("User choose RPS");
             yield return new WaitUntil(() => _userChooseRPS);
         } while (!_userChooseRPS);
-
+        userRightHandTrigger.GetComponent<BoxCollider>().enabled = false;
+        userLeftHandTrigger.GetComponent<BoxCollider>().enabled = false;
         yield return new WaitForSeconds(1);
         GameEventCenter.DispatchEvent("FirstRoundCloseAnimatorP2");//小花慢出
         GameEventCenter.DispatchEvent("FirstRoundFourPlayerShowResultP2");
-       
-        
         yield return new WaitForSeconds(3);
+        
         npc1.animator.SetBool("isTalk", true);
         //不算～，你慢出，再猜一次！
         clip = Resources.Load<AudioClip>(audioClipRootPath+"NPC_TooSlow");
@@ -193,7 +216,7 @@ public class BlockGameTask : TaskBase
             GameObject.FindWithTag("RPS").SetActive(false);
         }
         yield return new WaitForSeconds(3);
-
+        
         //第二次 User贏
         HostAnimator.SetBool("isStandingAndTalking", true);
         //記得聽到布的時候，要一起出拳喔，不然贏了會不算喔，要再重猜一次
@@ -205,8 +228,9 @@ public class BlockGameTask : TaskBase
         GameEventCenter.DispatchEvent("FourPlayerRPS");
         GameObject.Find("FourPlayerChoose(Clone)/Canvas").SetActive(true);
         GameObject.Find("FourPlayerChoose(Clone)/Canvas2").SetActive(false);
-        
         //大家一起說剪刀石頭布
+        userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
+        userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
         yield return All_NPC_SayRPS();
         _userChooseRPS = false;
         do
@@ -214,6 +238,8 @@ public class BlockGameTask : TaskBase
             Debug.Log("User choose RPS");
             yield return new WaitUntil(() => _userChooseRPS);
         } while (!_userChooseRPS);
+        userRightHandTrigger.GetComponent<BoxCollider>().enabled = false;
+        userLeftHandTrigger.GetComponent<BoxCollider>().enabled = false;
         yield return new WaitForSeconds(3);
         
         for (int i=0; i<3; i++)
@@ -224,35 +250,50 @@ public class BlockGameTask : TaskBase
         {
             GameObject.FindWithTag("RPS").SetActive(false);
         }
-        
+        */
         //XXX那一組猜拳贏了，你可以先選一張圖。你要選第幾張圖?
         yield return Teacher_AskUserWhichPic();
         yield return new WaitForSeconds(1.5f);
         //讓user選題目
-        yield return UserChooseQuestion();
+        userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
+        userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
+        yield return UserChooseQuestion(ChooseQuestionCanvas);//??????
+        userRightHandTrigger.GetComponent<BoxCollider>().enabled = false;
+        userLeftHandTrigger.GetComponent<BoxCollider>().enabled = false;
         yield return new WaitForSeconds(1);
         //其他沒有贏的組，老師一組發一張圖案
         HostAnimator.SetBool("isSlouchStandErect", false);
         HostAnimator.SetBool("isStandingAndTalking", true);
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"Teacher_GiveQuestionToOtherGroups");
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_GiveQuestionToOtherGroups");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         HostAnimator.SetBool("isStandingAndTalking", false);
         HostAnimator.SetBool("isSlouchStandErect", true);
         yield return new WaitForSeconds(2);
-        
-        //User跟對面NPC猜拳
+
         GameEventCenter.DispatchEvent("InstatiateCube");
         GameEventCenter.DispatchEvent("AddCubesToList");
-        GameEventCenter.DispatchEvent("User_MissingOneCube"); 
+        GameEventCenter.DispatchEvent("User_MissingOneCube");
+        //GameEventCenter.DispatchEvent("FindQ1_QuestionCubes");//*****
+        GameEventCenter.DispatchEvent("CheckOrder");//QuestionCube
+        foreach (BlockEntity cube in Cubes)//users cube -> is user color
+        {
+            int userCube = 0;
+            if (userCube % 2 == 0)
+                Cubes[userCube]._isUserColor = true;
+        }
+
         //小花: 沒贏也沒關係，每一張圖我都喜歡
         clip = Resources.Load<AudioClip>(audioClipRootPath + "Flower_ItsOkTolose");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         //小朋友，你們要記得按照數字順序輪流完成作品喔
         yield return Teacher_LV1Remind();
+
         //NPC說贏的先
         yield return NPC_WinnerFirst();
+        userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
+        userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
         GameEventCenter.DispatchEvent("TwoPlayerRPS");
         //NPC說剪刀石頭布
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_SayRPS");
@@ -264,10 +305,12 @@ public class BlockGameTask : TaskBase
             Debug.Log("User choose RPS");
             yield return new WaitUntil(() => _userChooseRPS);
         } while (!_userChooseRPS);
+        userRightHandTrigger.GetComponent<BoxCollider>().enabled = false;
+        userLeftHandTrigger.GetComponent<BoxCollider>().enabled = false;
         yield return new WaitForSeconds(2);
-        
+
         GameObject.FindWithTag("Result").SetActive(false);
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 3; i++)
         {
             GameObject.FindWithTag("RPS").SetActive(false);
         }
@@ -277,26 +320,30 @@ public class BlockGameTask : TaskBase
         //猜拳之後，小星說你贏了你先
         yield return NPC_YouWin();
         //開始堆積木
-       
+
         Debug.Log("Start:" + _StartTobuild);
-       
+
+        userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
+        userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
         while (!_BlockFinished)
-        { 
+        {
             _StartTobuild = true;
-            while (_StartTobuild) 
-            {
-                yield return OtherGroupBuildBlock();
-            }
+            GameEventCenter.DispatchEvent("KidsShouldPut");
+            Debug.Log("Recent order is : " + RecentOrder);
+
+            //while (_StartTobuild) 
+            //{
+            //    yield return OtherGroupBuildBlock();
+            //}
             if (_playerRound)  //玩家回合
             {
-                if (Cubes[RanNum-1]._isChose)
+                if (Cubes[RanNum - 1]._isChose)
                 {
-                    if(Cubes[RanNum - 1]._isChose && Cubes[RanNum]._isChose )
+                    if (Cubes[RanNum - 1]._isChose && Cubes[RanNum]._isChose)
                     {
-                    Debug.Log(Cubes[RanNum] + "was put.");
-                    Debug.Log("User turn");
-                    yield return new WaitUntil(() => !_playerRound);
-                    
+                        Debug.Log(Cubes[RanNum] + "was put.");
+                        Debug.Log("User turn");
+                        yield return new WaitUntil(() => !_playerRound);
                     }
                     else
                     {
@@ -307,11 +354,14 @@ public class BlockGameTask : TaskBase
                         GameObject.Find(MissingCube).GetComponent<BoxCollider>().enabled = true;
                         GameObject.Find(MissingCube).GetComponent<MeshRenderer>().enabled = true;
                     }
-                    
                 }
-                 
-                else 
-                Debug.Log("User touch Block"); 
+
+                else
+                {
+                    GameEventCenter.DispatchEvent("KidsShouldPut");
+                }
+                Debug.Log("RecentOrder: " + BlockGameTaskLv2.RecentOrder);
+                Debug.Log("User touch Block");
                 yield return new WaitUntil(() => !_playerRound);
             }
             else  //NPC回合
@@ -319,13 +369,14 @@ public class BlockGameTask : TaskBase
                 _npcremind = false;
                 foreach (BlockEntity cube in Cubes)
                 {
-                    if (!cube._isChose)
+                    if (!cube._isChose&& !cube._isUserColor)
                     {
                         npc1.animator.Play("Puzzle"); //npc拿積木
                         yield return new WaitForSeconds(7);
                         if (!_npcremind)
-                        {   
+                        {
                             Debug.Log("NPC putting Block");
+                            GameEventCenter.DispatchEvent("KidsShouldPut");
                             GameEventCenter.DispatchEvent("CubeAns", cube);
                             _playerRound = true;
                         }
@@ -343,7 +394,7 @@ public class BlockGameTask : TaskBase
             _StartTobuild = false;
             yield return new WaitForSeconds(2);
         }
-        
+
         yield return null;
     }
 
@@ -368,10 +419,10 @@ public class BlockGameTask : TaskBase
     {
         HostAnimator.SetBool("isSlouchStandErect", false);
         HostAnimator.SetBool("isStandingAndTalking", true);
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"Teacher_Opening");
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_Opening");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        Debug.Log(audioClipRootPath+"Teacher_Opening" + clip.length);
+        Debug.Log(audioClipRootPath + "Teacher_Opening" + clip.length);
         Debug.Log("老師開完場");
         HostAnimator.SetBool("isStandingAndTalking", false);
         HostAnimator.SetBool("isSlouchStandErect", true);
@@ -381,10 +432,10 @@ public class BlockGameTask : TaskBase
     {
         HostAnimator.SetBool("isSlouchStandErect", false);
         HostAnimator.SetBool("isStandingAndTalking", true);
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"Teacher_Introduction");
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_Introduction");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        Debug.Log(audioClipRootPath+"Teacher_Introduction" + clip.length);
+        Debug.Log(audioClipRootPath + "Teacher_Introduction" + clip.length);
         Debug.Log("老師說完遊戲規則");
         HostAnimator.SetBool("isStandingAndTalking", false);
         HostAnimator.SetBool("isSlouchStandErect", true);
@@ -392,10 +443,10 @@ public class BlockGameTask : TaskBase
     }
     IEnumerator Host_RemindAllToSayRPS()
     {
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"Host_RemindAllToSayRPS");
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_RemindAllToSayRPS");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        Debug.Log(audioClipRootPath+"Host_RemindAllToSayRPS" + clip.length);
+        Debug.Log(audioClipRootPath + "Host_RemindAllToSayRPS" + clip.length);
         yield return null;
     }
     IEnumerator Teacher_AskUserWhichPic()
@@ -405,10 +456,10 @@ public class BlockGameTask : TaskBase
         SpVoice npcsay = new SpVoice();
         npcsay.Speak(GameDataManager.FlowData.UserName, SpeechVoiceSpeakFlags.SVSFlagsAsync);
         yield return new WaitForSeconds(1.5f);
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"Teacher_AskUserWhichPic");
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_AskUserWhichPic");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        Debug.Log(audioClipRootPath+"Teacher_AskUserWhichPic" + clip.length);
+        Debug.Log(audioClipRootPath + "Teacher_AskUserWhichPic" + clip.length);
         Debug.Log("老師問完選圖");
         HostAnimator.SetBool("isAsking", false);
         HostAnimator.SetBool("isSlouchStandErect", true);
@@ -418,10 +469,10 @@ public class BlockGameTask : TaskBase
     {
         HostAnimator.SetBool("isSlouchStandErect", false);
         HostAnimator.SetBool("isStandingAndTalking", true);
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"Teacher_LV1Remind");
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_LV1Remind");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        Debug.Log(audioClipRootPath+"Teacher_LV1Remind" + clip.length);
+        Debug.Log(audioClipRootPath + "Teacher_LV1Remind" + clip.length);
         Debug.Log("老師提醒規則");
         HostAnimator.SetBool("isStandingAndTalking", false);
         HostAnimator.SetBool("isSlouchStandErect", true);
@@ -430,17 +481,17 @@ public class BlockGameTask : TaskBase
     IEnumerator NPC_YouWin()
     {
         npc1.animator.SetBool("isTalk2", true);
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"NPC_YouWin");
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_YouWin");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        Debug.Log(audioClipRootPath+"NPC_Rule" + clip.length);
+        Debug.Log(audioClipRootPath + "NPC_Rule" + clip.length);
         npc1.animator.SetBool("isTalk2", false);
         yield return null;
     }
     IEnumerator NPC_WinnerFirst()
     {
         npc1.animator.SetBool("isTalk", true);
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"NPC_WinnerFirst");
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_WinnerFirst");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         npc1.animator.SetBool("isTalk", false);
@@ -448,36 +499,37 @@ public class BlockGameTask : TaskBase
     }
     IEnumerator All_NPC_SayRPS()
     {
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"NPC_SayRPS");
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_SayRPS");
         GameAudioController.Instance.PlayOneShot(clip);
         Debug.Log(clip.length);
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"Flower_SayRPS");
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Flower_SayRPS");
         GameAudioController.Instance.PlayOneShot(clip);
         Debug.Log(clip.length);
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"Red_SayRPS");
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Red_SayRPS");
         GameAudioController.Instance.PlayOneShot(clip);
         Debug.Log(clip.length);
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"Green_SayRPS");
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Green_SayRPS");
         GameAudioController.Instance.PlayOneShot(clip);
         Debug.Log(clip.length);
         yield return new WaitForSeconds(1);
         yield return null;
     }
-    IEnumerator UserChooseQuestion()
+    IEnumerator UserChooseQuestion(GameObject ChooseQuestionCanvas)
     {
+        ChooseQuestionCanvas.SetActive(true);
         GameObject.Find("ChooseQuestionCanvas").GetComponent<Canvas>().enabled = true;
-        for(int i = 1; i<5; i++)
+        for (int i = 1; i < 5; i++)
         {
             GameObject.FindGameObjectWithTag("Q" + i).GetComponent<BoxCollider>().enabled = true;
         }
-        
+
         while (!_userChooseQuestion)
         {
             Debug.Log("User choose Question");
             yield return new WaitUntil(() => _userChooseQuestion);
         }
-        yield return new WaitForSeconds(5);
-        GameObject.Find("ChooseQuestionCanvas").GetComponent<Canvas>().enabled = false;
+        yield return new WaitForSeconds(3);
+        GameObject.Find("ChooseQuestionCanvas").SetActive(false);
         yield return null;
     }
     IEnumerator UserNeedsACube()
@@ -487,25 +539,25 @@ public class BlockGameTask : TaskBase
         GreenTriggerBall.SetActive(true);
         //clip = Resources.Load<AudioClip>(audioClipRootPath+"NPC_YouCanTellTheTeacher1");//你可以跟老師說
         npc1.animator.SetBool("isTalk2", true);
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"NPC_YouCanTellTheTeacher2");
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_YouCanTellTheTeacher2");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         npc1.animator.SetBool("isTalk2", false);
         Debug.Log("NPC叫user要跟老師說少一個");
         yield return new WaitForSeconds(2);
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"Host_RaiseHandThenTell");
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_RaiseHandThenTell");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         Debug.Log("主持人說明要跟小花一樣，舉手之後跟老師說少一個");
         yield return new WaitUntil(() => _userRaiseHand);//*******************
         yield return new WaitForSeconds(3);
         GreenTriggerBall.SetActive(false);//Close GreenTriggerBall
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"Host_YouWaitedToTalk");
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_YouWaitedToTalk");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         Debug.Log("主持人說user有等老師，還有說自己少一個積木很棒");
         yield return new WaitForSeconds(3);
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"Teacher_GiveUserCube");
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_GiveUserCube");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         yield return null;
@@ -515,7 +567,7 @@ public class BlockGameTask : TaskBase
         //yield return LeftGroupBuildBlock();
         //yield return MiddleGroupBuildBlock();
         //yield return RightGroupBuildBlock();
-        foreach (BlockEntity cube in cube_GA)//LeftDesk
+        foreach (BlockEntity cube in cube_GA)
         {
             if (_RoundA)  //玩家回合
             {
@@ -635,9 +687,27 @@ public class BlockGameTask : TaskBase
             }
         }
     }
+    public void FindQ1_QuestionCubes()
+    {
+        Debug.Log("find Q1_Qcube!!!");
+        QuestionCube.AddRange(GameObject.FindGameObjectsWithTag("Q1question"));
+
+    }
+    public void FindQ2_QuestionCubes()
+    {
+        Debug.Log("find Q2_Qcube!!!");
+    }
+    public void FindQ3_QuestionCubes()
+    {
+        Debug.Log("find Q3_Qcube!!!");
+    }
+    public void FindQ4_QuestionCubes()
+    {
+        Debug.Log("find Q4_Qcube!!!");
+    }
     public void AddCubesToList()
     {
-        if(_RandomQuestion == 1)
+        if (_RandomQuestion == 1)
         {
             GameEventCenter.DispatchEvent("FindQ1Cubes");
             Cubes.AddRange(Q1_cube);
@@ -651,7 +721,7 @@ public class BlockGameTask : TaskBase
             GameEventCenter.DispatchEvent("FindQ4Cubes");
             cube_GC.AddRange(Q4_cube);
         }
-        else if(_RandomQuestion == 2)
+        else if (_RandomQuestion == 2)
         {
             GameEventCenter.DispatchEvent("FindQ2Cubes");
             Cubes.AddRange(Q2_cube);
@@ -696,7 +766,6 @@ public class BlockGameTask : TaskBase
     }
     public void FindQ1Cubes()
     {
-        Debug.Log("find Q1_cube!!!");
         Q1_cube.Add(GameObject.Find("Q1BlueCuboid3(Clone)").GetComponent<BlockEntity>());
         Q1_cube.Add(GameObject.Find("Q1RedCuboid3(Clone)").GetComponent<BlockEntity>());
         Q1_cube.Add(GameObject.Find("Q1GreenCuboid3(Clone)").GetComponent<BlockEntity>());
@@ -711,7 +780,6 @@ public class BlockGameTask : TaskBase
     }
     public void FindQ2Cubes()
     {
-        Debug.Log("find Q2_cube!!!");
         Q2_cube.Add(GameObject.Find("Q2BlueCuboid3_1(Clone)").GetComponent<BlockEntity>());
         Q2_cube.Add(GameObject.Find("Q2BlueCuboid3_2(Clone)").GetComponent<BlockEntity>());
         Q2_cube.Add(GameObject.Find("Q2YellowCube_1(Clone)").GetComponent<BlockEntity>());
@@ -726,7 +794,6 @@ public class BlockGameTask : TaskBase
     }
     public void FindQ3Cubes()
     {
-        Debug.Log("find Q3_cube!!!");
         Q3_cube.Add(GameObject.Find("Q3BlueCuboid_1(Clone)").GetComponent<BlockEntity>());
         Q3_cube.Add(GameObject.Find("Q3YellowCube(Clone)").GetComponent<BlockEntity>());
         Q3_cube.Add(GameObject.Find("Q3BlueCuboid_2(Clone)").GetComponent<BlockEntity>());
@@ -741,7 +808,6 @@ public class BlockGameTask : TaskBase
     }
     public void FindQ4Cubes()
     {
-        Debug.Log("find Q1_cube!!!");
         Q4_cube.Add(GameObject.Find("Q4RedCuboid_1(Clone)").GetComponent<BlockEntity>());
         Q4_cube.Add(GameObject.Find("Q4GreenCuboid(Clone)").GetComponent<BlockEntity>());
         Q4_cube.Add(GameObject.Find("Q4RedCuboid_2(Clone)").GetComponent<BlockEntity>());
@@ -762,11 +828,11 @@ public class BlockGameTask : TaskBase
             Debug.Log(RanNum);
             Debug.Log(Cubes[RanNum]);
             MissingCube = Cubes[RanNum].name;
-            Debug.Log(MissingCube+ " is missing....");
+            Debug.Log(MissingCube + " is missing....");
             GameObject.Find(MissingCube).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             GameObject.Find(MissingCube).GetComponent<MeshRenderer>().enabled = false;
             GameObject.Find(MissingCube).GetComponent<BoxCollider>().enabled = false;
-            
+
         }
         else
         {
@@ -775,10 +841,21 @@ public class BlockGameTask : TaskBase
             Debug.Log(Cubes[RanNum]);
             //Cubes[RanNum].gameObject.tag = MissingCube;
             MissingCube = Cubes[RanNum].name;
-            Debug.Log(MissingCube +" is missing....");
+            Debug.Log(MissingCube + " is missing....");
             GameObject.Find(MissingCube).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             GameObject.Find(MissingCube).GetComponent<MeshRenderer>().enabled = false;
             GameObject.Find(MissingCube).GetComponent<BoxCollider>().isTrigger = false;
+        }
+    }
+    public void KidsShouldPut()
+    {
+        foreach (GameObject cube in QuestionCube)
+        {
+            if (cube.GetComponent<QuestionCube>().CubeOrder == RecentOrder)
+            {
+                KidShouldPut = cube;
+                Debug.Log("Kid should put: " + KidShouldPut);
+            }
         }
     }
     public void TakeObject()//拼圖的氣球
@@ -792,14 +869,14 @@ public class BlockGameTask : TaskBase
     }
     public void CubeAns(BlockEntity cube)
     {
-        cube.ToAns();
+        cube.ToAnsLv1();
     }
 
     public void OtherGroupCubeAns(BlockEntity cube)
     {
         cube.OtherSroupToAns();
     }
-    
+
     public void GetFocusName(string name)
     {
         focusName = name;

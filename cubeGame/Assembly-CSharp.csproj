@@ -398,6 +398,7 @@
     <Compile Include="Assets\Scripts\MyScripts\otherGroupBiuldBlock.cs" />
     <Compile Include="Assets\Scripts\MyScripts\putCube.cs" />
     <Compile Include="Assets\Scripts\MyScripts\QuadTriggerDisabled.cs" />
+    <Compile Include="Assets\Scripts\MyScripts\QuestionCube.cs" />
     <Compile Include="Assets\Scripts\MyScripts\RockPaperScissors.cs" />
     <Compile Include="Assets\Scripts\MyScripts\StopRedrawCube.cs" />
     <Compile Include="Assets\Scripts\UIFrameWork\PanelBase\BasePanel.cs" />

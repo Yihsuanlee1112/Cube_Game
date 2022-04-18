@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3841489700464172121
+--- !u!1 &6160110698953811851
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3841489700464172126}
+  - component: {fileID: 6160110698953811852}
   m_Layer: 0
   m_Name: Q2_2Ans
   m_TagString: Untagged
@@ -16,15 +16,15 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3841489700464172126
+--- !u!4 &6160110698953811852
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3841489700464172121}
+  m_GameObject: {fileID: 6160110698953811851}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.2681, y: 0.3616, z: 3.9756}
+  m_LocalPosition: {x: 1.2763, y: 0.3616, z: 4.0137}
   m_LocalScale: {x: 0.15, y: 0.05, z: 0.05}
   m_Children: []
   m_Father: {fileID: 0}

@@ -37,6 +37,11 @@ TagManager:
   - Q2
   - Q3
   - Q4
+  - greenTriggerBall
+  - Q1question
+  - Q2question
+  - Q3question
+  - Q4question
   layers:
   - Default
   - TransparentFX

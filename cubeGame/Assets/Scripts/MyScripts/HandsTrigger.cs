@@ -8,7 +8,7 @@ public class HandsTrigger : MonoBehaviour
     private int MyPreCubeIndex;
     public List<BlockEntity> FirstBlock;
     private string FirstCube;
-    private List<BlockEntity> Cubes;
+
     //private bool _NPCRemind;
 
     // Start is called before the first frame update
@@ -28,14 +28,13 @@ public class HandsTrigger : MonoBehaviour
         //Debug.Log(FirstBlock[0].name);
         var MyCube = other.GetComponent<BlockEntity>();//BLockEntity
         var index = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.IndexOf(MyCube);//int
+        
         QuestionPicked();
         //拿積木
         if (GameTaskManager.task == 0)
         {
-            Debug.Log("TaskLv1");
             //拿積木
-            if (other.gameObject.tag == "cube" && !PlayerEntity._take &&
-             !other.GetComponent<BlockEntity>()._isChose &&
+            if (other.gameObject.tag == "cube" && !PlayerEntity._take && !other.GetComponent<BlockEntity>()._isChose &&
              GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.Contains(MyCube))
             {
                 other.GetComponent<BoxCollider>().isTrigger = false;
@@ -53,7 +52,7 @@ public class HandsTrigger : MonoBehaviour
                     GameEventCenter.DispatchEvent("NPCRemind");//輪流拼
                 }
 
-                else if (other.gameObject.GetComponent<BlockEntity>() == GameObject.Find(FirstCube + "(Clone)").GetComponent<BlockEntity>())
+                else if (other.gameObject.GetComponent<BlockEntity>() == GameObject.Find(FirstCube + "(Clone)").GetComponent<BlockEntity>())//firstcube
                 {
                     Debug.Log(other.gameObject.GetComponent<BlockEntity>());
                     //GameEventCenter.DispatchEvent("NPCRemind_Order"); 
@@ -130,6 +129,7 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Q2").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q3").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q4").SetActive(false);
+                GameObject.FindGameObjectWithTag("Q1").GetComponent<BoxCollider>().enabled = false;
                 BlockGameTask._RandomQuestion = 1;
                 BlockGameTask._userChooseQuestion = true;
             }
@@ -139,6 +139,7 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Q1").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q3").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q4").SetActive(false);
+                GameObject.FindGameObjectWithTag("Q2").GetComponent<BoxCollider>().enabled = false;
                 BlockGameTask._RandomQuestion = 2;
                 BlockGameTask._userChooseQuestion = true;
             }
@@ -148,6 +149,7 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Q1").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q2").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q4").SetActive(false);
+                GameObject.FindGameObjectWithTag("Q3").GetComponent<BoxCollider>().enabled = false;
                 BlockGameTask._RandomQuestion = 3;
                 BlockGameTask._userChooseQuestion = true;
             }
@@ -157,8 +159,9 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Q1").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q2").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q3").SetActive(false);
-                BlockGameTaskLv2._RandomQuestion = 4;
-                BlockGameTaskLv2._userChooseQuestion = true;
+                GameObject.FindGameObjectWithTag("Q4").GetComponent<BoxCollider>().enabled = false;
+                BlockGameTask._RandomQuestion = 4;
+                BlockGameTask._userChooseQuestion = true;
             }
             //舉手碰綠球
             else if (other.gameObject.tag == "greenTriggerBall")
@@ -297,22 +300,12 @@ public class HandsTrigger : MonoBehaviour
         }
         else if(GameTaskManager.task == 1)
         {
-            Debug.Log("TaskLv2");
-            Cubes = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes;
-            //var MyCube = other.GetComponent<BlockEntity>();//BLockEntity
-            //var index = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.IndexOf(MyCube);//int
             QuestionPickedLv2();
             //拿積木
-            if (other.gameObject.tag == "cube" && !PlayerEntity._take &&
-                !other.GetComponent<BlockEntity>()._isChose &&
-                GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.Contains(MyCube))
+            if (other.gameObject.tag == "cube" && !PlayerEntity._take && !other.GetComponent<BlockEntity>()._isChose && other.gameObject )
+                //GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.Contains(MyCube))
             {
                 other.GetComponent<BoxCollider>().isTrigger = false;
-                Debug.Log("Old" + MyPreCube + MyPreCubeIndex);
-                Debug.Log("New" + MyCube + index);
-                Debug.Log(index);//int
-                Debug.Log(index - MyPreCubeIndex);
-
 
                 //堆積木
                 if (!BlockGameTaskLv2._playerRound)
@@ -321,76 +314,57 @@ public class HandsTrigger : MonoBehaviour
                     Debug.Log("NPCs turn");
                     //StartCoroutine(NPCEntity.NPCRemind());
                     GameEventCenter.DispatchEvent("NPCRemind");//輪流拼
-                    PlayerEntity._take = false;
-                    Debug.Log(PlayerEntity._take);
-                    BlockGameTaskLv2._playerRound = false;
-                    Debug.Log(BlockGameTaskLv2._playerRound);
                 }
-                else if (Cubes[index - 1]._isChose && MyCube._isUserColor && BlockGameTaskLv2._playerRound)//成功
+                else if (other.gameObject.transform.localScale.x == BlockGameTaskLv2.KidShouldPut.transform.localScale.x &&
+                    other.gameObject.transform.localScale.y == BlockGameTaskLv2.KidShouldPut.transform.localScale.y &&
+                    other.gameObject.GetComponent<MeshRenderer>().material.color == BlockGameTaskLv2.KidShouldPut.GetComponent<MeshRenderer>().material.color &&
+                    other.GetComponent<BlockEntity>()._isUserColor && !other.GetComponent<BlockEntity>()._isChose)
+                //成功: same color, same scale(x,y), _isUserColor, !_isChose
                 {
                     Debug.Log("Sucdeed");
                     Debug.Log("Catch " + other.name);
-                    Debug.Log("follow hand");
                     other.GetComponent<BoxCollider>().isTrigger = false;
                     other.gameObject.GetComponent<Rigidbody>().useGravity = false;
                     other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                     other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
                     other.gameObject.transform.SetParent(gameObject.transform);
-                    MyPreCube = other.GetComponent<BlockEntity>();//BlockEntity
-                    MyPreCubeIndex = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.IndexOf(MyPreCube);//int
-                    Debug.Log(MyPreCube + " " + MyPreCubeIndex);
-                    PlayerEntity._take = true;
-                    Debug.Log(PlayerEntity._take);
-                    BlockGameTaskLv2._playerRound = false;
-                    Debug.Log(BlockGameTaskLv2._playerRound);
+                    //PlayerEntity._take = true;
+                    //Debug.Log(PlayerEntity._take);
+                    BlockGameTaskLv2.RecentOrder++;
+                    Debug.Log(BlockGameTaskLv2.RecentOrder++);
+                    BlockGameTaskLv2.KidShouldPut.GetComponent<QuestionCube>()._isCheck = true;
+                    Debug.Log("I put: " + BlockGameTaskLv2.KidShouldPut);
                 }
-                else if (Cubes[index - 1]._isChose && MyCube._isUserColor && BlockGameTaskLv2._playerRound && Cubes[index + 1]._isUserColor)//成功, next isUserColor
+                else if (other.GetComponent<BlockEntity>()._isUserColor && !other.GetComponent<BlockEntity>()._isChose && 
+                    other.gameObject.transform.localScale.x != BlockGameTaskLv2.KidShouldPut.transform.localScale.x &&
+                    other.gameObject.transform.localScale.y != BlockGameTaskLv2.KidShouldPut.transform.localScale.y ||
+                    other.GetComponent<BlockEntity>()._isUserColor && !other.GetComponent<BlockEntity>()._isChose &&
+                    other.gameObject.GetComponent<MeshRenderer>().material.color != BlockGameTaskLv2.KidShouldPut.GetComponent<MeshRenderer>().material.color)
+                //fail. color not match || fail. scale not match 
+                //_isUserColor, !_isChose
                 {
-                    Debug.Log("成功, next isUserColor");
-                    Debug.Log("Catch " + other.name);
-                    Debug.Log("follow hand");
-                    other.GetComponent<BoxCollider>().isTrigger = false;
-                    other.gameObject.GetComponent<Rigidbody>().useGravity = false;
-                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                    other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                    other.gameObject.transform.SetParent(gameObject.transform);
-                    MyPreCube = other.GetComponent<BlockEntity>();//BlockEntity
-                    MyPreCubeIndex = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.IndexOf(MyPreCube);//int
-                    Debug.Log(MyPreCube + " " + MyPreCubeIndex);
-                    PlayerEntity._take = true;
-                    Debug.Log(PlayerEntity._take);
-                    BlockGameTaskLv2._playerRound = true;
-                    Debug.Log(BlockGameTaskLv2._playerRound);
-                }
-                else if (!Cubes[index - 1]._isChose && MyCube._isUserColor && Cubes[index + 1]._isUserColor &&  BlockGameTaskLv2._playerRound)//player round. wrong order, former first, next isUsercColor
-                {
-                    Debug.Log("player round. wrong order, former first, next isUsercColor");
+                    Debug.Log("player round. fail. right color, wrong scale || fail. right color, wrong scale");
                     GameEventCenter.DispatchEvent("NPCRemind_Order");
                     //StartCoroutine(NPCEntity.NPCRemind());
                     other.gameObject.transform.parent = null;
                     other.gameObject.GetComponent<Rigidbody>().useGravity = true;
                     other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                     other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
-                    PlayerEntity._take = false;
-                    Debug.Log(PlayerEntity._take);
-                    BlockGameTaskLv2._playerRound = true;
-                    Debug.Log(BlockGameTaskLv2._playerRound);
+                    //PlayerEntity._take = false;
+                    //Debug.Log(PlayerEntity._take);
                 }
-                else if (!MyCube._isUserColor && BlockGameTaskLv2._playerRound)//player round. NPCs cube, take again,
-                {
-                    Debug.Log("Wrong Cube, its NPCs cube. , take again");
+                else if (!other.GetComponent<BlockEntity>()._isUserColor)
+                {//!_isUserColor
+                    Debug.Log("Wrong Cube, its NPCs cube. take it again");
                     GameEventCenter.DispatchEvent("NPCRemind_Order");
                     //StartCoroutine(NPCEntity.NPCRemind());
                     other.gameObject.transform.parent = null;
                     other.gameObject.GetComponent<Rigidbody>().useGravity = true;
                     other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                     other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
-                    PlayerEntity._take = false;
-                    Debug.Log(PlayerEntity._take);
-                    Debug.Log("Take again");
-                    BlockGameTaskLv2._playerRound = true;
-                    Debug.Log(BlockGameTaskLv2._playerRound);
+
                 }
+
                 //判斷是否輪到User
                 if (!other.gameObject.GetComponent<Rigidbody>().isKinematic)
                 {
@@ -400,10 +374,6 @@ public class HandsTrigger : MonoBehaviour
                 {
                     PlayerEntity._take = true;
                 }
-                MyCube = MyPreCube;
-                index = MyPreCubeIndex;
-                Debug.Log(MyCube + " " + MyPreCube);
-                Debug.Log(index + " " + MyPreCubeIndex);
             }
             //放積木
             else if (other.gameObject.tag == "q" && PlayerEntity._take)
@@ -413,14 +383,13 @@ public class HandsTrigger : MonoBehaviour
                 var parent = GameObject.Find("Answer");
                 //var cube = gameObject.transform.GetChild(5).gameObject.GetComponent<BlockEntity>();//hand底下的第6個
                 var cube = gameObject.transform.GetChild(0).gameObject.GetComponent<BlockEntity>();//FakeHand
-                Debug.Log(parent);
-                Debug.Log(cube);
                 cube.GetComponent<Rigidbody>().useGravity = true;
                 cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                 cube.transform.SetParent(parent.transform);
                 GameEventCenter.DispatchEvent("CubeAns", cube);
                 cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 Debug.Log(cube.transform.position);
+                BlockGameTaskLv2.RecentOrder++;
                 BlockGameTaskLv2._playerRound = false;
                 PlayerEntity._take = false;
             }
@@ -432,6 +401,7 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Q2").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q3").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q4").SetActive(false);
+                GameObject.FindGameObjectWithTag("Q1").GetComponent<BoxCollider>().enabled = false;
                 BlockGameTaskLv2._RandomQuestion = 1;
                 BlockGameTaskLv2._userChooseQuestion = true;
             }
@@ -441,6 +411,7 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Q1").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q3").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q4").SetActive(false);
+                GameObject.FindGameObjectWithTag("Q2").GetComponent<BoxCollider>().enabled = false;
                 BlockGameTaskLv2._RandomQuestion = 2;
                 BlockGameTaskLv2._userChooseQuestion = true;
             }
@@ -450,6 +421,7 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Q1").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q2").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q4").SetActive(false);
+                GameObject.FindGameObjectWithTag("Q3").GetComponent<BoxCollider>().enabled = false;
                 BlockGameTaskLv2._RandomQuestion = 3;
                 BlockGameTaskLv2._userChooseQuestion = true;
             }
@@ -459,6 +431,7 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Q1").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q2").SetActive(false);
                 GameObject.FindGameObjectWithTag("Q3").SetActive(false);
+                GameObject.FindGameObjectWithTag("Q4").GetComponent<BoxCollider>().enabled = false;
                 BlockGameTaskLv2._RandomQuestion = 4;
                 BlockGameTaskLv2._userChooseQuestion = true;
             }
