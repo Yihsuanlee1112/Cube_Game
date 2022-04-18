@@ -34,6 +34,7 @@ public class BlockEntity : GameEntityBase
     }
     public void ToAnsLv2()
     {
+        Debug.Log(BlockGameTaskLv2.RecentOrder);
         if (_isUserColor == false)
         {
             BlockGameTaskLv2._playerRound = false;
@@ -44,7 +45,7 @@ public class BlockEntity : GameEntityBase
         }
        
         _isChose = true;
-        BlockGameTaskLv2.RecentOrder++;
+        
         Debug.Log("RecentOrder: " + BlockGameTaskLv2.RecentOrder);
         gameObject.transform.position = ansTransform.position;
         gameObject.transform.rotation = ansTransform.rotation;
@@ -52,6 +53,8 @@ public class BlockEntity : GameEntityBase
         gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         Debug.Log(gameObject.name);
         Debug.Log("********" + ansTransform.position);
+        BlockGameTaskLv2.RecentOrder++;
+        Debug.Log(BlockGameTaskLv2.RecentOrder);
     }
     public void OtherSroupToAns()
     {

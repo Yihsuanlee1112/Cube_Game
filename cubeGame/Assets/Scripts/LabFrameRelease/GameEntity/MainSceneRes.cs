@@ -21,7 +21,7 @@ public class MainSceneRes : GameSceneEntityRes
     public List<GameObject> Q2_QuestionCube;
     public List<GameObject> Q3_QuestionCube;
     public List<GameObject> Q4_QuestionCube;
-    public List<GameObject> QuestionCube;
+    public List<GameObject> Question_Cube;
 
     [Header("BlockLists")]
     public List<BlockEntity> Q1_cube;

@@ -50,7 +50,7 @@ public class NPCEntity : GameEntityBase
 
     public void NPCPutObject(Transform puttransform)
     {
-        Debug.Log("NPCPUTOBJ!!!!!!");
+        Debug.Log("NPC PUT OBJ!!!!!!");
         ObjectTaked.transform.parent = null;
         ObjectTaked.transform.position = puttransform.position;
         ObjectTaked = null;

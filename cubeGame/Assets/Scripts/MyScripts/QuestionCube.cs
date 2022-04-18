@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class QuestionCube : MonoBehaviour
 {
-    public bool _isCheck = false;
+    public static bool _isCheck = false;
     public int CubeOrder = 0;
     public string TxtOrder = " ";
     private void Awake()

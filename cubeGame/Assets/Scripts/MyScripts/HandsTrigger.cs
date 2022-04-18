@@ -330,9 +330,6 @@ public class HandsTrigger : MonoBehaviour
                     other.gameObject.transform.SetParent(gameObject.transform);
                     //PlayerEntity._take = true;
                     //Debug.Log(PlayerEntity._take);
-                    BlockGameTaskLv2.RecentOrder++;
-                    Debug.Log(BlockGameTaskLv2.RecentOrder++);
-                    BlockGameTaskLv2.KidShouldPut.GetComponent<QuestionCube>()._isCheck = true;
                     Debug.Log("I put: " + BlockGameTaskLv2.KidShouldPut);
                 }
                 else if (other.GetComponent<BlockEntity>()._isUserColor && !other.GetComponent<BlockEntity>()._isChose && 
@@ -344,7 +341,7 @@ public class HandsTrigger : MonoBehaviour
                 //_isUserColor, !_isChose
                 {
                     Debug.Log("player round. fail. right color, wrong scale || fail. right color, wrong scale");
-                    GameEventCenter.DispatchEvent("NPCRemind_Order");
+                    GameEventCenter.DispatchEvent("NPCRemind_OrderLv2");
                     //StartCoroutine(NPCEntity.NPCRemind());
                     other.gameObject.transform.parent = null;
                     other.gameObject.GetComponent<Rigidbody>().useGravity = true;
@@ -356,7 +353,7 @@ public class HandsTrigger : MonoBehaviour
                 else if (!other.GetComponent<BlockEntity>()._isUserColor)
                 {//!_isUserColor
                     Debug.Log("Wrong Cube, its NPCs cube. take it again");
-                    GameEventCenter.DispatchEvent("NPCRemind_Order");
+                    GameEventCenter.DispatchEvent("NPCRemind_OrderLv2");
                     //StartCoroutine(NPCEntity.NPCRemind());
                     other.gameObject.transform.parent = null;
                     other.gameObject.GetComponent<Rigidbody>().useGravity = true;
@@ -390,6 +387,8 @@ public class HandsTrigger : MonoBehaviour
                 cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 Debug.Log(cube.transform.position);
                 BlockGameTaskLv2.RecentOrder++;
+                Debug.Log(BlockGameTaskLv2.RecentOrder);
+                QuestionCube._isCheck = true;
                 BlockGameTaskLv2._playerRound = false;
                 PlayerEntity._take = false;
             }

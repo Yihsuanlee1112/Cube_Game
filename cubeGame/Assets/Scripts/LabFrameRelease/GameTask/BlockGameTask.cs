@@ -13,7 +13,7 @@ public class BlockGameTask : TaskBase
     private List<GameObject> Q2_QuestionCube;
     private List<GameObject> Q3_QuestionCube;
     private List<GameObject> Q4_QuestionCube;
-    private List<GameObject> QuestionCube;
+    private List<GameObject> Question_Cube;
     private NPCEntity npc1;
     private Animator HostAnimator;
     private Animator KidA, KidB, KidC, KidD, KidE, KidF;
@@ -85,7 +85,7 @@ public class BlockGameTask : TaskBase
         Q2_QuestionCube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q2_QuestionCube;
         Q3_QuestionCube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q3_QuestionCube;
         Q4_QuestionCube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q4_QuestionCube;
-        QuestionCube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().QuestionCube;
+        Question_Cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Question_Cube;
         Q1_cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q1_cube;
         Q2_cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q2_cube;
         Q3_cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q3_cube;
@@ -690,7 +690,7 @@ public class BlockGameTask : TaskBase
     public void FindQ1_QuestionCubes()
     {
         Debug.Log("find Q1_Qcube!!!");
-        QuestionCube.AddRange(GameObject.FindGameObjectsWithTag("Q1question"));
+        Question_Cube.AddRange(GameObject.FindGameObjectsWithTag("Q1question"));
 
     }
     public void FindQ2_QuestionCubes()
@@ -849,7 +849,7 @@ public class BlockGameTask : TaskBase
     }
     public void KidsShouldPut()
     {
-        foreach (GameObject cube in QuestionCube)
+        foreach (GameObject cube in Question_Cube)
         {
             if (cube.GetComponent<QuestionCube>().CubeOrder == RecentOrder)
             {
