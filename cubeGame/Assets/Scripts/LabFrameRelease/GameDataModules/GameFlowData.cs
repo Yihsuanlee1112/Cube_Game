@@ -21,17 +21,24 @@ namespace GameData
         public string UserName { get; set; }
 
         /// <summary>
+        /// 语言
+        /// </summary>
+        public Level Level { get; set; }
+        /// <summary>
         /// FlowData 构造函数
         /// </summary>
         /// <param name="UserID"></param>
+        /// <param name="Username"></param>
         /// <param name="languageType"></param>
+        /// <param name="Level"></param>
         /// <param name="remindType"></param>
         /// <param name="gameData"></param>
-        public GameFlowData(string UserID, Language languageType, string Username)
+        public GameFlowData(string UserID, Language languageType, string Username, Level Level)
         {
             this.Language = languageType;
             this.UserId = UserID;
             this.UserName = Username;
+            this.Level = Level;
         }
 
         public GameFlowData()

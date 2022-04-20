@@ -11,7 +11,7 @@ public class MainUI : MonoBehaviour
     //public GameObject DropDown;
     public Button Start_Btn;
     public InputField Userid, Username;
-    public Dropdown LanguageDropdown; // 0: 中文, 1: 英文
+    public Dropdown LanguageDropdown, LevelDropdown; // 0: 中文, 1: 英文
     private void Start()
     {
         LanguageDropdown.onValueChanged.AddListener(delegate
@@ -25,6 +25,20 @@ public class MainUI : MonoBehaviour
             else if (LanguageDropdown.value == 1) // 英文
             {
                 gameData.Language = Language.English;
+            }
+        }); 
+        
+        LevelDropdown.onValueChanged.AddListener(delegate
+        {
+            Debug.Log("Level:" + LevelDropdown.value);
+            
+            if (LevelDropdown.value == 0) // LV1
+            {
+                gameData.Level = Level.Level1;
+            }
+            else if (LevelDropdown.value == 1) // LV2
+            {
+                gameData.Level = Level.Level2;
             }
         });
         Start_Btn.onClick.AddListener(delegate

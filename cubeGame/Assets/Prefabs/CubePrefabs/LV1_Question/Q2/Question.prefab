@@ -121,7 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!114 &3876045270526095986
@@ -536,7 +535,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!114 &4179719432415076365
@@ -1139,7 +1137,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!114 &8243210770772453814
@@ -2348,7 +2345,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!65 &7210712817548082638
@@ -2488,7 +2484,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!1 &5530720933224662020
@@ -2690,7 +2685,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!114 &4728746318708228566
@@ -2830,7 +2824,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!114 &9196182688735071411
@@ -3184,7 +3177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!65 &1873901697393814967
@@ -3324,7 +3316,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!1 &7657213066769938492
@@ -3690,7 +3681,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!1 &9065983400422848168
@@ -5486,7 +5476,7 @@ PrefabInstance:
     - target: {fileID: 7517571869261035825, guid: ec433a57d64b14a4ea758720ceece781,
         type: 3}
       propertyPath: m_Name
-      value: BlueCuboid_1
+      value: BlueCuboid3_1
       objectReference: {fileID: 0}
     - target: {fileID: 7517571869261035825, guid: ec433a57d64b14a4ea758720ceece781,
         type: 3}

@@ -11,12 +11,8 @@ public class BlockGameTaskLv2 : TaskBase
     private PlayerEntity player;
     private GameObject userLeftHandTrigger;
     private GameObject userRightHandTrigger;
-    private List<GameObject> Q1_QuestionCube;
-    private List<GameObject> Q2_QuestionCube;
-    private List<GameObject> Q3_QuestionCube;
-    private List<GameObject> Q4_QuestionCube;
     private List<GameObject> Question_Cube;
-    private NPCEntity npc1;
+    private NPCEntity npc;
     private Animator HostAnimator;
     private Animator KidA, KidB, KidC, KidD, KidE, KidF;
     private GameObject GreenTriggerBall;
@@ -26,7 +22,7 @@ public class BlockGameTaskLv2 : TaskBase
     private List<BlockEntity> Q4_cube;
     private List<BlockEntity> AllCubes;
     private List<BlockEntity> Cubes;
-    private List<BlockEntity> Lv2_Order;
+    private List<BlockEntity> Final_Order;
     //private List<GameObject> Lv2_Order;
     private List<BlockEntity> cube_GA;
     private List<BlockEntity> cube_GB;
@@ -69,6 +65,7 @@ public class BlockGameTaskLv2 : TaskBase
         GameEventCenter.AddEvent("CheckCube", CheckCube);
         GameEventCenter.AddEvent<BlockEntity>("CubeAns", CubeAns);
         GameEventCenter.AddEvent<string>("GetFocusName", GetFocusName);
+        GameEventCenter.AddEvent<BlockEntity>("OtherGroupCubeAns", OtherGroupCubeAns);
         GameEventCenter.AddEvent("AddCubesToList", AddCubesToList);
         GameEventCenter.AddEvent("FindQ1Cubes", FindQ1Cubes);
         GameEventCenter.AddEvent("FindQ2Cubes", FindQ2Cubes);
@@ -85,19 +82,15 @@ public class BlockGameTaskLv2 : TaskBase
         userLeftHandTrigger = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().userLeftHandTrigger;
         userRightHandTrigger = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().userRightHandTrigger;
         player = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().player;
-        npc1 = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().npc1;
+        npc = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().npc;
         GreenTriggerBall = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().GreenTriggerBall;
-        Q1_QuestionCube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q1_QuestionCube;
-        Q2_QuestionCube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q2_QuestionCube;
-        Q3_QuestionCube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q3_QuestionCube;
-        Q4_QuestionCube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q4_QuestionCube;
         Question_Cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Question_Cube;
         Q1_cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q1_cube;
         Q2_cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q2_cube;
         Q3_cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q3_cube;
         Q4_cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q4_cube;
         Cubes = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes;
-        Lv2_Order = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Lv2_Order;
+        Final_Order = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Final_Order;
         cube_GA = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().cube_GA;
         cube_GB = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().cube_GB;
         cube_GC = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().cube_GC;
@@ -105,10 +98,10 @@ public class BlockGameTaskLv2 : TaskBase
         Colors = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Colors;
         textOnQuestion = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().textOnQuestion;
         //objectlist = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().ObjectList;
-        npc1.npc1hand = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().NPC1_Hand; 
-        npc1.ChineseSpeechList = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().ChineseSpeechClip;
-        npc1.EnglishSpeechList = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().EnglishSpeechClip;
-        npc1.animator = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().NPC1_animator;
+        npc.npc_hand = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().NPC_Hand; 
+        npc.ChineseSpeechList = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().ChineseSpeechClip;
+        npc.EnglishSpeechList = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().EnglishSpeechClip;
+        npc.animator = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().NPC_animator;
         HostAnimator = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().HostAnimator;
         QuestionOrder = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().QuestionOrder;
         //mainSceneUI = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().MainSceneUI;
@@ -123,7 +116,7 @@ public class BlockGameTaskLv2 : TaskBase
         player.Init(GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().vrCamera);
 
         //NPC初始化
-        npc1.EntityInit();
+        npc.EntityInit();
 
         //設定VR中可看到UI
         yield return new WaitForSeconds(0.5f);
@@ -220,12 +213,12 @@ public class BlockGameTaskLv2 : TaskBase
 
 
         yield return new WaitForSeconds(3);
-        npc1.animator.SetBool("isTalk", true);
+        npc.animator.SetBool("isTalk", true);
         //不算～，你慢出，再猜一次！
         clip = Resources.Load<AudioClip>(audioClipRootPath+"NPC_TooSlow");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        npc1.animator.SetBool("isTalk", false);
+        npc.animator.SetBool("isTalk", false);
         for (int i = 0; i < 3; i++)
         {
             GameObject.FindWithTag("Result").SetActive(false);
@@ -296,7 +289,6 @@ public class BlockGameTaskLv2 : TaskBase
         //User跟對面NPC猜拳**********************************************************************************
         GameEventCenter.DispatchEvent("InstatiateCubeLv2");//
         GameEventCenter.DispatchEvent("CubeOnDesk");
-        //GameEventCenter.DispatchEvent("AddCubesToList");
         GameEventCenter.DispatchEvent("Find_QuestionCubes");//*****
         
         foreach (BlockEntity cube in AllCubes)
@@ -360,42 +352,49 @@ public class BlockGameTaskLv2 : TaskBase
             cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         }
-        
         GameEventCenter.DispatchEvent("AddCubesToList");
         GameEventCenter.DispatchEvent("PutInRightOrder");
         GameEventCenter.DispatchEvent("User_MissingOneCubeLv2");
 
         //開始堆積木
-
-        _StartTobuild = true;
+        //_StartTobuild = true;
         userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
-       
+
+        if(Final_Order[0].GetComponent<BlockEntity>()._isUserColor)
+        {
+            _playerRound = true;
+        }
         while (!_BlockFinished)//LV2
         {
-            if(Lv2_Order[0].GetComponent<BlockEntity>()._isUserColor)
-            {
-                _playerRound = true;
-            }
             _StartTobuild = true;
             GameEventCenter.DispatchEvent("KidsShouldPut");
             Debug.Log("Recent order is : " + RecentOrder);
+            if (Final_Order[RecentOrder - 1]._isUserColor)
+            {
+                _playerRound = true;
+            }
+            else
+            {
+                _playerRound = false;
+            }
+            Debug.Log("PlayerRound: " + _playerRound);
             //while (_StartTobuild) 
             //{
             //    yield return OtherGroupBuildBlock();
             //}
             if (_playerRound)  //玩家回合
             {
-                if (Lv2_Order[RanNum - 1].GetComponent<BlockEntity>()._isChose && Lv2_Order[RanNum - 1].GetComponent<BlockEntity>()._isUserColor)
+                if (Final_Order[RanNum - 1]._isChose && Final_Order[RanNum].GetComponent<BoxCollider>().enabled == false)//檢查前一個積木，
                 {
-                    if (Lv2_Order[RanNum - 1].GetComponent<BlockEntity>()._isChose && Lv2_Order[RanNum].GetComponent<BlockEntity>()._isChose && Lv2_Order[RanNum].GetComponent<BlockEntity>()._isUserColor)
+                    if (Final_Order[RanNum]._isChose) //不見的也放過了
                     {
-                        Debug.Log(Lv2_Order[RanNum] + "was put.");
+                        Debug.Log(Final_Order[RanNum] + "was put.");
                         Debug.Log("User turn");
                         yield return new WaitUntil(() => !_playerRound);
-
                     }
-                    else
+
+                    else 
                     {
                         //user要跟老師說少一個，wait until 叫老師
                         yield return UserNeedsACube();
@@ -404,46 +403,31 @@ public class BlockGameTaskLv2 : TaskBase
                         GameObject.Find(MissingCube).GetComponent<BoxCollider>().enabled = true;
                         GameObject.Find(MissingCube).GetComponent<MeshRenderer>().enabled = true;
                     }
-
                 }
 
                 else
+                {
                     //GameEventCenter.DispatchEvent("KidsShouldPut");
                     Debug.Log("User touch Block");
-                yield return new WaitUntil(() => !_playerRound);
+                    yield return new WaitUntil(() => !_playerRound);
+                }
             }
             else  //NPC回合
             {
                 _npcremind = false;
-                foreach (BlockEntity cube in Lv2_Order)
+                foreach (BlockEntity cube in Final_Order)
                 {
-                    if (!cube.GetComponent<BlockEntity>()._isChose)
+                    if (!cube._isChose && !cube._isUserColor)
                     {
-                        npc1.animator.Play("Puzzle"); //npc拿積木
-                        yield return new WaitForSeconds(7);
                         if (!_npcremind)
                         {
+                            npc.animator.Play("Puzzle"); //npc拿積木
+                            yield return new WaitForSeconds(7);
                             Debug.Log("NPC putting Block");
                             GameEventCenter.DispatchEvent("KidsShouldPut");
                             GameEventCenter.DispatchEvent("CubeAns", cube);
-                            QuestionCube._isCheck = true;
-                            if(Lv2_Order[RecentOrder]._isUserColor)
-                            {
-                                _playerRound = true;
-                            }
-                            else
-                            {
-                                _playerRound = false;
-                            }
-                            
+                            break;
                         }
-                        else
-                        {
-                            Debug.Log("wait for remind");
-                            //clip = Resources.Load<AudioClip>(audioClipRootPath+"NPC_Remind");
-                            //yield return new WaitForSeconds(clip.length);
-                        }
-                        break;
                     }
                 }
             }
@@ -534,20 +518,20 @@ public class BlockGameTaskLv2 : TaskBase
     }
     IEnumerator NPC_WinnerFirstLv2()
     {
-        npc1.animator.SetBool("isTalk", true);
+        npc.animator.SetBool("isTalk", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath+"NPC_WinnerFirstLv2");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        npc1.animator.SetBool("isTalk", false);
+        npc.animator.SetBool("isTalk", false);
     }
     IEnumerator NPC_YouWinLv2()
     {
-        npc1.animator.SetBool("isTalk2", true);
+        npc.animator.SetBool("isTalk2", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath+"NPC_YouWinLv2");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         Debug.Log(audioClipRootPath+"NPC_YouWinLv2" + clip.length);
-        npc1.animator.SetBool("isTalk2", false);
+        npc.animator.SetBool("isTalk2", false);
     }
     IEnumerator All_NPC_SayRPS()
     {
@@ -588,15 +572,17 @@ public class BlockGameTaskLv2 : TaskBase
         //開起綠球
         GreenTriggerBall.SetActive(true);
         //clip = Resources.Load<AudioClip>(audioClipRootPath+"NPC_YouCanTellTheTeacher1");//你可以跟老師說
+        npc.animator.SetBool("isTalk2", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath+"NPC_YouCanTellTheTeacher2");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
+        npc.animator.SetBool("isTalk2", false);
         Debug.Log("NPC叫user要跟老師說少一個");
         yield return new WaitForSeconds(2);
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"Host_RaiseHandThenTell");
-        GameAudioController.Instance.PlayOneShot(clip);
-        yield return new WaitForSeconds(clip.length);
-        Debug.Log("主持人說明要跟小花一樣，舉手之後跟老師說少一個");
+        //clip = Resources.Load<AudioClip>(audioClipRootPath+"Host_RaiseHandThenTell");
+        //GameAudioController.Instance.PlayOneShot(clip);
+        //yield return new WaitForSeconds(clip.length);
+        //Debug.Log("主持人說明舉手之後跟老師說少一個");
         yield return new WaitUntil(() => _userRaiseHand);//*******************
         yield return new WaitForSeconds(3);
         GreenTriggerBall.SetActive(false);//Close GreenTriggerBall
@@ -666,7 +652,7 @@ public class BlockGameTaskLv2 : TaskBase
     }
     public void CheckCube()
     {
-        foreach (BlockEntity item in Lv2_Order)
+        foreach (BlockEntity item in Final_Order)
         {
             if (!item._isChose)
             {
@@ -732,13 +718,13 @@ public class BlockGameTaskLv2 : TaskBase
 
                 if (questionOrder.name == cubeName)
                 {
-                    Lv2_Order.Add(cube);
+                    Final_Order.Add(cube);
                     Debug.Log("questionOrder.name: " + questionOrder.name);
                     Debug.Log("cube.name: " + cube.name);
                 }
             }
         }
-        foreach (BlockEntity cube in Lv2_Order)
+        foreach (BlockEntity cube in Final_Order)
         {
             if (UserChoice1 == cube.GetComponent<MeshRenderer>().material.color || UserChoice2 == cube.GetComponent<MeshRenderer>().material.color)
             {
@@ -749,7 +735,6 @@ public class BlockGameTaskLv2 : TaskBase
             }
         }
     }
-
     public void AddCubesToList()
     {
         if (_RandomQuestion == 1)
@@ -910,25 +895,25 @@ public class BlockGameTaskLv2 : TaskBase
         Debug.Log(RanNum);
         for (int i = 0; i < 9; i++)
         {
-            if (Lv2_Order[RanNum].GetComponent<BlockEntity>()._isUserColor)
+            if (Final_Order[RanNum]._isUserColor)
             {
                 Debug.Log(RanNum);
-                Debug.Log(Lv2_Order[RanNum]);
-                MissingCube = Lv2_Order[RanNum].name;
+                Debug.Log(Final_Order[RanNum]);
+                MissingCube = Final_Order[RanNum].name;
                 Debug.Log(MissingCube + " is missing....");
                 GameObject.Find(MissingCube).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 GameObject.Find(MissingCube).GetComponent<MeshRenderer>().enabled = false;
                 GameObject.Find(MissingCube).GetComponent<BoxCollider>().enabled = false;
                 break;
             }
-            else if (!Lv2_Order[RanNum].GetComponent<BlockEntity>()._isUserColor)
+            else if (!Final_Order[RanNum]._isUserColor)
             {
                 if (RanNum > 9)
                 {
                     RanNum--;
                     Debug.Log(RanNum);
-                    Debug.Log(Lv2_Order[RanNum]);
-                    MissingCube = Lv2_Order[RanNum].name;
+                    Debug.Log(Final_Order[RanNum]);
+                    MissingCube = Final_Order[RanNum].name;
                     Debug.Log(MissingCube + " is missing....");
                     GameObject.Find(MissingCube).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                     GameObject.Find(MissingCube).GetComponent<MeshRenderer>().enabled = false;
@@ -939,8 +924,8 @@ public class BlockGameTaskLv2 : TaskBase
                 {
                     RanNum++;
                     Debug.Log(RanNum);
-                    Debug.Log(Lv2_Order[RanNum]);
-                    MissingCube = Lv2_Order[RanNum].name;
+                    Debug.Log(Final_Order[RanNum]);
+                    MissingCube = Final_Order[RanNum].name;
                     Debug.Log(MissingCube + " is missing....");
                     GameObject.Find(MissingCube).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                     GameObject.Find(MissingCube).GetComponent<MeshRenderer>().enabled = false;
@@ -957,11 +942,15 @@ public class BlockGameTaskLv2 : TaskBase
     }
     public void PutObject()
     {
-        npc1.NPCPutObject(GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().PutPosition);
+        npc.NPCPutObject(GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().PutPosition);
     }
     public void CubeAns(BlockEntity cube)
     {
         cube.ToAnsLv2();
+    }
+    public void OtherGroupCubeAns(BlockEntity cube)
+    {
+        cube.OtherSroupToAns();
     }
     public void GetFocusName(string name)
     {

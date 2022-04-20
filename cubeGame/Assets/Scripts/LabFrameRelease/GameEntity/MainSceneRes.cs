@@ -6,12 +6,12 @@ public class MainSceneRes : GameSceneEntityRes
 {
     [Header("Entities")]
     public PlayerEntity player;
-    public NPCEntity npc1;
+    public NPCEntity npc;
     public CameraEntity eyeCamera;
 
     [Header("GameObjects")]
     public GameObject GreenTriggerBall;
-    public GameObject NPC1_Hand;
+    public GameObject NPC_Hand;
     public GameObject vrCamera;
     public GameObject userLeftHandTrigger;
     public GameObject userRightHandTrigger;
@@ -29,7 +29,7 @@ public class MainSceneRes : GameSceneEntityRes
     public List<BlockEntity> Q3_cube;
     public List<BlockEntity> Q4_cube;
     public List<BlockEntity> AllCubes;
-    public List<BlockEntity> Lv2_Order;
+    public List<BlockEntity> Final_Order;
     //public List<GameObject> Lv2_Order;
     [Header("Each_Groups_BlockLists")]
     public List<BlockEntity> cube_GA;
@@ -46,7 +46,7 @@ public class MainSceneRes : GameSceneEntityRes
 
     [Header("Animator")]
     public Animator HostAnimator;
-    public Animator NPC1_animator;
+    public Animator NPC_animator;
     public Animator KidA, KidB, KidC, KidD, KidE, KidF;
 
     [Header("Instantiate")]

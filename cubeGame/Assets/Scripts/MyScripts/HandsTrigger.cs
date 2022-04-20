@@ -29,67 +29,73 @@ public class HandsTrigger : MonoBehaviour
         var MyCube = other.GetComponent<BlockEntity>();//BLockEntity
         var index = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.IndexOf(MyCube);//int
         
-        QuestionPicked();
+        
         //拿積木
         if (GameTaskManager.task == 0)
         {
+            QuestionPicked();
             //拿積木
-            if (other.gameObject.tag == "cube" && !PlayerEntity._take && !other.GetComponent<BlockEntity>()._isChose &&
-             GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.Contains(MyCube))
+            if (other.gameObject.tag == "cube" && !PlayerEntity._take && !other.GetComponent<BlockEntity>()._isChose && other.gameObject)
+            //GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.Contains(MyCube))
             {
                 other.GetComponent<BoxCollider>().isTrigger = false;
-                Debug.Log("Old" + MyPreCube + MyPreCubeIndex);
-                Debug.Log("New" + MyCube + index);
-                Debug.Log(index);//int
-                Debug.Log(index - MyPreCubeIndex);
-                
+
                 //堆積木
                 if (!BlockGameTask._playerRound)
                 {
                     //BLockGameTask._NPCRemind = true;
-                    Debug.Log("Wrong Action");
+                    Debug.Log("NPCs turn");
                     //StartCoroutine(NPCEntity.NPCRemind());
                     GameEventCenter.DispatchEvent("NPCRemind");//輪流拼
                 }
-
-                else if (other.gameObject.GetComponent<BlockEntity>() == GameObject.Find(FirstCube + "(Clone)").GetComponent<BlockEntity>())//firstcube
+                else if (other.gameObject.transform.localScale.x == BlockGameTask.KidShouldPut.transform.localScale.x &&
+                    other.gameObject.transform.localScale.y == BlockGameTask.KidShouldPut.transform.localScale.y &&
+                    other.gameObject.GetComponent<MeshRenderer>().material.color == BlockGameTask.KidShouldPut.GetComponent<MeshRenderer>().material.color &&
+                    other.GetComponent<BlockEntity>()._isUserColor && !other.GetComponent<BlockEntity>()._isChose)
+                //成功: same color, same scale(x,y), _isUserColor, !_isChose
                 {
-                    Debug.Log(other.gameObject.GetComponent<BlockEntity>());
-                    //GameEventCenter.DispatchEvent("NPCRemind_Order"); 
+                    Debug.Log("Sucdeed");
+                    Debug.Log("Catch " + other.name);
                     other.GetComponent<BoxCollider>().isTrigger = false;
                     other.gameObject.GetComponent<Rigidbody>().useGravity = false;
                     other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                     other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
                     other.gameObject.transform.SetParent(gameObject.transform);
+                    //PlayerEntity._take = true;
+                    //Debug.Log(PlayerEntity._take);
+                    Debug.Log("I put: " + BlockGameTask.KidShouldPut);
                 }
-                else if (index > 0 && index < 10 && index - MyPreCubeIndex != 2
-                    || !GameObject.Find(FirstCube + "(Clone)").GetComponent<Rigidbody>().isKinematic)
+                else if (other.GetComponent<BlockEntity>()._isUserColor && !other.GetComponent<BlockEntity>()._isChose &&
+                    other.gameObject.transform.localScale.x != BlockGameTask.KidShouldPut.transform.localScale.x &&
+                    other.gameObject.transform.localScale.y != BlockGameTask.KidShouldPut.transform.localScale.y ||
+                    other.GetComponent<BlockEntity>()._isUserColor && !other.GetComponent<BlockEntity>()._isChose &&
+                    other.gameObject.GetComponent<MeshRenderer>().material.color != BlockGameTask.KidShouldPut.GetComponent<MeshRenderer>().material.color)
+                //fail. color not match || fail. scale not match 
+                //_isUserColor, !_isChose
                 {
-                    Debug.Log("Wrong Cube, put 1 first");
-                    GameEventCenter.DispatchEvent("NPCRemind_Order");
+                    Debug.Log("player round. fail. right color, wrong scale || fail. right color, wrong scale");
+                    GameEventCenter.DispatchEvent("NPCRemind_OrderLv2");
                     //StartCoroutine(NPCEntity.NPCRemind());
                     other.gameObject.transform.parent = null;
                     other.gameObject.GetComponent<Rigidbody>().useGravity = true;
                     other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                     other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+                    //PlayerEntity._take = false;
+                    //Debug.Log(PlayerEntity._take);
                 }
-                else if (GameObject.Find(FirstCube + "(Clone)").GetComponent<Rigidbody>().isKinematic)
-                {
-                    Debug.Log("Catch " + other.name);
-                    Debug.Log("follow hand");
-                    Debug.Log(gameObject.name);
-                    Debug.Log(other.gameObject.name);
-                    other.GetComponent<BoxCollider>().isTrigger = false;
-                    other.gameObject.GetComponent<Rigidbody>().useGravity = false;
-                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                    other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                    other.gameObject.transform.SetParent(gameObject.transform);
-                    MyPreCube = other.GetComponent<BlockEntity>();//BlockEntity
-                    MyPreCubeIndex = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.IndexOf(MyPreCube);//int
-                    Debug.Log(MyPreCube + " " + MyPreCubeIndex);
+                else if (!other.GetComponent<BlockEntity>()._isUserColor)
+                {//!_isUserColor
+                    Debug.Log("Wrong Cube, its NPCs cube. take it again");
+                    GameEventCenter.DispatchEvent("NPCRemind_OrderLv2");
+                    //StartCoroutine(NPCEntity.NPCRemind());
+                    other.gameObject.transform.parent = null;
+                    other.gameObject.GetComponent<Rigidbody>().useGravity = true;
+                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                    other.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+
                 }
 
-               //判斷是否輪到User
+                //判斷是否輪到User
                 if (!other.gameObject.GetComponent<Rigidbody>().isKinematic)
                 {
                     PlayerEntity._take = false;
@@ -98,28 +104,23 @@ public class HandsTrigger : MonoBehaviour
                 {
                     PlayerEntity._take = true;
                 }
-                MyCube = MyPreCube;
-                index = MyPreCubeIndex;
-                Debug.Log(MyCube + " " + MyPreCube);
-                Debug.Log(index + " " + MyPreCubeIndex);
             }
             //放積木
             else if (other.gameObject.tag == "q" && PlayerEntity._take)
             {
+                Debug.Log(PlayerEntity._take);
                 Debug.Log("Put toAns");
                 var parent = GameObject.Find("Answer");
                 //var cube = gameObject.transform.GetChild(5).gameObject.GetComponent<BlockEntity>();//hand底下的第6個
                 var cube = gameObject.transform.GetChild(0).gameObject.GetComponent<BlockEntity>();//FakeHand
-                Debug.Log(parent);
-                Debug.Log(cube);
                 cube.GetComponent<Rigidbody>().useGravity = true;
                 cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                 cube.transform.SetParent(parent.transform);
                 GameEventCenter.DispatchEvent("CubeAns", cube);
                 cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                //Debug.Log(parent);
                 Debug.Log(cube.transform.position);
-                //GetComponent<BoxCollider>().enabled = false;
+                Debug.Log("In Hands Trigger:" + BlockGameTask.RecentOrder);
+                QuestionCube._isCheck = true;
                 BlockGameTask._playerRound = false;
                 PlayerEntity._take = false;
             }
@@ -303,7 +304,6 @@ public class HandsTrigger : MonoBehaviour
             QuestionPickedLv2();
             //拿積木
             if (other.gameObject.tag == "cube" && !PlayerEntity._take && !other.GetComponent<BlockEntity>()._isChose && other.gameObject )
-                //GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.Contains(MyCube))
             {
                 other.GetComponent<BoxCollider>().isTrigger = false;
 
@@ -313,7 +313,7 @@ public class HandsTrigger : MonoBehaviour
                     //BLockGameTask._NPCRemind = true;
                     Debug.Log("NPCs turn");
                     //StartCoroutine(NPCEntity.NPCRemind());
-                    GameEventCenter.DispatchEvent("NPCRemind");//輪流拼
+                    GameEventCenter.DispatchEvent("NPCRemindLv2");//輪流拼
                 }
                 else if (other.gameObject.transform.localScale.x == BlockGameTaskLv2.KidShouldPut.transform.localScale.x &&
                     other.gameObject.transform.localScale.y == BlockGameTaskLv2.KidShouldPut.transform.localScale.y &&
@@ -386,8 +386,7 @@ public class HandsTrigger : MonoBehaviour
                 GameEventCenter.DispatchEvent("CubeAns", cube);
                 cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 Debug.Log(cube.transform.position);
-                BlockGameTaskLv2.RecentOrder++;
-                Debug.Log(BlockGameTaskLv2.RecentOrder);
+                Debug.Log("In Hands Trigger:" +BlockGameTaskLv2.RecentOrder);
                 QuestionCube._isCheck = true;
                 BlockGameTaskLv2._playerRound = false;
                 PlayerEntity._take = false;

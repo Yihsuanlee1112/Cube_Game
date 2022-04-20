@@ -12,7 +12,7 @@ public class NPCEntity : GameEntityBase
     public Animator animator;
     public List<AudioClip> ChineseSpeechList;
     public List<AudioClip> EnglishSpeechList;
-    public GameObject npc1hand;
+    public GameObject npc_hand;
     private GameObject ObjectTaked;
     private AudioClip clip;
     public static int Remindcount = 0;
@@ -42,9 +42,9 @@ public class NPCEntity : GameEntityBase
     {
         Debug.Log("NPC touch block");
         Debug.Log(gameObject.name);
-        gameObject.transform.position = npc1hand.transform.position;
+        gameObject.transform.position = npc_hand.transform.position;
         gameObject.transform.parent = null;
-        gameObject.transform.SetParent(npc1hand.transform);
+        gameObject.transform.SetParent(npc_hand.transform);
         ObjectTaked = gameObject;
     }
 
@@ -119,7 +119,6 @@ public class NPCEntity : GameEntityBase
         //clip = Resources.Load<AudioClip>("AudioClip/NPC_Remind2");
         //GameAudioController.Instance.PlayOneShot(clip);
         //yield return new WaitForSeconds(clip.length);
-        GameAudioController.Instance.PlayOneShot(ChineseSpeechList[6]);//NPC_Remind_Order
         if (GameDataManager.FlowData.Language == Language.中文)
         {
             GameAudioController.Instance.PlayOneShot(ChineseSpeechList[1]);//NPC_Remind_Order

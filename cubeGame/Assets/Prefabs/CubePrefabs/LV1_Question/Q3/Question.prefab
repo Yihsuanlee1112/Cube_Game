@@ -861,7 +861,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!65 &3879981557465705414
@@ -985,7 +984,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!114 &8533733675616709468
@@ -1564,7 +1562,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!114 &6207656424158861791
@@ -1890,7 +1887,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!1 &3253897255592181923
@@ -2107,7 +2103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!1 &4212930067185919442
@@ -2340,7 +2335,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!65 &4715742867986838877
@@ -2480,7 +2474,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!1 &4577218545905259054
@@ -3213,7 +3206,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!1 &6058692315942268988
@@ -3650,7 +3642,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!65 &6563419576753877862
@@ -3790,7 +3781,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fe4ed72ec495445b5f0e8c89a58791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCheck: 0
   CubeOrder: 0
   TxtOrder: ' '
 --- !u!1 &7408069037862665928

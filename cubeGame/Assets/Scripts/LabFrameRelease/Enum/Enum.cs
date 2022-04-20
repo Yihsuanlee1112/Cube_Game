@@ -51,9 +51,9 @@ public enum Difficult
 /// <summary>
 /// 遊戲模式
 /// </summary>
-public enum Mode
+public enum Level
 {
-    TrainingMode,
-    ChallengeMode
+    Level1,
+    Level2
 }
 
