@@ -308,13 +308,47 @@ public class BlockGameTaskLv2 : TaskBase
         yield return new WaitForSeconds(clip.length);
         //小朋友，你們可以分配顏色，按照題目上的數字順序輪流完成作品
         yield return Teacher_LV2Remind();
-        //NPC說 總共有四種顏色耶，我們來猜拳，贏的人可以先選兩種顏色
+        //NPC說 總共有四種顏色耶，你可以先選兩種顏色*******
         yield return NPC_WinnerFirstLv2(); 
+        //userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
+        //userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
+        //GameEventCenter.DispatchEvent("TwoPlayerRPS");
+        ////NPC說剪刀石頭布
+        //clip = Resources.Load<AudioClip>(audioClipRootPath+"NPC_SayRPS");
+        //GameAudioController.Instance.PlayOneShot(clip);
+        //Debug.Log(clip.length);
+        //_userChooseRPS = false;
+        //do
+        //{
+        //    Debug.Log("User choose RPS");
+        //    Debug.Log(_userChooseRPS);
+        //    yield return new WaitUntil(() => _userChooseRPS);
+        //    Debug.Log(_userChooseRPS);
+        //} while (!_userChooseRPS);
+        //userRightHandTrigger.GetComponent<BoxCollider>().enabled = false;
+        //userLeftHandTrigger.GetComponent<BoxCollider>().enabled = false;
+        //yield return new WaitForSeconds(2);
+
+        //GameObject.FindWithTag("Result").SetActive(false);
+        //for (int i = 0; i < 3; i++)
+        //{
+        //    GameObject.FindWithTag("RPS").SetActive(false);
+        //}
+        //yield return new WaitForSeconds(2);
+
+        //框架
+        
+
+        //User choose two colors
+        yield return UserChooseColor();//**************************
+        //猜拳之後，小星說你贏了，你想要哪兩個顏色呢?
+        yield return NPC_YouWinLv2();
+
         userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
         GameEventCenter.DispatchEvent("TwoPlayerRPS");
         //NPC說剪刀石頭布
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"NPC_SayRPS");
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_SayRPS");
         GameAudioController.Instance.PlayOneShot(clip);
         Debug.Log(clip.length);
         _userChooseRPS = false;
@@ -336,12 +370,6 @@ public class BlockGameTaskLv2 : TaskBase
         }
         yield return new WaitForSeconds(2);
 
-        //框架
-        //猜拳之後，小星說你贏了，你想要哪兩個顏色呢?
-        yield return NPC_YouWinLv2();
-
-        //User choose two colors
-        yield return UserChooseColor();//**************************
         //題目出現數字順序
         GameEventCenter.DispatchEvent("RandomNumOnQuestion");
         GameEventCenter.DispatchEvent("CheckOrder");//QuestionCube
@@ -419,10 +447,20 @@ public class BlockGameTaskLv2 : TaskBase
                 {
                     if (!cube._isChose && !cube._isUserColor)
                     {
+                        npc.animator.SetBool("isFindCube", true);
+                        Debug.Log("find Block");
+                        //yield return new WaitForSeconds(3f);
+                        //npc.animator.Play("坐在椅子上放積木(2D圖片) NPC用左手拿取桌上的積木，然後放在中間的圖片上");
+                        npc.animator.SetBool("isTakeCube", true);
+                        yield return new WaitForSeconds(1f);
+                        Debug.Log("put Block");
+                        npc.transform.rotation = Quaternion.Euler(0, 0, 0);
                         if (!_npcremind)
                         {
-                            npc.animator.Play("Puzzle"); //npc拿積木
-                            yield return new WaitForSeconds(7);
+                            //    npc.animator.Play("Puzzle"); //npc拿積木
+                            //    yield return new WaitForSeconds(7);
+                            npc.animator.SetBool("isFindCube", false);
+                            npc.animator.SetBool("isTakeCube", false);
                             Debug.Log("NPC putting Block");
                             GameEventCenter.DispatchEvent("KidsShouldPut");
                             GameEventCenter.DispatchEvent("CubeAns", cube);
@@ -608,15 +646,21 @@ public class BlockGameTaskLv2 : TaskBase
         //NPC: 蛤~我也想要紅色[故意跟user一樣]，那我們來猜拳
         UserChoice1 = Colors[0];//red
         UserChoice2 = Colors[3];//yellow
-        //UserChoice1 = Colors[1];
-        //UserChoice1 = Colors[2];
-        //UserChoice1 = Colors[3];
-        //UserChoice1 = green;
-        //UserChoice2 = yellow;
+                                //UserChoice1 = Colors[1];
+                                //UserChoice1 = Colors[2];
+                                //UserChoice1 = Colors[3];
+                                //UserChoice1 = green;
+                                //UserChoice2 = yellow;
+        GameDataManager.FlowData.UserColor = UserChoice2.ToString();
+        //NPC: 蛤~我也想要紅色[故意跟user一樣]，那我們來猜拳
+        SpVoice npcsay = new SpVoice();
+        npcsay.Speak(GameDataManager.FlowData.UserName, SpeechVoiceSpeakFlags.SVSFlagsAsync);
+        yield return new WaitForSeconds(1.5f);
+
         Debug.Log(UserChoice1 + "UserChoice1");
         Debug.Log(UserChoice2 + " + UserChoice2");
-       
-        yield return new WaitForSeconds(5);
+        Debug.Log(GameDataManager.FlowData.UserColor);
+        yield return new WaitForSeconds(2);
     }
     IEnumerator OtherGroupBuildBlock()
     {

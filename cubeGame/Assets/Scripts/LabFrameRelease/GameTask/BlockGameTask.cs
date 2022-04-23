@@ -359,7 +359,7 @@ public class BlockGameTask : TaskBase
                         //user要跟老師說少一個，wait until 叫老師
                         yield return UserNeedsACube();
                         Debug.Log("User need " + MissingCube);
-                        yield return new WaitForSeconds(5);
+                        yield return new WaitForSeconds(2);
                         GameObject.Find(MissingCube).GetComponent<BoxCollider>().enabled = true;
                         GameObject.Find(MissingCube).GetComponent<MeshRenderer>().enabled = true;
                     }
@@ -379,12 +379,24 @@ public class BlockGameTask : TaskBase
                 {
                     if (!cube._isChose && !cube._isUserColor)
                     {
+                        npc.animator.Play("坐在椅子上尋找積木");
+                        Debug.Log("find Block");
+                        //yield return new WaitForSeconds(3f);
+                        //npc.animator.Play("坐在椅子上放積木(2D圖片) NPC用左手拿取桌上的積木，然後放在中間的圖片上");
+                        npc.animator.SetBool("isTakeCube", true);
+                        yield return new WaitForSeconds(1f);
+                        Debug.Log("put Block");
+                        npc.transform.rotation = Quaternion.Euler(0, 0, 0);
                         if (!_npcremind)
                         {
-                            npc.animator.SetBool("findCube", true);
-                            npc.animator.SetBool("takeCube", true);
-                            yield return new WaitForSeconds(npc.animator.speed);
-                            Debug.Log("NPC putting Block");
+                            //npc.animator.SetBool("findCube", true); 
+                            //npc.animator.SetBool("takeCube", true);
+                            //yield return new WaitForSeconds(3);
+                            //Debug.Log("NPC putting Block");
+                            //npc.animator.SetBool("findCube",false);
+                            npc.animator.SetBool("isTakeCube", false);
+                            
+                            
                             GameEventCenter.DispatchEvent("KidsShouldPut");
                             GameEventCenter.DispatchEvent("CubeAns", cube);
                             break;
@@ -631,8 +643,8 @@ public class BlockGameTask : TaskBase
                 if (questionOrder.name == cubeName)
                 {
                     Final_Order.Add(cube);
-                    Debug.Log("questionOrder.name: " + questionOrder.name);
-                    Debug.Log("cube.name: " + cube.name);
+                    //Debug.Log("questionOrder.name: " + questionOrder.name);
+                    //Debug.Log("cube.name: " + cube.name);
                 }
             }
         }
@@ -817,7 +829,7 @@ public class BlockGameTask : TaskBase
             Debug.Log(MissingCube + " is missing....");
             GameObject.Find(MissingCube).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             GameObject.Find(MissingCube).GetComponent<MeshRenderer>().enabled = false;
-            GameObject.Find(MissingCube).GetComponent<BoxCollider>().isTrigger = false;
+            GameObject.Find(MissingCube).GetComponent<BoxCollider>().enabled = false;
         }
     }
     public void KidsShouldPut()

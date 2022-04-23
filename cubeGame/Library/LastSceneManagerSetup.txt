@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/2022-0311-Sediment tree/kids-room-2022-0409-01.unity
+- path: Assets/Scenes/GameInitialize.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

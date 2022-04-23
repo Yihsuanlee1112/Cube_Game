@@ -12,7 +12,6 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 7259283365300008546}
-  - {fileID: 2860798046876239577}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -66,7 +65,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: findCube
+    m_ConditionEvent: isFindCube
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7583417898897817774}
@@ -74,10 +73,10 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.9625
-  m_HasExitTime: 1
+  m_ExitTime: 0.07623265
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -91,17 +90,17 @@ AnimatorController:
   m_Name: kids-flower
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: findCube
+  - m_Name: isFindCube
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 1
+    m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: takeCube
+  - m_Name: isTakeCube
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 1
+    m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: findCube_left
     m_Type: 4
@@ -138,8 +137,7 @@ AnimatorState:
   m_Name: "\u5750\u5728\u6905\u5B50\u4E0A\u653E\u7A4D\u6728(2D\u5716\u7247) NPC\u7528\u5DE6\u624B\u62FF\u53D6\u684C\u4E0A\u7684\u7A4D\u6728\uFF0C\u7136\u5F8C\u653E\u5728\u4E2D\u9593\u7684\u5716\u7247\u4E0A"
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 4793845682190709317}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -156,28 +154,6 @@ AnimatorState:
   m_MirrorParameter: takeCube_Left
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1101 &2860798046876239577
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 4352846976184755021}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.89285725
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1102 &4352846976184755021
 AnimatorState:
   serializedVersion: 5
@@ -206,28 +182,6 @@ AnimatorState:
   m_MirrorParameter: findCube_Left
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1101 &4793845682190709317
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: -7583417898897817774}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.8928576
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1101 &7259283365300008546
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -237,7 +191,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: takeCube
+    m_ConditionEvent: isTakeCube
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 601128670271293557}
@@ -245,9 +199,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.53899074
-  m_TransitionOffset: 0.03695917
-  m_ExitTime: 0.7690043
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 0.0000000011882986
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
