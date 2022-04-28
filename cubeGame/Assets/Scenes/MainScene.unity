@@ -7848,7 +7848,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100072, guid: 74446716e9cda324f9d71e890af2c5bb, type: 3}
       propertyPath: m_Name
-      value: XiaoMei-all
+      value: XiaoHua-all
       objectReference: {fileID: 0}
     - target: {fileID: 100072, guid: 74446716e9cda324f9d71e890af2c5bb, type: 3}
       propertyPath: m_IsActive
