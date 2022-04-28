@@ -42,6 +42,9 @@ TagManager:
   - Q2question
   - Q3question
   - Q4question
+  - SecondRock2P
+  - SecondScissors2P
+  - SecondPaper2P
   layers:
   - Default
   - TransparentFX

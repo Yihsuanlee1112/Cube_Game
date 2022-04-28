@@ -6,7 +6,7 @@ public class HandsTrigger : MonoBehaviour
 {
     public static BlockEntity MyPreCube;
     private int MyPreCubeIndex;
-    public List<BlockEntity> FirstBlock;
+    //public List<BlockEntity> FirstBlock;
     private string FirstCube;
 
     //private bool _NPCRemind;
@@ -14,7 +14,7 @@ public class HandsTrigger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -26,14 +26,13 @@ public class HandsTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)//other=>cube
     {
         //Debug.Log(FirstBlock[0].name);
-        var MyCube = other.GetComponent<BlockEntity>();//BLockEntity
-        var index = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.IndexOf(MyCube);//int
-        
-        
+        //var MyCube = other.GetComponent<BlockEntity>();//BLockEntity
+        //var index = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.IndexOf(MyCube);//int
+
         //拿積木
         if (GameTaskManager.task == 0)
         {
-            QuestionPicked();
+            //QuestionPicked();
             //拿積木
             if (other.gameObject.tag == "cube" && !PlayerEntity._take && !other.GetComponent<BlockEntity>()._isChose && other.gameObject)
             //GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Cubes.Contains(MyCube))
@@ -43,7 +42,7 @@ public class HandsTrigger : MonoBehaviour
                 //堆積木
                 if (!BlockGameTask._playerRound)
                 {
-                    //BLockGameTask._NPCRemind = true;
+                    BlockGameTask._npcremind = true;
                     Debug.Log("NPCs turn");
                     //StartCoroutine(NPCEntity.NPCRemind());
                     GameEventCenter.DispatchEvent("NPCRemind");//輪流拼
@@ -73,8 +72,9 @@ public class HandsTrigger : MonoBehaviour
                 //fail. color not match || fail. scale not match 
                 //_isUserColor, !_isChose
                 {
+                    //BlockGameTask._npcremind = true;
                     Debug.Log("player round. fail. right color, wrong scale || fail. right color, wrong scale");
-                    GameEventCenter.DispatchEvent("NPCRemind_OrderLv2");
+                    GameEventCenter.DispatchEvent("NPCRemind_Order");
                     //StartCoroutine(NPCEntity.NPCRemind());
                     other.gameObject.transform.parent = null;
                     other.gameObject.GetComponent<Rigidbody>().useGravity = true;
@@ -85,8 +85,9 @@ public class HandsTrigger : MonoBehaviour
                 }
                 else if (!other.GetComponent<BlockEntity>()._isUserColor)
                 {//!_isUserColor
+                    //BlockGameTask._npcremind = true;
                     Debug.Log("Wrong Cube, its NPCs cube. take it again");
-                    GameEventCenter.DispatchEvent("NPCRemind_OrderLv2");
+                    GameEventCenter.DispatchEvent("NPCRemind_Order");
                     //StartCoroutine(NPCEntity.NPCRemind());
                     other.gameObject.transform.parent = null;
                     other.gameObject.GetComponent<Rigidbody>().useGravity = true;
@@ -280,7 +281,6 @@ public class HandsTrigger : MonoBehaviour
                 GameEventCenter.DispatchEvent("TwoPlayerShowResult");
                 GameObject.FindGameObjectWithTag("Paper2P").SetActive(false);
                 GameObject.FindGameObjectWithTag("Rock2P").SetActive(false);
-
                 BlockGameTask._userChooseRPS = true;
                 Debug.Log("User choose scissors");
             }
@@ -293,15 +293,15 @@ public class HandsTrigger : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Scissors2P").SetActive(false);
                 GameObject.Find("Paper").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Paper collider false");
-
+                
                 BlockGameTask._userChooseRPS = true;
                 Debug.Log("User choose paper");
             }
 
         }
-        else if(GameTaskManager.task == 1)
+        else if (GameTaskManager.task == 1)
         {
-            QuestionPickedLv2();
+            //QuestionPickedLv2();
             //拿積木
             if (other.gameObject.tag == "cube" && !PlayerEntity._take && !other.GetComponent<BlockEntity>()._isChose && other.gameObject )
             {
@@ -527,7 +527,8 @@ public class HandsTrigger : MonoBehaviour
                 BlockGameTaskLv2._userChooseRPS = true;
                 Debug.Log("User choose paper");
             }
-            //第三輪: 小組內部猜拳，決定順序。User wins
+            //Lv1 第三輪 : 小組內部猜拳，決定順序。User wins
+            //Lv2 第三輪 : 小組內部猜拳，決定第一個顏色。User wins
             else if (other.gameObject.tag == "Rock2P")//Scissors
             {
                 BlockGameTaskLv2._ShowResult = 2;
@@ -567,48 +568,88 @@ public class HandsTrigger : MonoBehaviour
                 BlockGameTaskLv2._userChooseRPS = true;
                 Debug.Log("User choose paper");
             }
+            //Lv2 第四輪 : 小組內部猜拳，決定第二個顏色。User Lose
+            else if (other.gameObject.tag == "SecondRock2P")//Paper
+            {
+                BlockGameTaskLv2._ShowResult = 1;
+                GameObject.Find("Rock").GetComponent<BoxCollider>().enabled = false;
+                Debug.Log("Rock collider false");
+                GameEventCenter.DispatchEvent("CloseAnimator2P");
+                GameEventCenter.DispatchEvent("TwoPlayerShowResultLv2");//*********
+                GameObject.FindGameObjectWithTag("Paper2P").SetActive(false);
+                GameObject.FindGameObjectWithTag("Scissors2P").SetActive(false);
+
+                BlockGameTaskLv2._userChooseRPS = true;
+                Debug.Log("User choose rock");
+            }
+            else if (other.gameObject.tag == "SecondScissors2P")//Rock
+            {
+                BlockGameTaskLv2._ShowResult = 0;
+                GameObject.Find("Scissors").GetComponent<BoxCollider>().enabled = false;
+                Debug.Log("Scissors collider false");
+                GameEventCenter.DispatchEvent("CloseAnimator2P");
+                GameEventCenter.DispatchEvent("TwoPlayerShowResultLv2");//*********
+                GameObject.FindGameObjectWithTag("Paper2P").SetActive(false);
+                GameObject.FindGameObjectWithTag("Rock2P").SetActive(false);
+
+                BlockGameTaskLv2._userChooseRPS = true;
+                Debug.Log("User choose scissors");
+            }
+            else if (other.gameObject.tag == "SecondPaper2P")//Scissors
+            {
+                BlockGameTaskLv2._ShowResult = 2;
+                GameEventCenter.DispatchEvent("CloseAnimator2P");
+                GameEventCenter.DispatchEvent("TwoPlayerShowResultLv2");//*********
+                GameObject.FindGameObjectWithTag("Rock2P").SetActive(false);
+                GameObject.FindGameObjectWithTag("Scissors2P").SetActive(false);
+                GameObject.Find("Paper").GetComponent<BoxCollider>().enabled = false;
+                Debug.Log("Paper collider false");
+
+                BlockGameTaskLv2._userChooseRPS = true;
+                Debug.Log("User choose paper");
+            }
 
         }
     }
 
-    private void QuestionPicked()
-    {
-        //判斷哪個題目
-        if (BlockGameTask._RandomQuestion == 1)
-        {
-            FirstCube = FirstBlock[0].name;
-        }
-        else if (BlockGameTask._RandomQuestion == 2)
-        {
-            FirstCube = FirstBlock[1].name;
-        }
-        else if (BlockGameTask._RandomQuestion == 3)
-        {
-            FirstCube = FirstBlock[2].name;
-        }
-        else if (BlockGameTask._RandomQuestion == 4)
-        {
-            FirstCube = FirstBlock[3].name;
-        }
-    }
-    private void QuestionPickedLv2()
-    {
-        //判斷哪個題目
-        if (BlockGameTaskLv2._RandomQuestion == 1)
-        {
-            FirstCube = FirstBlock[0].name;
-        }
-        else if (BlockGameTaskLv2._RandomQuestion == 2)
-        {
-            FirstCube = FirstBlock[1].name;
-        }
-        else if (BlockGameTaskLv2._RandomQuestion == 3)
-        {
-            FirstCube = FirstBlock[2].name;
-        }
-        else if (BlockGameTaskLv2._RandomQuestion == 4)
-        {
-            FirstCube = FirstBlock[3].name;
-        }
-    }
+    //private void QuestionPicked()
+    //{
+    //    //判斷哪個題目
+    //    if (BlockGameTask._RandomQuestion == 1)
+    //    {
+    //        FirstCube = FirstBlock[0].name;
+    //    }
+    //    else if (BlockGameTask._RandomQuestion == 2)
+    //    {
+    //        FirstCube = FirstBlock[1].name;
+    //    }
+    //    else if (BlockGameTask._RandomQuestion == 3)
+    //    {
+    //        FirstCube = FirstBlock[2].name;
+    //    }
+    //    else if (BlockGameTask._RandomQuestion == 4)
+    //    {
+    //        FirstCube = FirstBlock[3].name;
+    //    }
+    //}
+    //private void QuestionPickedLv2()
+    //{
+    //    //判斷哪個題目
+    //    if (BlockGameTaskLv2._RandomQuestion == 1)
+    //    {
+    //        FirstCube = FirstBlock[0].name;
+    //    }
+    //    else if (BlockGameTaskLv2._RandomQuestion == 2)
+    //    {
+    //        FirstCube = FirstBlock[1].name;
+    //    }
+    //    else if (BlockGameTaskLv2._RandomQuestion == 3)
+    //    {
+    //        FirstCube = FirstBlock[2].name;
+    //    }
+    //    else if (BlockGameTaskLv2._RandomQuestion == 4)
+    //    {
+    //        FirstCube = FirstBlock[3].name;
+    //    }
+    //}
 }
