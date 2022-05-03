@@ -4,6 +4,8 @@ using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 using SpeechLib;
+using GameData;
+using LabData;
 
 public class BlockGameTaskLv2 : TaskBase
 {
@@ -48,6 +50,8 @@ public class BlockGameTaskLv2 : TaskBase
     public static int _RandomQuestion = 0;
     public static bool _StartTobuild = false;
     public static bool _userChooseRPS = false;
+    public static bool _userAskTeacher = false;
+    public static bool _userChooseColor = false;
     public static bool _userChooseQuestion = false;
     public static bool _userRaiseHand = false;
     public static bool _playerRound = false;
@@ -309,10 +313,13 @@ public class BlockGameTaskLv2 : TaskBase
         yield return new WaitForSeconds(clip.length);
         //小朋友，你們可以分配顏色，按照題目上的數字順序輪流完成作品
         yield return Teacher_RemindLv2();
+        yield return new WaitForSeconds(2);
         //NPC說 總共有四種顏色耶，你可以選兩種顏色。第一個顏色，你想要什麼呢?
         yield return NPC_AskUserFirstColor();
+        yield return new WaitForSeconds(2);
         //Recognizer*************************************************************
         yield return NPC_SameColor1();
+        yield return new WaitForSeconds(3);
         //user win
         userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
@@ -321,6 +328,7 @@ public class BlockGameTaskLv2 : TaskBase
         GameObject.Find("TwoPlayerChoose(Clone)/Canvas").SetActive(true);
         GameObject.Find("TwoPlayerChoose(Clone)/Canvas2").SetActive(false);
         //NPC說剪刀石頭布
+        npc.animator.Play("坐在椅子上右手握拳說剪刀石頭布 右手微微上下揮動");
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_SayRPS");
         GameAudioController.Instance.PlayOneShot(clip);
         Debug.Log(clip.length);
@@ -343,11 +351,13 @@ public class BlockGameTaskLv2 : TaskBase
         }
         yield return new WaitForSeconds(2);
 
-        //小星說: 你贏了，你可以拿XX
+        //小星說: 喔不!我輸了，你可以拿XX
         yield return NPC_YouWinLv2();
+        yield return new WaitForSeconds(2);
         yield return NPC_AskUserSecondColor();
-
+        yield return new WaitForSeconds(3);
         yield return NPC_SameColor2();
+        yield return new WaitForSeconds(3);
         //user lose
         userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
@@ -356,6 +366,7 @@ public class BlockGameTaskLv2 : TaskBase
         GameObject.Find("TwoPlayerChoose(Clone)/Canvas").SetActive(false);
         GameObject.Find("TwoPlayerChoose(Clone)/Canvas2").SetActive(true);
         //NPC說剪刀石頭布
+        npc.animator.Play("坐在椅子上右手握拳說剪刀石頭布 右手微微上下揮動");
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_SayRPS");
         GameAudioController.Instance.PlayOneShot(clip);
         Debug.Log(clip.length);
@@ -372,16 +383,18 @@ public class BlockGameTaskLv2 : TaskBase
         yield return new WaitForSeconds(2);
 
         GameObject.FindWithTag("Result").SetActive(false);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
         {
             GameObject.FindWithTag("RPS").SetActive(false);
         }
         yield return new WaitForSeconds(2);
-        //小星說: 你輸了，XX是我的積木
+        //小星說: 我贏了! XX是我的積木
         yield return NPC_YouLoseLv2();
+        yield return new WaitForSeconds(2);
+        yield return UserFinalColor();
         //框架
         //User choose two colors
-        yield return UserChooseColor();//**************************
+        //yield return UserChooseColor();//**************************
 
         //題目出現數字順序
         GameEventCenter.DispatchEvent("RandomNumOnQuestion");
@@ -576,24 +589,69 @@ public class BlockGameTaskLv2 : TaskBase
     }
     IEnumerator NPC_AskUserFirstColor()
     {
+        _userChooseColor = false;
+        //yield return new WaitForSeconds(2);
         npc.animator.SetBool("isTalk", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath+ "NPC_AskUserFirstColor");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         npc.animator.SetBool("isTalk", false);
+        do
+        {
+            Debug.Log("User choose first color");
+            Debug.Log(_userChooseColor);
+            yield return new WaitUntil(() => _userChooseColor);
+            Debug.Log(_userChooseColor);
+        } while (!_userChooseColor);
     }
     IEnumerator NPC_AskUserSecondColor()
     {
+        _userChooseColor = false;
+        GameDataManager.FlowData.UserColor = " ";
         npc.animator.SetBool("isTalk", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_AskUserSecondColor");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         npc.animator.SetBool("isTalk", false);
+        do
+        {
+            Debug.Log("User choose first color");
+            Debug.Log(_userChooseColor);
+            yield return new WaitUntil(() => _userChooseColor);
+            Debug.Log(_userChooseColor);
+        } while (!_userChooseColor);
     }
     IEnumerator NPC_SameColor1()
     {
-        GameDataManager.FlowData.UserColor = "紅色";
-        npc.animator.SetBool("isTalk", true);
+        Debug.Log(GameDataManager.FlowData.UserColor);
+        if (GameDataManager.FlowData.UserColor == "紅色")
+        {
+            UserChoice1 = Colors[0];//red
+            Colors.RemoveAt(0);
+            Debug.Log("GameDataManager.FlowData.UserColor: " + GameDataManager.FlowData.UserColor);
+        }
+        else if (GameDataManager.FlowData.UserColor == "藍色")
+        {
+            UserChoice1 = Colors[1];//blue
+            Colors.RemoveAt(1);
+            Debug.Log("GameDataManager.FlowData.UserColor: " + GameDataManager.FlowData.UserColor);
+        }
+        else if (GameDataManager.FlowData.UserColor == "綠色")
+        {
+            UserChoice1 = Colors[2];//green
+            Colors.RemoveAt(2);
+            Debug.Log("GameDataManager.FlowData.UserColor: " + GameDataManager.FlowData.UserColor);
+        }
+        else if (GameDataManager.FlowData.UserColor == "黃色")
+        {
+            UserChoice1 = Colors[3];//yellow
+            Colors.RemoveAt(3);
+            
+            Debug.Log("GameDataManager.FlowData.UserColor: " + GameDataManager.FlowData.UserColor);
+        }
+        //GameDataManager.FlowData.UserColor = "紅色";
+        Debug.Log(GameDataManager.FlowData.UserColor);
+        npc.animator.SetBool("isSad", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_SameColor1");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
@@ -603,12 +661,18 @@ public class BlockGameTaskLv2 : TaskBase
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_WinnerCanHaveColor1");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        npc.animator.SetBool("isTalk", false);
+        npcsay.Speak(GameDataManager.FlowData.UserColor, SpeechVoiceSpeakFlags.SVSFlagsAsync);
+        yield return new WaitForSeconds(1.5f);
+        npc.animator.SetBool("isSad", false);
+        GameDataManager.FlowData.UserFirstColor = GameDataManager.FlowData.UserColor;
     }
     IEnumerator NPC_SameColor2()
     {
-        GameDataManager.FlowData.UserColor = "黃色";
-        npc.animator.SetBool("isTalk", true);
+        int RanColor = Random.Range(0, 3);//在0到2之間隨機取值
+        UserChoice2 = Colors[RanColor];
+        
+        //GameDataManager.FlowData.UserColor = "黃色";
+        npc.animator.SetBool("isSad2", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_SameColor2");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
@@ -618,32 +682,77 @@ public class BlockGameTaskLv2 : TaskBase
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_WinnerCanHaveColor2");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        npc.animator.SetBool("isTalk", false);
+        npcsay.Speak(GameDataManager.FlowData.UserColor, SpeechVoiceSpeakFlags.SVSFlagsAsync);
+        npc.animator.SetBool("isSad2", false);
+        yield return new WaitForSeconds(3);
     }
     IEnumerator NPC_YouWinLv2()
     {
-        npc.animator.SetBool("isTalk2", true);
+        Debug.Log(GameDataManager.FlowData.UserColor);
+        npc.animator.SetBool("isTalk", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath+"NPC_YouWinLv2");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         SpVoice npcsay = new SpVoice();
         npcsay.Speak(GameDataManager.FlowData.UserColor, SpeechVoiceSpeakFlags.SVSFlagsAsync);
-        yield return new WaitForSeconds(1.5f);
-        npc.animator.SetBool("isTalk2", false);
+        yield return new WaitForSeconds(3);
     }
     IEnumerator NPC_YouLoseLv2()
     {
-        npc.animator.SetBool("isTalk2", true);
-        clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_YouLoseLv2");
+        npc.animator.SetBool("isExciting", true);
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_UserLoseLv2");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
+        yield return new WaitForSeconds(3f);
         SpVoice npcsay = new SpVoice();
         npcsay.Speak(GameDataManager.FlowData.UserColor, SpeechVoiceSpeakFlags.SVSFlagsAsync);
-        yield return new WaitForSeconds(1.5f);
+        //yield return new WaitForSeconds(1.5f);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_MyColor");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        npc.animator.SetBool("isTalk2", false);
+        npc.animator.SetBool("isExciting", false);
+        yield return new WaitForSeconds(3);
+        
+    }
+    IEnumerator UserFinalColor()
+    {
+        Color red, blue, green, yellow;
+        red = new Color(1, (float)0.23, (float)0.23, 1);
+        blue = new Color((float)0.203, (float)0.203, (float)0.87, 1);
+        green = new Color(0, (float)0.706, 0, 1);
+        yellow = new Color(1, 1, 0, 1);
+
+        //XX跟XX是你的顏色喔，不要拿錯囉!
+        SpVoice npcsay = new SpVoice();
+        npc.animator.SetBool("isTalk", true);
+        npcsay.Speak(GameDataManager.FlowData.UserFirstColor, SpeechVoiceSpeakFlags.SVSFlagsAsync);
+        yield return new WaitForSeconds(1.5f);
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_And");
+        GameAudioController.Instance.PlayOneShot(clip);
+        yield return new WaitForSeconds(clip.length);
+        //secondColor
+        if (UserChoice2 == red)
+        {
+            GameDataManager.FlowData.UserColor = "紅色";
+        }
+        else if (UserChoice2 == green)
+        {
+            GameDataManager.FlowData.UserColor = "綠色";
+        }
+        else if (UserChoice2 == blue)
+        {
+            GameDataManager.FlowData.UserColor = "藍色";
+        }
+        else if (UserChoice2 == yellow)
+        {
+            GameDataManager.FlowData.UserColor = "黃色";
+        }
+        npcsay.Speak(GameDataManager.FlowData.UserColor, SpeechVoiceSpeakFlags.SVSFlagsAsync);
+        yield return new WaitForSeconds(1.5f);
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_DontTakeThemWrong");
+        GameAudioController.Instance.PlayOneShot(clip);
+        yield return new WaitForSeconds(clip.length);
+        npc.animator.SetBool("isTalk", false);
     }
     IEnumerator All_NPC_SayRPS()
     {
@@ -709,15 +818,16 @@ public class BlockGameTaskLv2 : TaskBase
     }
     IEnumerator UserChooseColor()
     {
-        Color red, blue, green, yellow;
+        //Color red, blue, green, yellow;
         //Color UserChoice1;
         //Color UserChoice2;
-        red = new Color(1, (float)0.23, (float)0.23, 1);
-        blue = new Color((float)0.203, (float)0.203, (float)0.87, 1);
-        green = new Color(0, (float)0.706, 0, 1);
-        yellow = new Color(1, 1, 0, 1);
-        //User : 我想要藍色和紅色 [語音辨識] 
+        //red = new Color(1, (float)0.23, (float)0.23, 1);
+        //blue = new Color((float)0.203, (float)0.203, (float)0.87, 1);
+        //green = new Color(0, (float)0.706, 0, 1);
+        //yellow = new Color(1, 1, 0, 1);
+        //User : 我想要紅色 [語音辨識] 
         //NPC: 蛤~我也想要紅色[故意跟user一樣]，那我們來猜拳
+        //if (GameFlowData.UserColor == " ")
         UserChoice1 = Colors[0];//red
         UserChoice2 = Colors[3];//yellow
                                 //UserChoice1 = Colors[1];
@@ -725,7 +835,7 @@ public class BlockGameTaskLv2 : TaskBase
                                 //UserChoice1 = Colors[3];
                                 //UserChoice1 = green;
                                 //UserChoice2 = yellow;
-        GameDataManager.FlowData.UserColor = UserChoice2.ToString();
+        GameDataManager.FlowData.UserColor = UserChoice1.ToString();
         //NPC: 蛤~我也想要紅色[故意跟user一樣]，那我們來猜拳
         SpVoice npcsay = new SpVoice();
         npcsay.Speak(GameDataManager.FlowData.UserName, SpeechVoiceSpeakFlags.SVSFlagsAsync);
@@ -790,6 +900,7 @@ public class BlockGameTaskLv2 : TaskBase
         for (int i = 0; i < randomArray.Length;)
         {
             bool x = true;
+            
             int RanNum = Random.Range(1, 11);//在1到10之間隨機取值
             for (int j = 0; j < i; ++j)
             {
@@ -846,8 +957,8 @@ public class BlockGameTaskLv2 : TaskBase
         {
             if (UserChoice1 == cube.GetComponent<MeshRenderer>().material.color || UserChoice2 == cube.GetComponent<MeshRenderer>().material.color)
             {
-                //Debug.Log(UserChoice1 + "UserChoice1");
-                //Debug.Log(UserChoice2 + " + UserChoice2");
+                Debug.Log(UserChoice1 + "UserChoice1");
+                Debug.Log(UserChoice2 + " + UserChoice2");
                 Debug.Log(cube.GetComponent<MeshRenderer>().material.color);
                 cube._isUserColor = true;
             }

@@ -26,10 +26,10 @@ namespace GameData
         public Level Level { get; set; }
 
         /// <summary>
-        /// 遊戲Level
+        /// 玩家顏色
         /// </summary>
         public string UserColor { get; set; }
-
+        public string UserFirstColor { get; set; }
         /// <summary>
         /// FlowData 构造函数
         /// </summary>
@@ -37,15 +37,17 @@ namespace GameData
         /// <param name="Username"></param>
         /// <param name="languageType"></param>
         /// <param name="Level"></param>
+        /// <param name="UserColor"></param>
         /// <param name="remindType"></param>
         /// <param name="gameData"></param>
-        public GameFlowData(string UserID, Language languageType, string Username, Level Level, string UserColor)
+        public GameFlowData(string UserID, Language languageType, string Username, Level Level, string UserColor, string UserFirstColor)
         {
             this.Language = languageType;
             this.UserId = UserID;
             this.UserName = Username;
             this.Level = Level;
             this.UserColor = UserColor;
+            this.UserFirstColor = UserFirstColor;
         }
 
         public GameFlowData()

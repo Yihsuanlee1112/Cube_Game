@@ -391,8 +391,8 @@
      <Compile Include="Assets\Scripts\MyScripts\QuadTriggerDisabled.cs" />
      <Compile Include="Assets\Scripts\MyScripts\QuestionCube.cs" />
      <Compile Include="Assets\Scripts\MyScripts\RockPaperScissors.cs" />
+     <Compile Include="Assets\Scripts\MyScripts\SkipControl.cs" />
      <Compile Include="Assets\Scripts\MyScripts\StopRedrawCube.cs" />
-     <Compile Include="Assets\Scripts\MyScripts\test.cs" />
      <Compile Include="Assets\Scripts\UIFrameWork\PanelBase\BasePanel.cs" />
      <Compile Include="Assets\Scripts\UIFrameWork\PanleConfig\PanleData.cs" />
      <Compile Include="Assets\Scripts\UIFrameWork\PanleData\PanleDatas.cs" />

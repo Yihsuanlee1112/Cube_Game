@@ -576,8 +576,8 @@ public class HandsTrigger : MonoBehaviour
                 Debug.Log("Rock collider false");
                 GameEventCenter.DispatchEvent("CloseAnimator2P");
                 GameEventCenter.DispatchEvent("TwoPlayerShowResultLv2");//*********
-                GameObject.FindGameObjectWithTag("Paper2P").SetActive(false);
-                GameObject.FindGameObjectWithTag("Scissors2P").SetActive(false);
+                GameObject.FindGameObjectWithTag("SecondPaper2P").SetActive(false);
+                GameObject.FindGameObjectWithTag("SecondScissors2P").SetActive(false);
 
                 BlockGameTaskLv2._userChooseRPS = true;
                 Debug.Log("User choose rock");
@@ -589,8 +589,8 @@ public class HandsTrigger : MonoBehaviour
                 Debug.Log("Scissors collider false");
                 GameEventCenter.DispatchEvent("CloseAnimator2P");
                 GameEventCenter.DispatchEvent("TwoPlayerShowResultLv2");//*********
-                GameObject.FindGameObjectWithTag("Paper2P").SetActive(false);
-                GameObject.FindGameObjectWithTag("Rock2P").SetActive(false);
+                GameObject.FindGameObjectWithTag("SecondPaper2P").SetActive(false);
+                GameObject.FindGameObjectWithTag("SecondRock2P").SetActive(false);
 
                 BlockGameTaskLv2._userChooseRPS = true;
                 Debug.Log("User choose scissors");
@@ -600,8 +600,8 @@ public class HandsTrigger : MonoBehaviour
                 BlockGameTaskLv2._ShowResult = 2;
                 GameEventCenter.DispatchEvent("CloseAnimator2P");
                 GameEventCenter.DispatchEvent("TwoPlayerShowResultLv2");//*********
-                GameObject.FindGameObjectWithTag("Rock2P").SetActive(false);
-                GameObject.FindGameObjectWithTag("Scissors2P").SetActive(false);
+                GameObject.FindGameObjectWithTag("SecondRock2P").SetActive(false);
+                GameObject.FindGameObjectWithTag("SecondScissors2P").SetActive(false);
                 GameObject.Find("Paper").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Paper collider false");
 

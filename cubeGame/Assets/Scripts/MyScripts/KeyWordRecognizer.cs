@@ -25,14 +25,16 @@ public class KeyWordRecognizer : MonoBehaviour
     public void GetResult(string result)
     {
         Debug.Log("Keyword: " + result);
-        //if (result.Contains("小花"))
-        //{
-        //    BlockGameTask._isCallPeguineName = true;
-        //}
-        //else if (result.Contains("丟") && result.Contains("很好"))
-        //{
-        //    BlockGameTask._isUserPraiseElephant = true;
-        //}
+        if (result.Contains("紅色") || result.Contains("藍色")|| result.Contains("綠色")|| result.Contains("黃色"))
+        {
+            BlockGameTaskLv2._userChooseColor = true;
+            GameDataManager.FlowData.UserColor = result;
+            Debug.Log("GameDataManager.FlowData.UserColor: " + GameDataManager.FlowData.UserColor + " Result: " + result);
+        }
+        else if (result.Contains("丟") && result.Contains("很好"))
+        {
+            BlockGameTaskLv2._userAskTeacher = true;
+        }
         //else if (result.Contains("接到球") && result.Contains("好棒"))
         //{
         //    BlockGameTask._isUserPraisePenguin = true;

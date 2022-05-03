@@ -517,6 +517,13 @@ ModelImporter:
   - first:
       74: -1161826589001354446
     second: "\u5750\u5728\u6905\u5B50\u4E0A\u653E\u7A4D\u6728(2D\u5716\u7247) NPC\u7528\u5DE6\u624B\u62FF\u53D6\u684C\u4E0A\u7684\u7A4D\u6728\uFF0C\u7136\u5F8C\u653E\u5728\u4E2D\u9593\u7684\u5716\u7247\u4E0A"
+  - first:
+      74: 1001960203001608461
+    second: "\u5750\u5728\u6905\u5B50\u4E0A\u770B\u8457\u8001\u5E2B\u8209\u53F3\u624B\u8AAA\u8A71
+      \u982D\u5FAE\u5FAE\u8F49\u52D5\u5C0B\u627E\u8001\u5E2B"
+  - first:
+      74: 2629027670695168486
+    second: "\u5750\u5728\u6905\u5B50\u4E0A\u958B\u5FC3\u62CD\u62CD\u624B\u8AAA\u8A71"
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -549,8 +556,8 @@ ModelImporter:
       name: Take 001
       takeName: Take 001
       internalID: 0
-      firstFrame: 2080
-      lastFrame: 2150
+      firstFrame: 0
+      lastFrame: 3701
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1061,6 +1068,65 @@ ModelImporter:
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 1
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: "\u5750\u5728\u6905\u5B50\u4E0A\u770B\u8457\u8001\u5E2B\u8209\u53F3\u624B\u8AAA\u8A71
+        \u982D\u5FAE\u5FAE\u8F49\u52D5\u5C0B\u627E\u8001\u5E2B"
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 3310
+      lastFrame: 3500
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: "\u5750\u5728\u6905\u5B50\u4E0A\u958B\u5FC3\u62CD\u62CD\u624B\u8AAA\u8A71"
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 3500
+      lastFrame: 3700
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
