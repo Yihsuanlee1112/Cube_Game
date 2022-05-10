@@ -45,6 +45,7 @@ TagManager:
   - SecondRock2P
   - SecondScissors2P
   - SecondPaper2P
+  - redTriggerBall
   layers:
   - Default
   - TransparentFX

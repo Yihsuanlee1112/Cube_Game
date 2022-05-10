@@ -317,6 +317,7 @@
      <Compile Include="Assets\LabDataVisualization\ViveEye\ViveSR\Scripts\SRanipal_Eye_Framework.cs" />
      <Compile Include="Assets\LabDataVisualization\ViveEye\ViveSR\Scripts\SRanipal_EyeShapeTableDrawer.cs" />
      <Compile Include="Assets\LabDataVisualization\ViveEye\ViveSR\Scripts\SRWorks_Enums.cs" />
+     <Compile Include="Assets\Scripts\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\LabFrameRelease\Config\ApplicationConfig.cs" />
      <Compile Include="Assets\Scripts\LabFrameRelease\Enum\Enum.cs" />
      <Compile Include="Assets\Scripts\LabFrameRelease\GameApplication\GameApplication.cs" />
@@ -338,6 +339,7 @@
      <Compile Include="Assets\Scripts\LabFrameRelease\GameEntity\MainSceneRes.cs" />
      <Compile Include="Assets\Scripts\LabFrameRelease\GameEntity\NPCEntity.cs" />
      <Compile Include="Assets\Scripts\LabFrameRelease\GameEntity\PlayerEntity.cs" />
+     <Compile Include="Assets\Scripts\LabFrameRelease\GameEntity\TimerEntity.cs" />
      <Compile Include="Assets\Scripts\LabFrameRelease\GameEvent\GameEventCenter.cs" />
      <Compile Include="Assets\Scripts\LabFrameRelease\GameInput\GameInputController.cs" />
      <Compile Include="Assets\Scripts\LabFrameRelease\GameInput\VRIK\VRIKInput.cs" />

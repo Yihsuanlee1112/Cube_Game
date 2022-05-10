@@ -18,6 +18,7 @@ public class BlockGameTaskLv2 : TaskBase
     private Animator HostAnimator;
     private Animator KidA, KidB, KidC, KidD, KidE, KidF;
     private GameObject GreenTriggerBall;
+    private GameObject RedTriggerBall;
     private List<BlockEntity> Q1_cube;
     private List<BlockEntity> Q2_cube;
     private List<BlockEntity> Q3_cube;
@@ -30,14 +31,16 @@ public class BlockGameTaskLv2 : TaskBase
     private List<BlockEntity> cube_GB;
     private List<BlockEntity> cube_GC;
     private List<Color> Colors;
+    private Color UserChoice1;
+    private Color UserChoice2;
 
-    Color UserChoice1;
-    Color UserChoice2;
+    private GameObject Coin;
+    private GameObject Ruby;
+    private GameObject Heart;
 
     private List<int> textOnQuestion;
     private List<GameObject> QuestionOrder;
     //private List<GameObject> objectlist;
-    private Canvas mainSceneUI;
     private AudioClip clip;
     private string MissingCube;
     private int RanNum;
@@ -45,6 +48,7 @@ public class BlockGameTaskLv2 : TaskBase
 
     public static GameObject KidShouldPut;
     public static int RecentOrder = 1;
+    public static int RemindRaiseHand = 0;
     public static bool _RoundA = true;
     public static int _ShowResult = 0;
     public static int _RandomQuestion = 0;
@@ -54,6 +58,7 @@ public class BlockGameTaskLv2 : TaskBase
     public static bool _userChooseColor = false;
     public static bool _userChooseQuestion = false;
     public static bool _userRaiseHand = false;
+    public static bool _userCelebrate = false;
     public static bool _playerRound = false;
     public bool _BlockFinished = false;
     public static bool _usersayhello = false;
@@ -63,6 +68,9 @@ public class BlockGameTaskLv2 : TaskBase
     public static bool _waitforwatch = false;
     public static int answerindex = 0;
     public int TalkScore = 0;//recognizerEntity
+    public static bool _is5secTimeUp = false;
+    public static bool _is2secTimeUp = false;
+    public static bool _isEyeFinish = false;
     private string audioClipRootPath;
     public override IEnumerator TaskInit()
     {
@@ -88,6 +96,7 @@ public class BlockGameTaskLv2 : TaskBase
         player = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().player;
         npc = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().npc;
         GreenTriggerBall = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().GreenTriggerBall;
+        RedTriggerBall = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().RedTriggerBall;
         Question_Cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Question_Cube;
         Q1_cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q1_cube;
         Q2_cube = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Q2_cube;
@@ -115,7 +124,9 @@ public class BlockGameTaskLv2 : TaskBase
         KidD = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().KidD;
         KidE = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().KidE;
         KidF = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().KidF;
-
+        Coin = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Coin;
+        Ruby = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Ruby;
+        Heart = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Heart;
         //VRIK初始化
         player.Init(GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().vrCamera);
 
@@ -153,6 +164,12 @@ public class BlockGameTaskLv2 : TaskBase
 
     public override IEnumerator TaskStart()
     {
+        GameObject ChooseQuestionCanvas = GameObject.Find("ChooseQuestionCanvas");
+        GameObject XiaoMeiRaiseHandPic = GameObject.Find("Schematics/UserRightSightCanvas/XiaoMeiRaiseHandPic");
+        GameObject Question1Pic = GameObject.Find("Schematics/UserRightSightCanvas/QuestionPics/Question1Pic");
+        GameObject Question2Pic = GameObject.Find("Schematics/UserRightSightCanvas/QuestionPics/Question2Pic");
+        GameObject Question3Pic = GameObject.Find("Schematics/UserRightSightCanvas/QuestionPics/Question3Pic");
+        GameObject Question4Pic = GameObject.Find("Schematics/UserRightSightCanvas/QuestionPics/Question4Pic");
         //語言選擇
         if (GameDataManager.FlowData.Language == Language.中文)
         {
@@ -271,6 +288,7 @@ public class BlockGameTaskLv2 : TaskBase
         }
         */
         //XXX那一組猜拳贏了，你可以先選一張圖。你要選第幾張圖?
+        /*
         yield return Teacher_AskUserWhichPic();
         yield return new WaitForSeconds(1.5f);
         //讓user選題目
@@ -291,22 +309,22 @@ public class BlockGameTaskLv2 : TaskBase
         yield return new WaitForSeconds(2);
 
         //User跟對面NPC猜拳**********************************************************************************
-        GameEventCenter.DispatchEvent("InstatiateCubeLv2");
-        //GameEventCenter.DispatchEvent("User_MissingOneCubeLv2");
-        GameEventCenter.DispatchEvent("CubeOnDesk");
-        GameEventCenter.DispatchEvent("Find_QuestionCubes");//*****
-        GameEventCenter.DispatchEvent("AddCubesToList");
-        foreach (BlockEntity cube in AllCubes)
-        {
-            cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            //cube.GetComponent<MeshRenderer>().enabled = false;
-            cube.GetComponent<BoxCollider>().isTrigger = true;
+        //GameEventCenter.DispatchEvent("InstatiateCubeLv2");
+        ////GameEventCenter.DispatchEvent("User_MissingOneCubeLv2");
+        //GameEventCenter.DispatchEvent("CubeOnDesk");
+        //GameEventCenter.DispatchEvent("Find_QuestionCubes");//*****
+        //GameEventCenter.DispatchEvent("AddCubesToList");
+        //foreach (BlockEntity cube in AllCubes)
+        //{
+        //    cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        //    cube.GetComponent<MeshRenderer>().enabled = false;
+        //    cube.GetComponent<BoxCollider>().isTrigger = true;
             
-        }
-        for(int i = 0; i<10; i++)
-        {
-            GameObject.Find("Parents/Q"+ _RandomQuestion+"_Parent/Question(Clone)").transform.GetChild(i).GetChild(0).GetChild(0).GetComponent<Text>().text = null;
-        }
+        //}
+        //for(int i = 0; i<10; i++)
+        //{
+        //    GameObject.Find("Parents/Q"+ _RandomQuestion+"_Parent/Question(Clone)").transform.GetChild(i).GetChild(0).GetChild(0).GetComponent<Text>().text = null;
+        //}
         //小花: 沒贏也沒關係，每一張圖我都喜歡
         clip = Resources.Load<AudioClip>(audioClipRootPath+"Flower_ItsOkTolose");
         GameAudioController.Instance.PlayOneShot(clip);
@@ -314,6 +332,25 @@ public class BlockGameTaskLv2 : TaskBase
         //小朋友，你們可以分配顏色，按照題目上的數字順序輪流完成作品
         yield return Teacher_RemindLv2();
         yield return new WaitForSeconds(2);
+
+        //顯示user選的題目在右邊
+        if(_RandomQuestion == 1)
+        {
+            Question1Pic.GetComponent<RawImage>().enabled = true;
+        }
+        else if(_RandomQuestion == 2)
+        {
+            Question2Pic.GetComponent<RawImage>().enabled = true;
+        }
+        else if(_RandomQuestion == 3)
+        {
+            Question3Pic.GetComponent<RawImage>().enabled = true;
+        }
+        else if(_RandomQuestion == 4)
+        {
+            Question4Pic.GetComponent<RawImage>().enabled = true;
+        }
+        
         //NPC說 總共有四種顏色耶，你可以選兩種顏色。第一個顏色，你想要什麼呢?
         yield return NPC_AskUserFirstColor();
         yield return new WaitForSeconds(2);
@@ -392,23 +429,44 @@ public class BlockGameTaskLv2 : TaskBase
         yield return NPC_YouLoseLv2();
         yield return new WaitForSeconds(2);
         yield return UserFinalColor();
+
+        GameObject.Find("QuestionPics").SetActive(false);
         //框架
         //User choose two colors
         //yield return UserChooseColor();//**************************
 
+        //出現題目跟積木
+        GameEventCenter.DispatchEvent("InstatiateCubeLv2");
+        GameEventCenter.DispatchEvent("CubeOnDesk");
+        GameEventCenter.DispatchEvent("AddCubesToList");
+        foreach (BlockEntity cube in AllCubes)
+        {
+            cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            //cube.GetComponent<MeshRenderer>().enabled = false;
+            cube.GetComponent<BoxCollider>().isTrigger = true;
+
+        }
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject.Find("Parents/Q" + _RandomQuestion + "_Parent/Question(Clone)").transform.GetChild(i).GetChild(0).GetChild(0).GetComponent<Text>().text = null;
+        }
+        //GameEventCenter.DispatchEvent("User_MissingOneCubeLv2");
+        
+        GameEventCenter.DispatchEvent("Find_QuestionCubes");
         //題目出現數字順序
         GameEventCenter.DispatchEvent("RandomNumOnQuestion");
         GameEventCenter.DispatchEvent("CheckOrder");//QuestionCube
         //GameEventCenter.DispatchEvent("AddCubesToList");
         GameEventCenter.DispatchEvent("PutInRightOrder");
-        GameEventCenter.DispatchEvent("User_MissingOneCubeLv2");
+        //GameEventCenter.DispatchEvent("User_MissingOneCubeLv2");
         foreach (BlockEntity cube in AllCubes)
         {
-            //cube.GetComponent<MeshRenderer>().enabled = true;
+            cube.GetComponent<MeshRenderer>().enabled = true;
             cube.GetComponent<BoxCollider>().isTrigger = false;
-            //cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-            //cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         }
+        GameEventCenter.DispatchEvent("User_MissingOneCubeLv2");
         //MissingCube
         //GameObject.Find(MissingCube).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         //GameObject.Find(MissingCube).GetComponent<MeshRenderer>().enabled = false;
@@ -477,11 +535,9 @@ public class BlockGameTaskLv2 : TaskBase
                     if (!cube._isChose && !cube._isUserColor)
                     {
                         Debug.Log("NPC touch block");
-                        npc.animator.Play("坐在椅子上尋找積木");
-                        Debug.Log("find Block");
                         npc.animator.Play("坐在椅子上放積木(2D圖片) NPC用左手拿取桌上的積木，然後放在中間的圖片上");
                         //npc.animator.SetBool("isTakeCube", true);
-                        yield return new WaitForSeconds(1f);
+                        yield return new WaitForSeconds(2);
                         Debug.Log("put Block");
                         npc.transform.rotation = Quaternion.Euler(0, 0, 0);
                         //npc.animator.SetBool("findCube", true); 
@@ -490,7 +546,7 @@ public class BlockGameTaskLv2 : TaskBase
                         //Debug.Log("NPC putting Block");
                         //npc.animator.SetBool("findCube",false);
                         //npc.animator.SetBool("isTakeCube", false);
-                        yield return new WaitForSeconds(8);
+                        yield return new WaitForSeconds(5);
                         if (!_npcremind)
                         {
                             Debug.Log("NPC putting Block");
@@ -501,14 +557,141 @@ public class BlockGameTaskLv2 : TaskBase
                         break;
                     }
                 }
+                
             }
             GameEventCenter.DispatchEvent("CheckCube");
             _StartTobuild = false;
             yield return new WaitForSeconds(2);
         }
-
+        */
         userRightHandTrigger.GetComponent<BoxCollider>().enabled = false;
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = false;
+
+        //結束後語音
+        //小星: 耶!我們完成了!（小星雙手舉高）等待2秒
+        //npc.animator.Play("坐在椅子上開心 雙手舉高，眼睛跟嘴巴要笑(上揚)");
+        npc.animator.SetBool("isHappy", true);
+        //npc.animator.Play("坐在椅子上+舉手+說我! 舉右手");
+        npc.animator.SetBool("isRaiseHand", true);
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_Hooray");
+        GameAudioController.Instance.PlayOneShot(clip);
+        yield return new WaitForSeconds(clip.length);
+        //RedTriggerBall
+        npc.animator.SetBool("isHappy", false); 
+        RedTriggerBall.SetActive(true);
+        //wait2Sec
+        while (RemindRaiseHand < 3)
+        {
+            Debug.Log(RemindRaiseHand);
+            GameEventCenter.DispatchEvent("Text2sec_isEnabled", true); // 2秒計時器打開
+
+            yield return new WaitUntil(() =>
+            {
+                Debug.Log(RemindRaiseHand);
+                if (_userCelebrate && !_is2secTimeUp) // user有擊掌 
+                {
+                    return true;
+                }
+                else if (!_userCelebrate && _is2secTimeUp) // 過了2秒user沒有擊掌
+                {
+                    return true;
+                }
+                return false;
+            });
+
+            if (_userCelebrate && !_is2secTimeUp) // user有擊掌
+            {
+                Debug.Log(RemindRaiseHand);
+                GameEventCenter.DispatchEvent("Text2sec_isEnabled", false); // 2秒計時器關閉
+                _userCelebrate = false;
+                
+                yield return new WaitForSeconds(1);
+                //主持人：你有跟小星擊掌耶，可以獲得一個愛心喔
+                clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_CelebrateGetHeart");
+                GameAudioController.Instance.PlayOneShot(clip);
+                yield return new WaitForSeconds(clip.length);
+                RedTriggerBall.SetActive(false);
+                yield return new WaitForSeconds(2);
+                Heart.SetActive(true);
+                clip = Resources.Load<AudioClip>("AudioClip/Awards/ruby");
+                GameAudioController.Instance.PlayOneShot(clip);
+                yield return new WaitForSeconds(clip.length);
+                Heart.SetActive(false);
+                GameEventCenter.DispatchEvent("GameHeartCounter");   // 愛心數量加一
+                break;
+            }
+            else if (!_userCelebrate && _is2secTimeUp) // 過了2秒user沒有擊掌
+            {
+                Debug.Log(RemindRaiseHand);
+                GameEventCenter.DispatchEvent("Text2sec_isEnabled", false); // 5秒計時器關閉
+
+                if (RemindRaiseHand < 2)
+                {
+                    Debug.Log(RemindRaiseHand);
+                    //主持人（提醒1）
+                    clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_CelebrateLv2");
+                    GameAudioController.Instance.PlayOneShot(clip);
+                    yield return new WaitForSeconds(clip.length);
+                }
+                else if (RemindRaiseHand == 2)
+                {
+                    Debug.Log(RemindRaiseHand);
+                    //主持人（提醒2）: 小星很開心，想跟你擊掌，你可以碰紅色的球跟小星擊個掌（等待2秒）
+                    clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_CelebrateRemind");
+                    GameAudioController.Instance.PlayOneShot(clip);
+                    yield return new WaitForSeconds(clip.length);
+                }
+                RemindRaiseHand++;
+                Debug.Log(RemindRaiseHand);
+            }
+            GameEventCenter.DispatchEvent("Timer2secReset");
+        }
+        Debug.Log(RemindRaiseHand);
+        //if didn't raise hand, RemindRaiseHand =1
+        //主持人（提醒1）: 你和小星一起合作完成了積木圖案，很棒喔！小星很開心，想跟你擊掌! （等待2秒）
+        //clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_CelebrateLv2");
+        //GameAudioController.Instance.PlayOneShot(clip);
+        //yield return new WaitForSeconds(clip.length);
+        //wait2Sec
+
+
+        //if didn't raise hand, RemindRaiseHand =2
+        //小星很開心，想跟你擊掌，你可以碰紅色的球跟小星擊個掌（等待2秒）
+        //clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_CelebrateRemind");
+        //GameAudioController.Instance.PlayOneShot(clip);
+        //yield return new WaitForSeconds(clip.length);
+        //Wsitr2Sec
+
+
+        //if Raise hand
+        //主持人：你有跟小星擊掌耶，可以獲得一個愛心喔
+        //clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_CelebrateGetHeart");
+        //GameAudioController.Instance.PlayOneShot(clip);
+        //yield return new WaitForSeconds(clip.length);
+        //Heart.SetActive(true);                                    //愛心動畫
+        //clip = Resources.Load<AudioClip>("AudioClip/Awards/Heart");
+        //GameAudioController.Instance.PlayOneShot(clip);
+        //yield return new WaitForSeconds(clip.length);
+        //Heart.SetActive(false);
+        //GameEventCenter.DispatchEvent("GameHeartCounter");        //愛心數量加一(愛心動畫)
+
+        //if didn't raise hand, RemindRaiseHand =3 
+        //主持人：你和小星一起合作完成了積木圖案，很棒喔！可以獲得5個金幣！(提醒2後，沒有擊掌一樣會說)
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_GetFiveCoins");
+        GameAudioController.Instance.PlayOneShot(clip);
+        yield return new WaitForSeconds(clip.length);
+        for(int i = 0; i < 5; i++)
+        {
+            Coin.SetActive(true);                                    // 金幣動畫
+            clip = Resources.Load<AudioClip>("AudioClip/Awards/coin");
+            GameAudioController.Instance.PlayOneShot(clip);
+            yield return new WaitForSeconds(clip.length);
+            Coin.SetActive(false);
+            GameEventCenter.DispatchEvent("GameCoinCounter");        // 金幣數量加一(金幣動畫)
+        }
+
+        RemindRaiseHand = 0;//歸零
+        Debug.Log(RemindRaiseHand);
         yield return null;
     }
 
@@ -807,11 +990,33 @@ public class BlockGameTaskLv2 : TaskBase
         yield return new WaitUntil(() => _userRaiseHand);//*******************
         yield return new WaitForSeconds(3);
         GreenTriggerBall.SetActive(false);//Close GreenTriggerBall
+
         clip = Resources.Load<AudioClip>(audioClipRootPath+"Host_YouWaitedToTalk");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        Debug.Log("主持人說user有等老師，還有說自己少一個積木很棒");
-        yield return new WaitForSeconds(3);
+
+        Heart.SetActive(true);
+        clip = Resources.Load<AudioClip>("AudioClip/Awards/Heart");
+        GameAudioController.Instance.PlayOneShot(clip);
+        yield return new WaitForSeconds(clip.length);
+        Heart.SetActive(false);
+        GameEventCenter.DispatchEvent("GameRubyCounter");   // 寶石數量加一
+
+        Debug.Log("主持人:你有舉手等待老師，很棒，可以獲得一枚愛心。");
+        yield return new WaitForSeconds(1);
+        //clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_YouWaitedToTalk");
+        //GameAudioController.Instance.PlayOneShot(clip);
+        //yield return new WaitForSeconds(clip.length);
+        
+        Ruby.SetActive(true);
+        clip = Resources.Load<AudioClip>("AudioClip/Awards/ruby");
+        GameAudioController.Instance.PlayOneShot(clip);
+        yield return new WaitForSeconds(clip.length);
+        Ruby.SetActive(false);
+        GameEventCenter.DispatchEvent("GameRubyCounter");   // 寶石數量加一
+        yield return new WaitForSeconds(2);
+        Debug.Log("而且你還跟老師說你少了一塊積木，很棒喔！可以獲得一顆寶石");
+
         clip = Resources.Load<AudioClip>(audioClipRootPath+"Teacher_GiveUserCube");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);

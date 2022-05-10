@@ -469,13 +469,13 @@ ModelImporter:
       74: -5405653242291790180
     second: "\u5750\u5728\u6905\u5B50\u4E0A\u7684Default"
   - first:
-      74: 7333342152410418946
-    second: "\u5C0F\u7F8E\u5750\u5728\u6905\u5B50\u4E0A\u5F80\u53F3\u908A\u8F49\u982D\u770B\u767D\u677F"
+      74: 9067093048684652814
+    second: "\u5C0F\u661F\u5750\u5728\u6905\u5B50\u4E0A\u5F80\u53F3\u908A\u8F49\u982D\u770B\u767D\u677F"
   - first:
-      74: 249905047701931600
+      74: -3291206362154003629
     second: "\u5750\u5728\u6905\u5B50\u4E0A+\u8209\u624B+\u8AAA\u6211! \u8209\u53F3\u624B"
   - first:
-      74: 9067093048684652814
+      74: 1805460836062726171
     second: "\u5750\u5728\u6905\u5B50\u4E0A+\u8209\u624B+\u8AAA\u6211! \u8209\u5DE6\u624B"
   - first:
       74: 7427331629329451930
@@ -493,8 +493,9 @@ ModelImporter:
       74: -7287464382530539811
     second: "\u5750\u5728\u6905\u5B50\u4E0A\u958B\u5FC3 \u96D9\u624B\u8209\u9AD8\uFF0C\u773C\u775B\u8DDF\u5634\u5DF4\u8981\u7B11(\u4E0A\u63DA)"
   - first:
-      74: 4478583647040753632
-    second: "\u5DE6\u624B\u6307\u5B8C\u684C\u4E0A\u7684\u7A4D\u6728\u5F8C\u96D9\u624B\u6524\u958B\u8073\u80A9"
+      74: -134144208600620716
+    second: "\u5750\u5728\u6905\u5B50\u4E0A\u5DE6\u624B\u6307\u8457\u684C\u4E0A\u7684\u7A4D\u6728\u8AAA\u8A71
+      \u5DE6\u624B\u6307\u5B8C\u684C\u4E0A\u7684\u7A4D\u6728\u5F8C\u96D9\u624B\u6524\u958B\u8073\u80A9(\u7A4D\u6728\u548C\u624B\u7684\u52D5\u4F5C\u5206\u958B)"
   - first:
       74: 2831208504595684611
     second: "\u5750\u5728\u6905\u5B50\u4E0A\u76BA\u7709\u8AAA\u8A71 \u96D9\u624B\u63D2\u5728\u80F8\u524D"
@@ -512,14 +513,14 @@ ModelImporter:
       74: -2843815846413390201
     second: "\u5750\u5728\u6905\u5B50\u4E0A\u53F3\u624B\u51FA\u5E03"
   - first:
-      74: -246860477867451336
+      74: -8863293999649645383
     second: "\u5750\u5728\u6905\u5B50\u4E0A\u5C0B\u627E\u7A4D\u6728"
   - first:
       74: -1161826589001354446
     second: "\u5750\u5728\u6905\u5B50\u4E0A\u653E\u7A4D\u6728(2D\u5716\u7247) NPC\u7528\u5DE6\u624B\u62FF\u53D6\u684C\u4E0A\u7684\u7A4D\u6728\uFF0C\u7136\u5F8C\u653E\u5728\u4E2D\u9593\u7684\u5716\u7247\u4E0A"
   - first:
-      74: 1001960203001608461
-    second: "\u5750\u5728\u6905\u5B50\u4E0A\u770B\u8457\u8001\u5E2B\u8209\u53F3\u624B\u8AAA\u8A71
+      74: 3867814457104753654
+    second: ".\u5750\u5728\u6905\u5B50\u4E0A\u770B\u8457\u8001\u5E2B\u8209\u53F3\u624B\u8AAA\u8A71
       \u982D\u5FAE\u5FAE\u8F49\u52D5\u5C0B\u627E\u8001\u5E2B"
   - first:
       74: 2629027670695168486
@@ -545,7 +546,7 @@ ModelImporter:
     importAnimatedCustomProperties: 0
     importConstraints: 0
     animationCompression: 3
-    animationRotationError: 10
+    animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
@@ -593,7 +594,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -611,7 +612,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: "\u5C0F\u7F8E\u5750\u5728\u6905\u5B50\u4E0A\u5F80\u53F3\u908A\u8F49\u982D\u770B\u767D\u677F"
+      name: "\u5C0F\u661F\u5750\u5728\u6905\u5B50\u4E0A\u5F80\u53F3\u908A\u8F49\u982D\u770B\u767D\u677F"
       takeName: Take 001
       internalID: 0
       firstFrame: 200
@@ -631,7 +632,7 @@ ModelImporter:
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
-      mirror: 1
+      mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
@@ -644,7 +645,7 @@ ModelImporter:
       takeName: Take 001
       internalID: 0
       firstFrame: 400
-      lastFrame: 500
+      lastFrame: 580
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -660,7 +661,7 @@ ModelImporter:
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
-      mirror: 1
+      mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
@@ -673,7 +674,7 @@ ModelImporter:
       takeName: Take 001
       internalID: 0
       firstFrame: 580
-      lastFrame: 735
+      lastFrame: 740
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -689,7 +690,7 @@ ModelImporter:
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
-      mirror: 1
+      mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
@@ -702,7 +703,7 @@ ModelImporter:
       takeName: Take 001
       internalID: 0
       firstFrame: 740
-      lastFrame: 900
+      lastFrame: 1000
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -843,11 +844,12 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: "\u5DE6\u624B\u6307\u5B8C\u684C\u4E0A\u7684\u7A4D\u6728\u5F8C\u96D9\u624B\u6524\u958B\u8073\u80A9"
+      name: "\u5750\u5728\u6905\u5B50\u4E0A\u5DE6\u624B\u6307\u8457\u684C\u4E0A\u7684\u7A4D\u6728\u8AAA\u8A71
+        \u5DE6\u624B\u6307\u5B8C\u684C\u4E0A\u7684\u7A4D\u6728\u5F8C\u96D9\u624B\u6524\u958B\u8073\u80A9(\u7A4D\u6728\u548C\u624B\u7684\u52D5\u4F5C\u5206\u958B)"
       takeName: Take 001
       internalID: 0
-      firstFrame: 1730
-      lastFrame: 1850
+      firstFrame: 1700
+      lastFrame: 1900
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -863,7 +865,7 @@ ModelImporter:
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
-      mirror: 1
+      mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
@@ -922,7 +924,7 @@ ModelImporter:
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
-      mirror: 1
+      mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
@@ -951,7 +953,7 @@ ModelImporter:
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
-      mirror: 1
+      mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
@@ -980,7 +982,7 @@ ModelImporter:
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
-      mirror: 1
+      mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
@@ -993,7 +995,7 @@ ModelImporter:
       takeName: Take 001
       internalID: 0
       firstFrame: 2600
-      lastFrame: 2740
+      lastFrame: 2760
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1009,7 +1011,7 @@ ModelImporter:
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
-      mirror: 1
+      mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
@@ -1021,8 +1023,8 @@ ModelImporter:
       name: "\u5750\u5728\u6905\u5B50\u4E0A\u5C0B\u627E\u7A4D\u6728"
       takeName: Take 001
       internalID: 0
-      firstFrame: 2760
-      lastFrame: 2830
+      firstFrame: 2920
+      lastFrame: 3040
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1038,7 +1040,7 @@ ModelImporter:
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
-      mirror: 1
+      mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
@@ -1050,7 +1052,7 @@ ModelImporter:
       name: "\u5750\u5728\u6905\u5B50\u4E0A\u653E\u7A4D\u6728(2D\u5716\u7247) NPC\u7528\u5DE6\u624B\u62FF\u53D6\u684C\u4E0A\u7684\u7A4D\u6728\uFF0C\u7136\u5F8C\u653E\u5728\u4E2D\u9593\u7684\u5716\u7247\u4E0A"
       takeName: Take 001
       internalID: 0
-      firstFrame: 3170
+      firstFrame: 3040
       lastFrame: 3240
       wrapMode: 0
       orientationOffsetY: 0
@@ -1067,7 +1069,7 @@ ModelImporter:
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
-      mirror: 1
+      mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
@@ -1076,11 +1078,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: "\u5750\u5728\u6905\u5B50\u4E0A\u770B\u8457\u8001\u5E2B\u8209\u53F3\u624B\u8AAA\u8A71
+      name: ".\u5750\u5728\u6905\u5B50\u4E0A\u770B\u8457\u8001\u5E2B\u8209\u53F3\u624B\u8AAA\u8A71
         \u982D\u5FAE\u5FAE\u8F49\u52D5\u5C0B\u627E\u8001\u5E2B"
       takeName: Take 001
       internalID: 0
-      firstFrame: 3310
+      firstFrame: 3240
       lastFrame: 3500
       wrapMode: 0
       orientationOffsetY: 0

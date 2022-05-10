@@ -141,7 +141,7 @@ Material:
     - _BaseColor: {r: 1, g: 0, b: 0, a: 1}
     - _BaseColorAddSubDiff: {r: -1, g: 1, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 0.105882324, g: 0.90588236, b: 0.14117643, a: 0.45490196}
+    - _Color: {r: 0.18711863, g: 0.6603774, b: 0.15886435, a: 0.45490196}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HueVariation: {r: 0.098039225, g: 0.098039225, b: 0.098039225, a: 0.1}
     - _HueVariationColor: {r: 1, g: 0.5, b: 0, a: 0.1}

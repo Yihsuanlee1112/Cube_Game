@@ -171,6 +171,12 @@ public class HandsTrigger : MonoBehaviour
                 Debug.Log("User Raise Hand");
                 BlockGameTask._userRaiseHand = true;
             }
+            //擊掌
+            else if (other.gameObject.tag == "redTriggerBall")
+            {
+                Debug.Log("User Celebrate");
+                BlockGameTask._userCelebrate = true;
+            }
 
             //猜拳選題目
             //第一輪: 小花贏了，但是慢出(小綠生氣)
@@ -438,6 +444,13 @@ public class HandsTrigger : MonoBehaviour
             {
                 Debug.Log("User Raise Hand");
                 BlockGameTaskLv2._userRaiseHand = true;
+            }
+            
+            //舉手碰紅球
+            else if (other.gameObject.tag == "redTriggerBall")
+            {
+                Debug.Log("User Celebrate");
+                BlockGameTaskLv2._userCelebrate = true;
             }
 
             //猜拳選題目

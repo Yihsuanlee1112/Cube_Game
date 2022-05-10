@@ -401,7 +401,7 @@ ModelImporter:
     second: kids_a_face
   - first:
       74: 7400000
-    second: Take 001
+    second: "\u5DE6\u624B\u6307\u5B8C\u684C\u4E0A\u7684\u7A4D\u6728\u5F8C\u96D9\u624B\u6524\u958B\u8073\u80A9"
   - first:
       95: 9500000
     second: //RootNode
@@ -412,64 +412,36 @@ ModelImporter:
       137: 13700002
     second: kids_a_face
   - first:
+      74: 2629027670695168486
+    second: "\u5750\u5728\u6905\u5B50\u4E0A\u958B\u5FC3\u62CD\u62CD\u624B\u8AAA\u8A71"
+  - first:
       74: -5405653242291790180
     second: "\u5750\u5728\u6905\u5B50\u4E0A\u7684Default"
   - first:
-      74: 4854180139978558704
-    second: "\u5C0F\u661F\u5750\u5728\u6905\u5B50\u4E0A\u5F80\u53F3\u908A\u8F49\u982D\u770B\u767D\u677F"
-  - first:
-      74: 1389121407789637250
+      74: 9067093048684652814
     second: "\u5750\u5728\u6905\u5B50\u4E0A+\u8209\u624B+\u8AAA\u6211! \u8209\u53F3\u624B"
   - first:
-      74: 4353825163953427278
-    second: "\u5750\u5728\u6905\u5B50\u4E0A+\u8209\u624B+\u8AAA\u6211! \u8209\u5DE6\u624B"
-  - first:
-      74: 3672910778998720083
-    second: "\u5750\u5728\u6905\u5B50\u4E0A\u751F\u6C23 \u96D9\u624B\u4E82\u63EE\u6253\u684C\u5B50"
-  - first:
-      74: -3956177450704724540
-    second: "\u5750\u5728\u6905\u5B50\u4E0A\u751F\u6C23 \u96D9\u624B\u6293\u982D\uFF0C\u982D\u5DE6\u53F3\u64FA\u52D5"
-  - first:
-      74: 7699450993773243021
-    second: "\u5750\u5728\u6905\u5B50\u4E0A\u96E3\u904E \u982D\u5FAE\u5FAE\u5411\u4E0B"
-  - first:
-      74: 3280542803925046194
-    second: "\u5750\u5728\u6905\u5B50\u4E0A\u8AAA\u8A71 \u60C5\u7DD2\uFF1A\u4E2D\u6027"
-  - first:
-      74: -5999675527893996257
+      74: -7287464382530539811
     second: "\u5750\u5728\u6905\u5B50\u4E0A\u958B\u5FC3 \u96D9\u624B\u8209\u9AD8\uFF0C\u773C\u775B\u8DDF\u5634\u5DF4\u8981\u7B11(\u4E0A\u63DA)"
   - first:
-      74: -2689075921232039075
-    second: "\u5DE6\u624B\u6307\u5B8C\u684C\u4E0A\u7684\u7A4D\u6728\u5F8C\u96D9\u624B\u6524\u958B\u8073\u80A9"
+      74: -8863293999649645383
+    second: "\u5750\u5728\u6905\u5B50\u4E0A\u5C0B\u627E\u7A4D\u6728"
   - first:
-      74: 8920196359723871472
-    second: "\u5750\u5728\u6905\u5B50\u4E0A\u76BA\u7709\u8AAA\u8A71 \u96D9\u624B\u63D2\u5728\u80F8\u524D"
+      74: -1161826589001354446
+    second: "\u5750\u5728\u6905\u5B50\u4E0A\u653E\u7A4D\u6728(2D\u5716\u7247) NPC\u7528\u5DE6\u624B\u62FF\u53D6\u684C\u4E0A\u7684\u7A4D\u6728\uFF0C\u7136\u5F8C\u653E\u5728\u4E2D\u9593\u7684\u5716\u7247\u4E0A"
   - first:
-      74: 408346803935102584
+      74: 5185934415721627557
+    second: "\u5750\u5728\u6905\u5B50\u4E0A\u8AAA\u8A71 \u60C5\u7DD2\uFF1A\u4E2D\u6027"
+  - first:
+      74: 6839744723314391102
     second: "\u5750\u5728\u6905\u5B50\u4E0A\u53F3\u624B\u63E1\u62F3\u8AAA\u526A\u5200\u77F3\u982D\u5E03
       \u53F3\u624B\u5FAE\u5FAE\u4E0A\u4E0B\u63EE\u52D5"
   - first:
-      74: 8882823298892826374
-    second: "\u5750\u5728\u6905\u5B50\u4E0A\u53F3\u624B\u51FA\u526A\u5200"
+      74: 345552675556385565
+    second: "\u5750\u5728\u6905\u5B50\u4E0A\u96E3\u904E \u982D\u5FAE\u5FAE\u5411\u4E0B"
   - first:
-      74: 7203548638874166975
-    second: "\u5750\u5728\u6905\u5B50\u4E0A\u53F3\u624B\u51FA\u77F3\u982D"
-  - first:
-      74: 7189169672641188838
-    second: "\u5750\u5728\u6905\u5B50\u4E0A\u53F3\u624B\u51FA\u5E03"
-  - first:
-      74: 1898960015755076542
-    second: "\u5750\u5728\u6905\u5B50\u4E0A\u5C0B\u627E\u7A4D\u6728"
-  - first:
-      74: -6523562176807684107
-    second: "\u5750\u5728\u6905\u5B50\u4E0A\u653E\u7A4D\u6728(2D\u5716\u7247) NPC\u7528\u5DE6\u624B\u62FF\u53D6\u684C\u4E0A\u7684\u7A4D\u6728\uFF0C\u7136\u5F8C\u653E\u5728\u4E2D\u9593\u7684\u5716\u7247\u4E0A"
-  - first:
-      74: 1001960203001608461
-    second: "\u5750\u5728\u6905\u5B50\u4E0A\u770B\u8457\u8001\u5E2B\u8209\u53F3\u624B\u8AAA\u8A71
-      \u982D\u5FAE\u5FAE\u8F49\u52D5\u5C0B\u627E\u8001\u5E2B"
-  - first:
-      74: 2629027670695168486
-    second: "\u5750\u5728\u6905\u5B50\u4E0A\u958B\u5FC3\u62CD\u62CD\u624B\u8AAA\u8A71"
+      74: 2831208504595684611
+    second: "\u5750\u5728\u6905\u5B50\u4E0A\u76BA\u7709\u8AAA\u8A71 \u96D9\u624B\u63D2\u5728\u80F8\u524D"
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -499,11 +471,40 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Take 001
+      name: "\u5DE6\u624B\u6307\u5B8C\u684C\u4E0A\u7684\u7A4D\u6728\u5F8C\u96D9\u624B\u6524\u958B\u8073\u80A9"
       takeName: Take 001
       internalID: 0
-      firstFrame: 0
-      lastFrame: 3701
+      firstFrame: 1730
+      lastFrame: 1860
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 1
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: "\u5750\u5728\u6905\u5B50\u4E0A\u958B\u5FC3\u62CD\u62CD\u624B\u8AAA\u8A71"
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 1540
+      lastFrame: 1700
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -557,40 +558,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: "\u5C0F\u661F\u5750\u5728\u6905\u5B50\u4E0A\u5F80\u53F3\u908A\u8F49\u982D\u770B\u767D\u677F"
-      takeName: Take 001
-      internalID: 0
-      firstFrame: 200
-      lastFrame: 400
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
       name: "\u5750\u5728\u6905\u5B50\u4E0A+\u8209\u624B+\u8AAA\u6211! \u8209\u53F3\u624B"
       takeName: Take 001
       internalID: 0
       firstFrame: 400
-      lastFrame: 500
+      lastFrame: 580
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -607,151 +579,6 @@ ModelImporter:
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 1
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: "\u5750\u5728\u6905\u5B50\u4E0A+\u8209\u624B+\u8AAA\u6211! \u8209\u5DE6\u624B"
-      takeName: Take 001
-      internalID: 0
-      firstFrame: 580
-      lastFrame: 735
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 1
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: "\u5750\u5728\u6905\u5B50\u4E0A\u751F\u6C23 \u96D9\u624B\u4E82\u63EE\u6253\u684C\u5B50"
-      takeName: Take 001
-      internalID: 0
-      firstFrame: 740
-      lastFrame: 900
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: "\u5750\u5728\u6905\u5B50\u4E0A\u751F\u6C23 \u96D9\u624B\u6293\u982D\uFF0C\u982D\u5DE6\u53F3\u64FA\u52D5"
-      takeName: Take 001
-      internalID: 0
-      firstFrame: 1000
-      lastFrame: 1180
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: "\u5750\u5728\u6905\u5B50\u4E0A\u96E3\u904E \u982D\u5FAE\u5FAE\u5411\u4E0B"
-      takeName: Take 001
-      internalID: 0
-      firstFrame: 1238
-      lastFrame: 1292
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: "\u5750\u5728\u6905\u5B50\u4E0A\u8AAA\u8A71 \u60C5\u7DD2\uFF1A\u4E2D\u6027"
-      takeName: Take 001
-      internalID: 0
-      firstFrame: 1360
-      lastFrame: 1540
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
@@ -789,11 +616,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: "\u5DE6\u624B\u6307\u5B8C\u684C\u4E0A\u7684\u7A4D\u6728\u5F8C\u96D9\u624B\u6524\u958B\u8073\u80A9"
+      name: "\u5750\u5728\u6905\u5B50\u4E0A\u653E\u7A4D\u6728(2D\u5716\u7247) NPC\u7528\u5DE6\u624B\u62FF\u53D6\u684C\u4E0A\u7684\u7A4D\u6728\uFF0C\u7136\u5F8C\u653E\u5728\u4E2D\u9593\u7684\u5716\u7247\u4E0A"
       takeName: Take 001
       internalID: 0
-      firstFrame: 1730
-      lastFrame: 1850
+      firstFrame: 3140
+      lastFrame: 3240
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -818,11 +645,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: "\u5750\u5728\u6905\u5B50\u4E0A\u76BA\u7709\u8AAA\u8A71 \u96D9\u624B\u63D2\u5728\u80F8\u524D"
+      name: "\u5750\u5728\u6905\u5B50\u4E0A\u8AAA\u8A71 \u60C5\u7DD2\uFF1A\u4E2D\u6027"
       takeName: Take 001
       internalID: 0
-      firstFrame: 1900
-      lastFrame: 1999.9999
+      firstFrame: 1360
+      lastFrame: 1540
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -868,122 +695,6 @@ ModelImporter:
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: "\u5750\u5728\u6905\u5B50\u4E0A\u53F3\u624B\u51FA\u526A\u5200"
-      takeName: Take 001
-      internalID: 0
-      firstFrame: 2240
-      lastFrame: 2380
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: "\u5750\u5728\u6905\u5B50\u4E0A\u53F3\u624B\u51FA\u77F3\u982D"
-      takeName: Take 001
-      internalID: 0
-      firstFrame: 2440
-      lastFrame: 2580
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: "\u5750\u5728\u6905\u5B50\u4E0A\u53F3\u624B\u51FA\u5E03"
-      takeName: Take 001
-      internalID: 0
-      firstFrame: 2600
-      lastFrame: 2740
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: "\u5750\u5728\u6905\u5B50\u4E0A\u5C0B\u627E\u7A4D\u6728"
-      takeName: Take 001
-      internalID: 0
-      firstFrame: 2760
-      lastFrame: 2830
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
       mirror: 1
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
@@ -993,41 +704,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: "\u5750\u5728\u6905\u5B50\u4E0A\u653E\u7A4D\u6728(2D\u5716\u7247) NPC\u7528\u5DE6\u624B\u62FF\u53D6\u684C\u4E0A\u7684\u7A4D\u6728\uFF0C\u7136\u5F8C\u653E\u5728\u4E2D\u9593\u7684\u5716\u7247\u4E0A"
+      name: "\u5750\u5728\u6905\u5B50\u4E0A\u96E3\u904E \u982D\u5FAE\u5FAE\u5411\u4E0B"
       takeName: Take 001
       internalID: 0
-      firstFrame: 3170
-      lastFrame: 3240
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 1
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: "\u5750\u5728\u6905\u5B50\u4E0A\u770B\u8457\u8001\u5E2B\u8209\u53F3\u624B\u8AAA\u8A71
-        \u982D\u5FAE\u5FAE\u8F49\u52D5\u5C0B\u627E\u8001\u5E2B"
-      takeName: Take 001
-      internalID: 0
-      firstFrame: 3310
-      lastFrame: 3500
+      firstFrame: 1180
+      lastFrame: 1360
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1052,11 +733,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: "\u5750\u5728\u6905\u5B50\u4E0A\u958B\u5FC3\u62CD\u62CD\u624B\u8AAA\u8A71"
+      name: "\u5750\u5728\u6905\u5B50\u4E0A\u76BA\u7709\u8AAA\u8A71 \u96D9\u624B\u63D2\u5728\u80F8\u524D"
       takeName: Take 001
       internalID: 0
-      firstFrame: 3500
-      lastFrame: 3633
+      firstFrame: 1900
+      lastFrame: 1999.9999
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

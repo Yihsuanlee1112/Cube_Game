@@ -11,6 +11,7 @@ public class MainSceneRes : GameSceneEntityRes
 
     [Header("GameObjects")]
     public GameObject GreenTriggerBall;
+    public GameObject RedTriggerBall;
     public GameObject NPC_Hand;
     public GameObject vrCamera;
     public GameObject userLeftHandTrigger;
@@ -31,6 +32,7 @@ public class MainSceneRes : GameSceneEntityRes
     public List<BlockEntity> AllCubes;
     public List<BlockEntity> Final_Order;
     //public List<GameObject> Lv2_Order;
+
     [Header("Each_Groups_BlockLists")]
     public List<BlockEntity> cube_GA;
     public List<BlockEntity> cube_GB;
@@ -43,6 +45,9 @@ public class MainSceneRes : GameSceneEntityRes
     [Header("NumList")]
     public List<int> textOnQuestion;
     public List<GameObject> QuestionOrder;
+
+    [Header("TimerList")]
+    public List<TimerEntity> TimerList;
 
     [Header("Animator")]
     public Animator HostAnimator;
@@ -58,11 +63,15 @@ public class MainSceneRes : GameSceneEntityRes
     public List<AudioClip> ChineseSpeechClip;
     public List<AudioClip> EnglishSpeechClip;
 
+    [Header("Award")]
+    public GameObject Coin;
+    public GameObject Ruby;
+    public GameObject Heart;
     //public List<GameObject> ObjectList;
     public Transform PutPosition;
     //public List<TimerEntity> TimerList;
-    
+
     //public Canvas MainSceneUI;
 
-    
+
 }

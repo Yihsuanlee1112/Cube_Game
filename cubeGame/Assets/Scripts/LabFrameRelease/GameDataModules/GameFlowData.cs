@@ -30,6 +30,21 @@ namespace GameData
         /// </summary>
         public string UserColor { get; set; }
         public string UserFirstColor { get; set; }
+
+        public int EyeSec { get; set; }
+        public int HandSec { get; set; }
+        public int BreathSec { get; set; }
+        public bool LeftHand { get; set; }
+        public bool RightHand { get; set; }
+
+
+        public int GameTimeMin { get; set; }
+        //public int _isHaveInterference { get; set; } // 0: 有干擾物, 1: 沒有干擾物
+        //public int[] InterferenceStatus { get; set; }
+        //public int NumOfInterference { get; set; }
+        //public int isAdvanced { get; set; }
+
+
         /// <summary>
         /// FlowData 构造函数
         /// </summary>

@@ -26,10 +26,17 @@ public class Instantiate_Cube : MonoBehaviour
     float interval = 0.079f; //3.623-3.544 但好像間隔不平均(?
 
     [Header("桌子的位置")]
-    public List<GameObject> Desks;
+    public List<GameObject> Tables;
 
     [Header("積木的父物件")]
     public List<GameObject> CubeParents;
+
+    [Header("CubeAns")]
+    public List<GameObject> Q1_Ans;
+    public List<GameObject> Q2_Ans;
+    public List<GameObject> Q3_Ans;
+    public List<GameObject> Q4_Ans;
+    public List<List<GameObject>> Cube_Ans = new List<List<GameObject>>();
 
 
     //public int RandomQuestion = Random.Range(1, 4);
@@ -61,12 +68,20 @@ public class Instantiate_Cube : MonoBehaviour
         Cube_Prefabs.Add(Q3_Cube_Prefabs);
         Cube_Prefabs.Add(Q4_Cube_Prefabs);
 
-        for (int i = 0; i < 4; i++)
+        Cube_Ans.Add(Q1_Ans);
+        Cube_Ans.Add(Q2_Ans);
+        Cube_Ans.Add(Q3_Ans);
+        Cube_Ans.Add(Q4_Ans);
+
+        for (int i = 0; i < Cube_Prefabs.Count; i++)
         {
-            Question(i, Cube_Prefabs[i], Parents[i], CubeParents[i]);
+            // 生成積木和題目
+            //          Q1_CubePrefaabs, Q1_Parent, Q1_CubeParent, Q1_Ans
+            Question(i, Cube_Prefabs[i], Parents[i], CubeParents[i], Cube_Ans[i]);
         }
 
-        PutCubeOnDesk(BlockGameTask._RandomQuestion - 1);
+        // 題目和積木放到桌上
+        PutCubeOnTables(BlockGameTask._RandomQuestion - 1);
     }
     public void InstatiateCubeLv2()
     {
@@ -77,14 +92,14 @@ public class Instantiate_Cube : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
-            Question(i, Cube_Prefabs[i], Parents[i], CubeParents[i]);
+            Question(i, Cube_Prefabs[i], Parents[i], CubeParents[i], Cube_Ans[i]);
         }
 
-        //PutCubeOnDesk(BlockGameTaskLv2._RandomQuestion - 1);
+        //PutCubeOnTables(BlockGameTaskLv2._RandomQuestion - 1);
     }
     public void CubeOnDesk()
     {
-        PutCubeOnDesk(BlockGameTaskLv2._RandomQuestion - 1);
+        PutCubeOnTables(BlockGameTaskLv2._RandomQuestion - 1);
     }
 
     /// <summary>
@@ -95,17 +110,25 @@ public class Instantiate_Cube : MonoBehaviour
     /// <param name="CubePrefabs"></param>
     /// <param name="CubesInitPos"></param>
     /// <param name="Parent"></param>
-    public void Question(int PicNum, List<GameObject> CubePrefabs, GameObject Parent, GameObject CubeParent)
+    public void Question(int PicNum, List<GameObject> CubePrefabs, GameObject Parent, GameObject CubeParent, List<GameObject> CubeAns)
     {
         AllCubes = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().AllCubes;
         Vector3 PicsPos = new Vector3((float)0.0, (float)0.0, (float)0.0);
         Vector3 CubesPos = new Vector3((float)0.0, (float)0.0, (float)0.0);
+        int cubeAnsIndex = 0;
 
+        // 生成題目
         GameObject picInstantiate = Instantiate(Question_Prefabs[PicNum], PicsPos, Quaternion.Euler(0, 180, 0)); // 因為場景X和Z方向不同，所以4張圖統一轉向
         picInstantiate.transform.SetParent(Parent.transform);
 
+        // 生成積木
         foreach (GameObject cube in CubePrefabs)
         {
+            // 先把CubeAns放進Cube
+            cube.GetComponent<BlockEntity>().ansTransform = CubeAns[cubeAnsIndex];
+            cubeAnsIndex++;
+
+            // 然後在生成
             CubesPos.z = CubesPos.z + interval;
             GameObject cubeInstantiate = Instantiate(cube, CubesPos, Quaternion.identity);
             cubeInstantiate.transform.SetParent(CubeParent.transform);
@@ -122,26 +145,49 @@ public class Instantiate_Cube : MonoBehaviour
     }
 
     /// <summary>
-    /// 根據user的選擇把其他組的積木放在桌上
+    /// 根據user的選擇把其他組的題目和積木放在桌上
     /// </summary>
     /// <param name="PicNum"> user選擇的圖片編號 </param>
-    public void PutCubeOnDesk(int PicNum)
+    public void PutCubeOnTables(int PicNum)
     {
-        int otherDesk = 1;
+        GameObject CubeAns = GameObject.Find("CubeAns");
+        int otherTable = 1;
         for (int i = 0; i < 4; i++)
         {
             if (i == PicNum)
             {
-                //題目整個搬過去
-                Parents[i].transform.position = Desks[0].transform.position;
-                //設定積木的位置=>GetChild(0)
-                Parents[i].transform.GetChild(0).transform.position = Desks[0].transform.GetChild(0).transform.position;
+                //題目的位置等於Table底下的PicPos
+                Parents[i].transform.GetChild(1).position = Tables[0].transform.GetChild(1).position;
+
+                //積木的位置等於Table底下的CubePos
+                Parents[i].transform.GetChild(0).transform.position = Tables[0].transform.GetChild(2).transform.position;
+
+                Debug.Log("把積木的答案挪到桌子上");
+                CubeAns.transform.GetChild(i).position = Tables[0].transform.GetChild(1).position;
+
+                //Debug.Log("把積木答案的孩子們座標加上他爸的座標");
+                //foreach (GameObject cubeans in Cube_Ans[i])
+                //{
+                //cubeans.transform.position += CubeAns.transform.GetChild(i).transform.position;
+                //}
             }
             else
             {
-                Parents[i].transform.position = Desks[otherDesk].transform.position;
-                Parents[i].transform.GetChild(0).transform.position = Desks[otherDesk].transform.GetChild(0).transform.position;
-                otherDesk++;
+                Debug.Log("in else");
+                Parents[i].transform.GetChild(1).position = Tables[otherTable].transform.GetChild(1).position;
+                Parents[i].transform.GetChild(0).transform.position = Tables[otherTable].transform.GetChild(2).transform.position;
+                Debug.Log(Parents[i].transform.GetChild(1).position);
+                Debug.Log(Parents[i].transform.GetChild(0).transform.position);
+                Debug.Log("把積木的答案挪到桌子上");
+                CubeAns.transform.GetChild(i).position = Tables[otherTable].transform.GetChild(1).position;
+
+                Debug.Log("把積木答案的孩子們座標加上他爸的座標");
+                foreach (GameObject cubeans in Cube_Ans[i])
+                {
+                    cubeans.transform.position += CubeAns.transform.GetChild(i).transform.position;
+                }
+
+                otherTable++;
             }
         }
     }
