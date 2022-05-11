@@ -272,8 +272,10 @@ public class BlockGameTask : TaskBase
         }
         */
         //XXX那一組猜拳贏了，你可以先選一張圖。你要選第幾張圖?
-        
-        
+        //yield return NPC_YouWin();
+        /*
+        npc.animator.SetBool("isDefault", true);
+
         yield return Teacher_AskUserWhichPic();
         yield return new WaitForSeconds(1.5f);
         //讓user選題目
@@ -312,14 +314,19 @@ public class BlockGameTask : TaskBase
         }
 
         //小花: 沒贏也沒關係，每一張圖我都喜歡
+        KidA.SetBool("isTalk", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "Flower_ItsOkTolose");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
+        KidA.SetBool("isTalk", false);
+        KidA.SetBool("isDefault", true);
         //小朋友，你們要記得按照數字順序輪流完成作品喔
         yield return Teacher_LV1Remind();
 
         //NPC說贏的先
+        npc.animator.SetBool("isDefault", false);
         yield return NPC_WinnerFirst();
+        yield return new WaitForSeconds(1);
         userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
         GameEventCenter.DispatchEvent("TwoPlayerRPS");
@@ -339,17 +346,19 @@ public class BlockGameTask : TaskBase
         userRightHandTrigger.GetComponent<BoxCollider>().enabled = false;
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = false;
         yield return new WaitForSeconds(2);
-
+        npc.animator.SetBool("isDefault", true);
         GameObject.FindWithTag("Result").SetActive(false);
         for (int i = 0; i < 3; i++)
         {
             GameObject.FindWithTag("RPS").SetActive(false);
         }
-        yield return new WaitForSeconds(2);
-
+        yield return new WaitForSeconds(1);
+        npc.animator.SetBool("isDefault", false);
         //框架
         //猜拳之後，小星說你贏了你先
         yield return NPC_YouWin();
+        
+        
         foreach (BlockEntity cube in AllCubes)
         {
             //cube.getcomponent<meshrenderer>().enabled = true;//***********
@@ -365,19 +374,15 @@ public class BlockGameTask : TaskBase
         //_StartTobuild = true;
         userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
-
+        
         if (Final_Order[0]._isUserColor)
         {
             _playerRound = true;
         }
         
         while (!_BlockFinished)
-        {_StartTobuild = true;
-            while (_StartTobuild) 
-            {
-                yield return OtherGroupBuildBlock();
-            }
-            
+        {
+            _StartTobuild = true;
             GameEventCenter.DispatchEvent("KidsShouldPut");
             Debug.Log("Recent order is : " + RecentOrder);
             if (Final_Order[RecentOrder - 1]._isUserColor)
@@ -427,9 +432,9 @@ public class BlockGameTask : TaskBase
                     if (!cube._isChose && !cube._isUserColor)
                     {
                         Debug.Log("NPC touch block");
-                        npc.animator.Play("坐在椅子上放積木(2D圖片) NPC用左手拿取桌上的積木，然後放在中間的圖片上");
-                        //npc.animator.SetBool("isTakeCube", true);
-                        yield return new WaitForSeconds(1f);
+                        //npc.animator.Play("坐在椅子上放積木(2D圖片) NPC用左手拿取桌上的積木，然後放在中間的圖片上");
+                        npc.animator.SetBool("isTakeCube", true);
+                        //yield return new WaitForSeconds(1f);
                         Debug.Log("put Block");
                         npc.transform.rotation = Quaternion.Euler(0, 0, 0);
                         //npc.animator.SetBool("findCube", true); 
@@ -437,8 +442,7 @@ public class BlockGameTask : TaskBase
                         //yield return new WaitForSeconds(3);
                         //Debug.Log("NPC putting Block");
                         //npc.animator.SetBool("findCube",false);
-                        //npc.animator.SetBool("isTakeCube", false);
-                        yield return new WaitForSeconds(5);
+                        //yield return new WaitForSeconds(5);
                         _npcremind = false;
                         if (!_npcremind)
                         {
@@ -448,25 +452,35 @@ public class BlockGameTask : TaskBase
                             GameEventCenter.DispatchEvent("CubeAns", cube);
                             
                         }
+                        npc.animator.SetBool("isTakeCube", false);
+                        npc.animator.SetBool("isDefault", true);
+                        yield return new WaitForSeconds(1f);
                         break;
                     }
                 }
             }
             GameEventCenter.DispatchEvent("CheckCube");
+            while (_BlockFinished) 
+            {
+                yield return OtherGroupBuildBlock();   
+            }
             _StartTobuild = false;
+           
             yield return new WaitForSeconds(2);
         }
         
         userRightHandTrigger.GetComponent<BoxCollider>().enabled = false;
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = false;
-
+        */
         // 結束後語音
         //小星: 耶!我們完成了!（小星雙手舉高）等待2秒
         npc.animator.Play("坐在椅子上開心 雙手舉高，眼睛跟嘴巴要笑(上揚)");
-        npc.animator.Play("坐在椅子上+舉手+說我! 舉右手");
+        yield return new WaitForSeconds(2);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_Hooray");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
+        npc.animator.Play("坐在椅子上+舉手+說我! 舉右手");
+        
         //RedTriggerBall
         RedTriggerBall.SetActive(true);
 
@@ -661,12 +675,12 @@ public class BlockGameTask : TaskBase
     }
     IEnumerator NPC_YouWin()
     {
-        npc.animator.SetBool("isTalk2", true);
+        npc.animator.Play("坐在椅子上說話");
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_YouWin");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        Debug.Log(audioClipRootPath + "NPC_Rule" + clip.length);
-        npc.animator.SetBool("isTalk2", false);
+        //npc.animator.SetBool("isTalk2", false);
+        //npc.animator.SetBool("isDefault", true);
         yield return null;
     }
     IEnumerator NPC_WinnerFirst()

@@ -7,6 +7,8 @@ public class MainSceneUI : MonoBehaviour
 {
     public Text Text5sec;  // Timer5sec()
     public Text Text2sec;  // Timer2sec()
+    public Text Text5secLv2;  // Timer5secLv2()
+    public Text Text2secLv2;  // Timer2secLv2()
     public Text EyeText;    // EyeTimer()
     public Text HandText;   // HandTimer()
     public Text BreathText; // BreathTimer()
@@ -132,6 +134,8 @@ public class MainSceneUI : MonoBehaviour
 
     private void Awake()
     {
+        GameEventCenter.AddEvent<bool>("Text5sec_isEnabledLv2", Text5sec_isEnabledLv2);
+        GameEventCenter.AddEvent<bool>("Text2sec_isEnabledLv2", Text2sec_isEnabledLv2);
         GameEventCenter.AddEvent<bool>("Text5sec_isEnabled", Text5sec_isEnabled);
         GameEventCenter.AddEvent<bool>("Text2sec_isEnabled", Text2sec_isEnabled);
         GameEventCenter.AddEvent<bool>("HandText_isEnabled", HandText_isEnabled);
@@ -199,6 +203,14 @@ public class MainSceneUI : MonoBehaviour
         {
             Timer2sec();
         }
+        if (Text5secLv2.enabled)
+        {
+            Timer5secLv2();
+        }
+        if (Text2secLv2.enabled)
+        {
+            Timer2secLv2();
+        }
         //if (HandText.enabled)
         //{
         //    HandTimer();
@@ -245,6 +257,16 @@ public class MainSceneUI : MonoBehaviour
     void Text2sec_isEnabled(bool judge)
     {
         Text2sec.enabled = judge;
+    }
+    
+    void Text5sec_isEnabledLv2(bool judge)
+    {
+        Text5secLv2.enabled = judge;
+    }
+    
+    void Text2sec_isEnabledLv2(bool judge)
+    {
+        Text2secLv2.enabled = judge;
     }
 
     void HandText_isEnabled(bool judge)
@@ -395,7 +417,7 @@ public class MainSceneUI : MonoBehaviour
         //if (minute == 0 && second >= maxWaitingTime) // 超過5秒，顯示時間到
         if (timer_i >= maxWaitingTime) // 超過5秒，顯示時間到
         {
-            Text5sec.text = "5秒時間到";
+            Text5secLv2.text = "5秒時間到";
             //Debug.Log("5秒時間到");
             BlockGameTaskLv2._is5secTimeUp = true;
 
@@ -404,7 +426,7 @@ public class MainSceneUI : MonoBehaviour
         }
         else if (!BlockGameTaskLv2._is5secTimeUp) // 未達5秒，顯示時間
         {
-            Text5sec.text = "5秒計時: " + timer_i;
+            Text5secLv2.text = "5秒計時: " + timer_i;
             //Debug.Log("5秒計時: " + timer_i);
 
         }
@@ -487,7 +509,7 @@ public class MainSceneUI : MonoBehaviour
         //if (minute == 0 && second >= maxWaitingTime) // 超過5秒，顯示時間到
         if (timer_i5 >= maxWaitingTime_5) // 超過2秒，顯示時間到
         {
-            Text2sec.text = "2秒時間到";
+            Text2secLv2.text = "2秒時間到";
             Debug.Log("2秒時間到");
             BlockGameTaskLv2._is2secTimeUp = true;
 
@@ -496,7 +518,7 @@ public class MainSceneUI : MonoBehaviour
         }
         else if (!BlockGameTaskLv2._is2secTimeUp) // 未達5秒，顯示時間
         {
-            Text2sec.text = "2秒計時: " + timer_i5;
+            Text2secLv2.text = "2秒計時: " + timer_i5;
             Debug.Log("2秒計時: " + timer_i5);
 
         }

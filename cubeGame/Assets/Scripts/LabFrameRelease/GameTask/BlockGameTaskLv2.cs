@@ -326,9 +326,11 @@ public class BlockGameTaskLv2 : TaskBase
         //    GameObject.Find("Parents/Q"+ _RandomQuestion+"_Parent/Question(Clone)").transform.GetChild(i).GetChild(0).GetChild(0).GetComponent<Text>().text = null;
         //}
         //小花: 沒贏也沒關係，每一張圖我都喜歡
+        KidA.SetBool("isTalk", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath+"Flower_ItsOkTolose");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
+        KidA.SetBool("isTalk", false);
         //小朋友，你們可以分配顏色，按照題目上的數字順序輪流完成作品
         yield return Teacher_RemindLv2();
         yield return new WaitForSeconds(2);
@@ -579,15 +581,16 @@ public class BlockGameTaskLv2 : TaskBase
         //RedTriggerBall
         npc.animator.SetBool("isHappy", false); 
         RedTriggerBall.SetActive(true);
+        yield return new WaitForSeconds(2);
         //wait2Sec
         while (RemindRaiseHand < 3)
         {
-            Debug.Log(RemindRaiseHand);
-            GameEventCenter.DispatchEvent("Text2sec_isEnabled", true); // 2秒計時器打開
-
+            //Debug.Log(RemindRaiseHand);
+            GameEventCenter.DispatchEvent("Text2sec_isEnabledLv2", true); // 2秒計時器打開
+            GameEventCenter.DispatchEvent("Timer2secResetLv2");
             yield return new WaitUntil(() =>
             {
-                Debug.Log(RemindRaiseHand);
+                //Debug.Log(RemindRaiseHand);
                 if (_userCelebrate && !_is2secTimeUp) // user有擊掌 
                 {
                     return true;
@@ -601,8 +604,9 @@ public class BlockGameTaskLv2 : TaskBase
 
             if (_userCelebrate && !_is2secTimeUp) // user有擊掌
             {
-                Debug.Log(RemindRaiseHand);
-                GameEventCenter.DispatchEvent("Text2sec_isEnabled", false); // 2秒計時器關閉
+                //Debug.Log(RemindRaiseHand);
+                GameEventCenter.DispatchEvent("Text2sec_isEnabledLv2", false); // 2秒計時器關閉
+                GameEventCenter.DispatchEvent("Timer2secResetLv2");
                 _userCelebrate = false;
                 
                 yield return new WaitForSeconds(1);
@@ -612,6 +616,7 @@ public class BlockGameTaskLv2 : TaskBase
                 yield return new WaitForSeconds(clip.length);
                 RedTriggerBall.SetActive(false);
                 yield return new WaitForSeconds(2);
+                npc.animator.Play("坐在椅子上開心拍拍手說話");
                 Heart.SetActive(true);
                 clip = Resources.Load<AudioClip>("AudioClip/Awards/ruby");
                 GameAudioController.Instance.PlayOneShot(clip);
@@ -622,12 +627,12 @@ public class BlockGameTaskLv2 : TaskBase
             }
             else if (!_userCelebrate && _is2secTimeUp) // 過了2秒user沒有擊掌
             {
-                Debug.Log(RemindRaiseHand);
-                GameEventCenter.DispatchEvent("Text2sec_isEnabled", false); // 5秒計時器關閉
-
-                if (RemindRaiseHand < 2)
+                //Debug.Log(RemindRaiseHand);
+                GameEventCenter.DispatchEvent("Text2sec_isEnabledLv2", false); // 5秒計時器關閉
+                GameEventCenter.DispatchEvent("Timer2secResetLv2");
+                if (RemindRaiseHand == 1)
                 {
-                    Debug.Log(RemindRaiseHand);
+                    Debug.Log("Host_CelebrateLv2");
                     //主持人（提醒1）
                     clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_CelebrateLv2");
                     GameAudioController.Instance.PlayOneShot(clip);
@@ -635,7 +640,7 @@ public class BlockGameTaskLv2 : TaskBase
                 }
                 else if (RemindRaiseHand == 2)
                 {
-                    Debug.Log(RemindRaiseHand);
+                    Debug.Log("Host_CelebrateRemind");
                     //主持人（提醒2）: 小星很開心，想跟你擊掌，你可以碰紅色的球跟小星擊個掌（等待2秒）
                     clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_CelebrateRemind");
                     GameAudioController.Instance.PlayOneShot(clip);
@@ -644,39 +649,10 @@ public class BlockGameTaskLv2 : TaskBase
                 RemindRaiseHand++;
                 Debug.Log(RemindRaiseHand);
             }
-            GameEventCenter.DispatchEvent("Timer2secReset");
+            GameEventCenter.DispatchEvent("Text2sec_isEnabledLv2", false); // 2秒計時器關閉
+            GameEventCenter.DispatchEvent("Timer2secResetLv2");
         }
-        Debug.Log(RemindRaiseHand);
-        //if didn't raise hand, RemindRaiseHand =1
-        //主持人（提醒1）: 你和小星一起合作完成了積木圖案，很棒喔！小星很開心，想跟你擊掌! （等待2秒）
-        //clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_CelebrateLv2");
-        //GameAudioController.Instance.PlayOneShot(clip);
-        //yield return new WaitForSeconds(clip.length);
-        //wait2Sec
-
-
-        //if didn't raise hand, RemindRaiseHand =2
-        //小星很開心，想跟你擊掌，你可以碰紅色的球跟小星擊個掌（等待2秒）
-        //clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_CelebrateRemind");
-        //GameAudioController.Instance.PlayOneShot(clip);
-        //yield return new WaitForSeconds(clip.length);
-        //Wsitr2Sec
-
-
-        //if Raise hand
-        //主持人：你有跟小星擊掌耶，可以獲得一個愛心喔
-        //clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_CelebrateGetHeart");
-        //GameAudioController.Instance.PlayOneShot(clip);
-        //yield return new WaitForSeconds(clip.length);
-        //Heart.SetActive(true);                                    //愛心動畫
-        //clip = Resources.Load<AudioClip>("AudioClip/Awards/Heart");
-        //GameAudioController.Instance.PlayOneShot(clip);
-        //yield return new WaitForSeconds(clip.length);
-        //Heart.SetActive(false);
-        //GameEventCenter.DispatchEvent("GameHeartCounter");        //愛心數量加一(愛心動畫)
-
-        //if didn't raise hand, RemindRaiseHand =3 
-        //主持人：你和小星一起合作完成了積木圖案，很棒喔！可以獲得5個金幣！(提醒2後，沒有擊掌一樣會說)
+        
         clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_GetFiveCoins");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
@@ -691,7 +667,6 @@ public class BlockGameTaskLv2 : TaskBase
         }
 
         RemindRaiseHand = 0;//歸零
-        Debug.Log(RemindRaiseHand);
         yield return null;
     }
 
