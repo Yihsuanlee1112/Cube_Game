@@ -24,7 +24,8 @@ public class Instantiate_Cube : MonoBehaviour
     [Header("積木和題目的父物件")]
     public List<GameObject> Parents;
     float interval = 0.079f; //3.623-3.544 但好像間隔不平均(?
-
+    float interval2 = 0.025f;
+    
     [Header("桌子的位置")]
     public List<GameObject> Tables;
 
@@ -130,6 +131,7 @@ public class Instantiate_Cube : MonoBehaviour
 
             // 然後在生成
             CubesPos.z = CubesPos.z + interval;
+            //CubesPos.y = CubesPos.y + interval2;
             GameObject cubeInstantiate = Instantiate(cube, CubesPos, Quaternion.identity);
             cubeInstantiate.transform.SetParent(CubeParent.transform);
 

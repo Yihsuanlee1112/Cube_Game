@@ -1,81 +1,236 @@
 fileFormatVersion: 2
 guid: dbf42d4722a5eed42ac4b4535c708856
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: BlueCube
-    100002: BlueCuboid
-    100004: BlueCuboid3
-    100006: GreenCube00
-    100008: GreenCuboid
-    100010: GreenCuboid3
-    100012: RedCube
-    100014: RedCube2
-    100016: RedCuboid
-    100018: RedCuboid3
-    100020: //RootNode
-    100022: YellowCube
-    100024: YellowCuboid
-    100026: YellowCuboid3
-    400000: BlueCube
-    400002: BlueCuboid
-    400004: BlueCuboid3
-    400006: GreenCube00
-    400008: GreenCuboid
-    400010: GreenCuboid3
-    400012: RedCube
-    400014: RedCube2
-    400016: RedCuboid
-    400018: RedCuboid3
-    400020: //RootNode
-    400022: YellowCube
-    400024: YellowCuboid
-    400026: YellowCuboid3
-    2100000: 03 - DeweF
-    2100002: 03 - Defaultgftj
-    2100004: 03 - Defaultewate
-    2100006: 03 - Default011
-    2300000: BlueCube
-    2300002: BlueCuboid
-    2300004: BlueCuboid3
-    2300006: GreenCube00
-    2300008: GreenCuboid
-    2300010: GreenCuboid3
-    2300012: RedCube
-    2300014: RedCube2
-    2300016: RedCuboid
-    2300018: RedCuboid3
-    2300020: YellowCube
-    2300022: YellowCuboid
-    2300024: YellowCuboid3
-    3300000: BlueCube
-    3300002: BlueCuboid
-    3300004: BlueCuboid3
-    3300006: GreenCube00
-    3300008: GreenCuboid
-    3300010: GreenCuboid3
-    3300012: RedCube
-    3300014: RedCube2
-    3300016: RedCuboid
-    3300018: RedCuboid3
-    3300020: YellowCube
-    3300022: YellowCuboid
-    3300024: YellowCuboid3
-    4300000: BlueCube
-    4300002: BlueCuboid
-    4300004: BlueCuboid3
-    4300006: RedCube2
-    4300008: GreenCube00
-    4300010: GreenCuboid
-    4300012: GreenCuboid3
-    4300014: RedCuboid3
-    4300016: RedCuboid
-    4300018: RedCube
-    4300020: YellowCube
-    4300022: YellowCuboid
-    4300024: YellowCuboid3
-    7400000: Take 001
-    9500000: //RootNode
+  serializedVersion: 26
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: BlueCube
+  - first:
+      1: 100002
+    second: BlueCuboid
+  - first:
+      1: 100004
+    second: BlueCuboid3
+  - first:
+      1: 100006
+    second: GreenCube00
+  - first:
+      1: 100008
+    second: GreenCuboid
+  - first:
+      1: 100010
+    second: GreenCuboid3
+  - first:
+      1: 100012
+    second: RedCube
+  - first:
+      1: 100014
+    second: RedCube2
+  - first:
+      1: 100016
+    second: RedCuboid
+  - first:
+      1: 100018
+    second: RedCuboid3
+  - first:
+      1: 100020
+    second: //RootNode
+  - first:
+      1: 100022
+    second: YellowCube
+  - first:
+      1: 100024
+    second: YellowCuboid
+  - first:
+      1: 100026
+    second: YellowCuboid3
+  - first:
+      4: 400000
+    second: BlueCube
+  - first:
+      4: 400002
+    second: BlueCuboid
+  - first:
+      4: 400004
+    second: BlueCuboid3
+  - first:
+      4: 400006
+    second: GreenCube00
+  - first:
+      4: 400008
+    second: GreenCuboid
+  - first:
+      4: 400010
+    second: GreenCuboid3
+  - first:
+      4: 400012
+    second: RedCube
+  - first:
+      4: 400014
+    second: RedCube2
+  - first:
+      4: 400016
+    second: RedCuboid
+  - first:
+      4: 400018
+    second: RedCuboid3
+  - first:
+      4: 400020
+    second: //RootNode
+  - first:
+      4: 400022
+    second: YellowCube
+  - first:
+      4: 400024
+    second: YellowCuboid
+  - first:
+      4: 400026
+    second: YellowCuboid3
+  - first:
+      21: 2100000
+    second: 03 - DeweF
+  - first:
+      21: 2100002
+    second: 03 - Defaultgftj
+  - first:
+      21: 2100004
+    second: 03 - Defaultewate
+  - first:
+      21: 2100006
+    second: 03 - Default011
+  - first:
+      23: 2300000
+    second: BlueCube
+  - first:
+      23: 2300002
+    second: BlueCuboid
+  - first:
+      23: 2300004
+    second: BlueCuboid3
+  - first:
+      23: 2300006
+    second: GreenCube00
+  - first:
+      23: 2300008
+    second: GreenCuboid
+  - first:
+      23: 2300010
+    second: GreenCuboid3
+  - first:
+      23: 2300012
+    second: RedCube
+  - first:
+      23: 2300014
+    second: RedCube2
+  - first:
+      23: 2300016
+    second: RedCuboid
+  - first:
+      23: 2300018
+    second: RedCuboid3
+  - first:
+      23: 2300020
+    second: YellowCube
+  - first:
+      23: 2300022
+    second: YellowCuboid
+  - first:
+      23: 2300024
+    second: YellowCuboid3
+  - first:
+      33: 3300000
+    second: BlueCube
+  - first:
+      33: 3300002
+    second: BlueCuboid
+  - first:
+      33: 3300004
+    second: BlueCuboid3
+  - first:
+      33: 3300006
+    second: GreenCube00
+  - first:
+      33: 3300008
+    second: GreenCuboid
+  - first:
+      33: 3300010
+    second: GreenCuboid3
+  - first:
+      33: 3300012
+    second: RedCube
+  - first:
+      33: 3300014
+    second: RedCube2
+  - first:
+      33: 3300016
+    second: RedCuboid
+  - first:
+      33: 3300018
+    second: RedCuboid3
+  - first:
+      33: 3300020
+    second: YellowCube
+  - first:
+      33: 3300022
+    second: YellowCuboid
+  - first:
+      33: 3300024
+    second: YellowCuboid3
+  - first:
+      43: 4300000
+    second: BlueCube
+  - first:
+      43: 4300002
+    second: BlueCuboid
+  - first:
+      43: 4300004
+    second: BlueCuboid3
+  - first:
+      43: 4300006
+    second: RedCube2
+  - first:
+      43: 4300008
+    second: GreenCube00
+  - first:
+      43: 4300010
+    second: GreenCuboid
+  - first:
+      43: 4300012
+    second: GreenCuboid3
+  - first:
+      43: 4300014
+    second: RedCuboid3
+  - first:
+      43: 4300016
+    second: RedCuboid
+  - first:
+      43: 4300018
+    second: RedCube
+  - first:
+      43: 4300020
+    second: YellowCube
+  - first:
+      43: 4300022
+    second: YellowCuboid
+  - first:
+      43: 4300024
+    second: YellowCuboid3
+  - first:
+      74: 7400000
+    second: Teacher Take Default
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      74: 1827226128182048838
+    second: Take 001
+  - first:
+      74: -1184999264997611320
+    second: Take Block Up
+  - first:
+      74: -5299125252599568086
+    second: Put Block Back
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -103,7 +258,123 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Teacher Take Default
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 1205
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 2041
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Take Block Up
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 1214
+      lastFrame: 1330
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Put Block Back
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 1400
+      lastFrame: 1440
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -111,6 +382,7 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -118,18 +390,19 @@ ModelImporter:
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.01
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -138,10 +411,11 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -151,6 +425,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
