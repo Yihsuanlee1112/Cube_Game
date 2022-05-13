@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class testAni : MonoBehaviour
 {
-    public Animator NPC, BlueCube;
+    //public Animator NPC, BlueCube;
+    public GameObject cube;//use list for each cubes in every Question
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,13 +21,42 @@ public class testAni : MonoBehaviour
     }
 
    IEnumerator PlayAni()
-    {
-        //GameObject BlueCube = GameObject.Find("BlueCube");
-        NPC.Play("坐在椅子上放積木(2D圖片) NPC用左手拿取桌上的積木，然後放在中間的圖片上");
-        yield return new WaitForSeconds(1.5f);
-        BlueCube.Play("Take Block");
-        Debug.Log("PlayAni");
-        //BlueCube.SetBool("isTake", true);
+   {
+        string CubeName = cube.name;
+        cube.GetComponent<BlockEntity>()._isChose = true;
+        //cube.GetComponent<BlockEntity>()._isOnUserTable = true;
+        yield return new WaitForSeconds(3);
+        if(cube.GetComponent<BlockEntity>()._isChose && cube.GetComponent<BlockEntity>()._isOnUserTable && !cube.GetComponent<BlockEntity>()._isUserColor)
+        {
+            Debug.Log(cube.GetComponent<BlockEntity>()._isChose);
+            Debug.Log(cube.GetComponent<BlockEntity>()._isOnUserTable);
+            Debug.Log(cube.GetComponent<BlockEntity>()._isUserColor);
+            //GameObject.Find("Tables/UserTable/block/" + CubeName).GetComponent<MeshRenderer>().enabled = true;
+            GameObject.Find("desk/block/" + CubeName).GetComponent<Animator>().Play("Take Block");
+        }
+        ////GameObject BlueCube = GameObject.Find("BlueCube");
+        //NPC.SetBool("isTakeCube", true);
+        //yield return new WaitForSeconds(3);
+        //BlueCube.Play("Take Block");
+        //NPC.SetBool("isTakeCube", false);
+        //Debug.Log("PlayAni");
+        ////BlueCube.SetBool("isTake", true);
+        //if (CubeName.contains("BlueCube"))
+        //{
+        //    for (int i = 0; i < 13; i++)
+        //    {
+        //        if (cubeName == GameObject.Find("Tables/UserTable/block").transform.GetChild(i).name)
+        //        {
+        //            Debug.Log(GameObject.Find("Tables/UserTable/block").transform.GetChild(i).name);
+        //            GameObject.Find("Tables/UserTable/block").transform.GetChild(i).GetComponent<MeshRenderer>().enabled = true;
+        //            GameObject.Find("Tables/UserTable/block").transform.GetChild(i).GetComponent<Animator>().Play("Take Block");
+        //        }
+
+        //    }
+        //}
+
         yield return new WaitForSeconds(5);
     }
+    
+
 }

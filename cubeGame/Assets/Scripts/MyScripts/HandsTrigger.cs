@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class HandsTrigger : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class HandsTrigger : MonoBehaviour
         //拿積木
         if (GameTaskManager.task == 0)
         {
+            
             //QuestionPicked();
             //拿積木
             if (other.gameObject.tag == "cube" && !PlayerEntity._take && !other.GetComponent<BlockEntity>()._isChose && other.gameObject)
@@ -117,7 +119,8 @@ public class HandsTrigger : MonoBehaviour
                 cube.GetComponent<Rigidbody>().useGravity = true;
                 cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                 cube.transform.SetParent(parent.transform);
-                GameEventCenter.DispatchEvent("CubeAns", cube);
+                GameEventCenter.DispatchEvent("CubeToAns", cube);
+                GameEventCenter.DispatchEvent("CubeOnAns", cube);
                 cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 Debug.Log(cube.transform.position);
                 Debug.Log("In Hands Trigger:" + BlockGameTask.RecentOrder);
@@ -388,8 +391,9 @@ public class HandsTrigger : MonoBehaviour
                 var cube = gameObject.transform.GetChild(0).gameObject.GetComponent<BlockEntity>();//FakeHand
                 cube.GetComponent<Rigidbody>().useGravity = true;
                 cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-                cube.transform.SetParent(parent.transform);
-                GameEventCenter.DispatchEvent("CubeAns", cube);
+                cube.transform.SetParent(parent.transform); 
+                GameEventCenter.DispatchEvent("CubeToAns", cube);
+                GameEventCenter.DispatchEvent("CubeOnAns", cube);
                 cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 Debug.Log(cube.transform.position);
                 Debug.Log("In Hands Trigger:" +BlockGameTaskLv2.RecentOrder);

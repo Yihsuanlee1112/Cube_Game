@@ -69,7 +69,8 @@ public class BlockGameTask : TaskBase
     public override IEnumerator TaskInit()
     {
         GameEventCenter.AddEvent("CheckCube", CheckCube);
-        GameEventCenter.AddEvent<BlockEntity>("CubeAns", CubeAns);
+        GameEventCenter.AddEvent<BlockEntity>("CubeToAns", CubeToAns);
+        GameEventCenter.AddEvent<BlockEntity>("CubeOnAns", CubeOnAns);
         GameEventCenter.AddEvent<BlockEntity>("OtherGroupCubeAns", OtherGroupCubeAns);
         GameEventCenter.AddEvent<string>("GetFocusName", GetFocusName);
         GameEventCenter.AddEvent("AddCubesToList", AddCubesToList);
@@ -327,21 +328,22 @@ public class BlockGameTask : TaskBase
         //npc.animator.SetBool("isDefault", false);
         yield return NPC_WinnerFirst();
         yield return new WaitForSeconds(2);
-        
+        _userChooseRPS = false;
         GameEventCenter.DispatchEvent("TwoPlayerRPS");
         GameObject.Find("TwoPlayerChoose(Clone)/Canvas").SetActive(true);
         GameObject.Find("TwoPlayerChoose(Clone)/Canvas2").SetActive(false);
         //NPC說剪刀石頭布
+        userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
+        userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
         //npc.animator.SetBool("isPlayingRPS", true);
          npc.animator.SetBool("isPlayingRPS", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_SayRPS");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         npc.animator.SetBool("isPlayingRPS", false);
-        userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
-        userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
+        
         //Debug.Log(clip.length);
-        _userChooseRPS = false;
+        //_userChooseRPS = false;
         do
         {
             Debug.Log("User choose RPS");
@@ -433,17 +435,23 @@ public class BlockGameTask : TaskBase
                 //_npcremind = false;
                 foreach (BlockEntity cube in Final_Order)
                 {
+                    string cubeName;
+                    //Get Cube name without "(Clone)"
+                    cubeName = cube.name;
+                    int delStr = cubeName.IndexOf("(Clone)");
+                    if (delStr >= 0)
+                    {
+                        cubeName = cubeName.Remove(delStr);
+                    }
                     if (!cube._isChose && !cube._isUserColor)
                     {
                         Debug.Log("NPC touch block");
                         //npc.animator.Play("坐在椅子上放積木(2D圖片) NPC用左手拿取桌上的積木，然後放在中間的圖片上");
                         npc.animator.SetBool("isTakeCube", true);
-                        yield return new WaitForSeconds(3);
-                        
-                        //yield return new WaitForSeconds(1f);
+                        yield return new WaitForSeconds(1.5f);
                         Debug.Log("put Block");
                         npc.transform.rotation = Quaternion.Euler(0, 0, 0);
-                        cube.GetComponent<Animator>().Play("Take Block");
+                        //cube.GetComponent<Animator>().Play("Take Block");
                         //npc.animator.SetBool("findCube", true); 
                         //npc.animator.SetBool("takeCube", true);
                         //yield return new WaitForSeconds(3);
@@ -453,11 +461,14 @@ public class BlockGameTask : TaskBase
                         _npcremind = false;
                         if (!_npcremind)
                         {
-                            
                             Debug.Log("NPC put block");
                             GameEventCenter.DispatchEvent("KidsShouldPut");
-                            GameEventCenter.DispatchEvent("CubeAns", cube);
-                            
+                            GameEventCenter.DispatchEvent("CubeToAns", cube);
+                            yield return new WaitForSeconds(0.5f);
+                            //GameObject.Find("Parents/Q" + BlockGameTask._RandomQuestion + "_Parent/block/" + cubeName).GetComponent<Animator>().SetBool("isTake", false);
+                            GameObject.Find("Parents/Q" + BlockGameTask._RandomQuestion + "_Parent/block/" + cubeName).GetComponent<MeshRenderer>().enabled = false;
+                            yield return new WaitForSeconds(0.5f);
+                            GameEventCenter.DispatchEvent("CubeOnAns", cube);
                         }
                         npc.animator.SetBool("isTakeCube", false);
                         //npc.animator.SetBool("isDefault", true);
@@ -483,11 +494,11 @@ public class BlockGameTask : TaskBase
         // 結束後語音
         //小星: 耶!我們完成了!（小星雙手舉高）等待2秒
         npc.animator.Play("坐在椅子上開心 雙手舉高，眼睛跟嘴巴要笑(上揚)");
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_Hooray");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        npc.animator.Play("坐在椅子上+舉手+說我! 舉右手");
+        npc.animator.Play("坐在椅子上+舉手+說我! 舉左手");
         
         //RedTriggerBall
         RedTriggerBall.SetActive(true);
@@ -830,6 +841,7 @@ public class BlockGameTask : TaskBase
                 if (questionOrder.name == cubeName)
                 {
                     Final_Order.Add(cube);
+                    cube._isOnUserTable = true;
                     //Debug.Log("questionOrder.name: " + questionOrder.name);
                     //Debug.Log("cube.name: " + cube.name);
                 }
@@ -1038,11 +1050,14 @@ public class BlockGameTask : TaskBase
     {
         npc.NPCPutObject(GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().PutPosition);
     }
-    public void CubeAns(BlockEntity cube)
+    public void CubeToAns(BlockEntity cube)
     {
         cube.ToAnsLv1();
     }
-
+    public void CubeOnAns(BlockEntity cube)
+    {
+        cube.OnAnsLv1();
+    }
     public void OtherGroupCubeAns(BlockEntity cube)
     {
         cube.OtherSroupToAns();

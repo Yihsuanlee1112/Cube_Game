@@ -255,7 +255,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6335167980752280114}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: 00947e11faa51184eb2a7f83387eedbe, type: 3}
   m_Controller: {fileID: 9100000, guid: b0983b1b6f222d34db33853183593c3a, type: 2}
   m_CullingMode: 0
@@ -281,4 +281,5 @@ MonoBehaviour:
   Describe: 
   _isChose: 0
   _isUserColor: 0
+  _isOnUserTable: 0
   ansTransform: {fileID: 0}

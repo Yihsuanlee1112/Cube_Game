@@ -75,7 +75,8 @@ public class BlockGameTaskLv2 : TaskBase
     public override IEnumerator TaskInit()
     {
         GameEventCenter.AddEvent("CheckCube", CheckCube);
-        GameEventCenter.AddEvent<BlockEntity>("CubeAns", CubeAns);
+        GameEventCenter.AddEvent<BlockEntity>("CubeToAns", CubeToAns);
+        GameEventCenter.AddEvent<BlockEntity>("CubeOnAns", CubeOnAns); 
         GameEventCenter.AddEvent<string>("GetFocusName", GetFocusName);
         GameEventCenter.AddEvent<BlockEntity>("OtherGroupCubeAns", OtherGroupCubeAns);
         GameEventCenter.AddEvent("AddCubesToList", AddCubesToList);
@@ -1354,9 +1355,13 @@ public class BlockGameTaskLv2 : TaskBase
     {
         npc.NPCPutObject(GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().PutPosition);
     }
-    public void CubeAns(BlockEntity cube)
+    public void CubeToAns(BlockEntity cube)
     {
         cube.ToAnsLv2();
+    }
+    public void CubeOnAns(BlockEntity cube)
+    {
+        cube.OnAnsLv2();
     }
     public void OtherGroupCubeAns(BlockEntity cube)
     {

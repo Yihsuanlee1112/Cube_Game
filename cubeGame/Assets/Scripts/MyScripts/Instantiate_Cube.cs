@@ -159,10 +159,10 @@ public class Instantiate_Cube : MonoBehaviour
             if (i == PicNum)
             {
                 //題目的位置等於Table底下的PicPos
-                Parents[i].transform.GetChild(1).position = Tables[0].transform.GetChild(1).position;
+                Parents[i].transform.GetChild(2).position = Tables[0].transform.GetChild(1).position;
 
                 //積木的位置等於Table底下的CubePos
-                Parents[i].transform.GetChild(0).transform.position = Tables[0].transform.GetChild(2).transform.position;
+                Parents[i].transform.GetChild(1).transform.position = Tables[0].transform.GetChild(2).transform.position;
 
                 Debug.Log("把積木的答案挪到桌子上");
                 CubeAns.transform.GetChild(i).position = Tables[0].transform.GetChild(1).position;
@@ -176,10 +176,10 @@ public class Instantiate_Cube : MonoBehaviour
             else
             {
                 Debug.Log("in else");
-                Parents[i].transform.GetChild(1).position = Tables[otherTable].transform.GetChild(1).position;
-                Parents[i].transform.GetChild(0).transform.position = Tables[otherTable].transform.GetChild(2).transform.position;
-                Debug.Log(Parents[i].transform.GetChild(1).position);
-                Debug.Log(Parents[i].transform.GetChild(0).transform.position);
+                Parents[i].transform.GetChild(2).position = Tables[otherTable].transform.GetChild(1).position;
+                Parents[i].transform.GetChild(1).transform.position = Tables[otherTable].transform.GetChild(2).transform.position;
+                Debug.Log(Parents[i].transform.GetChild(2).position);
+                Debug.Log(Parents[i].transform.GetChild(1).transform.position);
                 Debug.Log("把積木的答案挪到桌子上");
                 CubeAns.transform.GetChild(i).position = Tables[otherTable].transform.GetChild(1).position;
 
