@@ -1023,8 +1023,8 @@ ModelImporter:
       name: "teacher (8.13) \u958B\u5FC3\u62CD\u624B"
       takeName: Take 001
       internalID: 0
-      firstFrame: 915
-      lastFrame: 1070
+      firstFrame: 849
+      lastFrame: 1011
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

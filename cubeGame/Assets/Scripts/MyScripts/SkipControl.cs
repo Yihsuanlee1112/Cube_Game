@@ -46,7 +46,13 @@ public class SkipControl : MonoBehaviour
         {
             BlockGameTaskLv2._userChooseRPS = true;
             BlockGameTask._userChooseRPS = true;
+            BlockGameTaskLv2._userRaiseHand = true;
+            BlockGameTask._userRaiseHand = true;
+            BlockGameTaskLv2._userCelebrate = true;
+            BlockGameTask._userCelebrate = true;
             Debug.Log("BlockGameTask._userChooseRPS: " + BlockGameTask._userChooseRPS);
+            Debug.Log("BlockGameTask._userRaiseHand: " + BlockGameTask._userRaiseHand);
+            Debug.Log("BlockGameTask._userCelebrate: " + BlockGameTask._userCelebrate);
         }
         if (Input.GetKeyDown(KeyCode.Keypad1))//choosePic1
         {
@@ -80,5 +86,6 @@ public class SkipControl : MonoBehaviour
             BlockGameTask._userChooseQuestion = true;
             Debug.Log("BlockGameTask._RandomQuestion: " + BlockGameTask._RandomQuestion);
         }
+        
     }
 }

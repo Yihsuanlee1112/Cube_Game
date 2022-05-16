@@ -91,9 +91,9 @@ public class BlockEntity : GameEntityBase
         Debug.Log(BlockGameTaskLv2.RecentOrder);
     }
     
-    public void OtherSroupToAns()
+    public void OtherGroupToAns()
     {
-        Debug.Log("others put");
+        //Debug.Log("others put");
         _isChose = true;
         gameObject.transform.position = ansTransform.transform.localPosition;
         gameObject.transform.rotation = ansTransform.transform.rotation;

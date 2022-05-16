@@ -31,9 +31,10 @@ public class KeyWordRecognizer : MonoBehaviour
             GameDataManager.FlowData.UserColor = result;
             Debug.Log("GameDataManager.FlowData.UserColor: " + GameDataManager.FlowData.UserColor + " Result: " + result);
         }
-        else if (result.Contains("丟") && result.Contains("很好"))
+        else if (result.Contains("老師") && result.Contains("少") && result.Contains("積木"))
         {
-            BlockGameTaskLv2._userAskTeacher = true;
+            BlockGameTask._userSpeekToTeacher = true;
+            BlockGameTaskLv2._userSpeekToTeacher = true;
         }
         //else if (result.Contains("接到球") && result.Contains("好棒"))
         //{
