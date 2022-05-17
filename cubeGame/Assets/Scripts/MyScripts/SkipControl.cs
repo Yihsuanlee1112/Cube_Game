@@ -50,9 +50,21 @@ public class SkipControl : MonoBehaviour
             BlockGameTask._userRaiseHand = true;
             BlockGameTaskLv2._userCelebrate = true;
             BlockGameTask._userCelebrate = true;
+            
+            Debug.Log("BlockGameTaskLv2._userChooseRPS: " + BlockGameTaskLv2._userChooseRPS);
+            Debug.Log("BlockGameTaskLv2._userRaiseHand: " + BlockGameTaskLv2._userRaiseHand);
+            Debug.Log("BlockGameTaskLv2._userCelebrate: " + BlockGameTaskLv2._userCelebrate);
             Debug.Log("BlockGameTask._userChooseRPS: " + BlockGameTask._userChooseRPS);
             Debug.Log("BlockGameTask._userRaiseHand: " + BlockGameTask._userRaiseHand);
             Debug.Log("BlockGameTask._userCelebrate: " + BlockGameTask._userCelebrate);
+            
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            BlockGameTask._userSpeekToTeacher = true;
+            BlockGameTaskLv2._userSpeekToTeacher = true;
+            Debug.Log("BlockGameTask._userSpeekToTeacher: " + BlockGameTask._userSpeekToTeacher);
+            Debug.Log("BlockGameTaskLv2._userSpeekToTeacher: " + BlockGameTaskLv2._userSpeekToTeacher);
         }
         if (Input.GetKeyDown(KeyCode.Keypad1))//choosePic1
         {
@@ -61,6 +73,7 @@ public class SkipControl : MonoBehaviour
             BlockGameTaskLv2._userChooseQuestion = true;
             BlockGameTask._userChooseQuestion = true;
             Debug.Log("BlockGameTask._RandomQuestion: " + BlockGameTask._RandomQuestion);
+            Debug.Log("BlockGameTaskLv2._RandomQuestion: " + BlockGameTaskLv2._RandomQuestion);
         }
         if (Input.GetKeyDown(KeyCode.Keypad2))//choosePic2
         {
@@ -69,6 +82,7 @@ public class SkipControl : MonoBehaviour
             BlockGameTaskLv2._userChooseQuestion = true;
             BlockGameTask._userChooseQuestion = true;
             Debug.Log("BlockGameTask._RandomQuestion: " + BlockGameTask._RandomQuestion);
+            Debug.Log("BlockGameTaskLv2._RandomQuestion: " + BlockGameTaskLv2._RandomQuestion);
         }
         if (Input.GetKeyDown(KeyCode.Keypad3))//choosePic3
         {
@@ -77,6 +91,7 @@ public class SkipControl : MonoBehaviour
             BlockGameTaskLv2._userChooseQuestion = true;
             BlockGameTask._userChooseQuestion = true;
             Debug.Log("BlockGameTask._RandomQuestion: " + BlockGameTask._RandomQuestion);
+            Debug.Log("BlockGameTaskLv2._RandomQuestion: " + BlockGameTaskLv2._RandomQuestion);
         }
         if (Input.GetKeyDown(KeyCode.Keypad4))//choosePic4
         {
@@ -85,6 +100,7 @@ public class SkipControl : MonoBehaviour
             BlockGameTaskLv2._userChooseQuestion = true;
             BlockGameTask._userChooseQuestion = true;
             Debug.Log("BlockGameTask._RandomQuestion: " + BlockGameTask._RandomQuestion);
+            Debug.Log("BlockGameTaskLv2._RandomQuestion: " + BlockGameTaskLv2._RandomQuestion);
         }
         
     }

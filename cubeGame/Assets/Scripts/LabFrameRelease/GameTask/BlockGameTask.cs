@@ -42,7 +42,7 @@ public class BlockGameTask : TaskBase
     private int RanNum;
     private string audioClipRootPath;
     private string focusName;
-
+    private string XiaoHuaMissingCube;
     public static GameObject KidShouldPut;
     public static int RecentOrder = 1;
     public static int RemindCelebrate = 0;
@@ -186,7 +186,7 @@ public class BlockGameTask : TaskBase
         //GameAudioController.Instance.PlayOneShot(npc.speechList[0]);
         //yield return new WaitForSeconds(1.5f);
         //yield return new WaitForSeconds(2);
-        /*
+        
         //打招呼
         yield return SayHello();
         yield return new WaitForSeconds(1.5f);
@@ -273,9 +273,9 @@ public class BlockGameTask : TaskBase
         {
             GameObject.FindWithTag("RPS").SetActive(false);
         }
-        */
-        //XXX那一組猜拳贏了，你可以先選一張圖。你要選第幾張圖?
         
+        //XXX那一組猜拳贏了，你可以先選一張圖。你要選哪一張圖?
+        yield return UserNeedsACube(XiaoMeiRaiseHandPic);
         yield return Teacher_AskUserWhichPic();
         yield return new WaitForSeconds(1.5f);
         //讓user選題目
@@ -295,7 +295,6 @@ public class BlockGameTask : TaskBase
         HostAnimator.SetBool("isSlouchStandErect", true);
         yield return new WaitForSeconds(2);
 
-       
         GameEventCenter.DispatchEvent("InstatiateCube");
         GameEventCenter.DispatchEvent("Find_QuestionCubes");
         GameEventCenter.DispatchEvent("AddCubesToList");
@@ -304,6 +303,7 @@ public class BlockGameTask : TaskBase
         GameEventCenter.DispatchEvent("PutInRightOrder");
         GameEventCenter.DispatchEvent("User_MissingOneCube");
         cube_GB[0].GetComponent<MeshRenderer>().enabled = false;//小花少第一顆積木
+
         //Debug.Log(GameObject.Find("Parents/Q1_Parent").transform.GetChild(1));
         //Debug.Log(GameObject.Find("Parents/Q1_Parent").transform.GetChild(1).position);
         foreach (BlockEntity cube in AllCubes)
@@ -727,6 +727,15 @@ public class BlockGameTask : TaskBase
         ChooseQuestionCanvas.SetActive(false);
         yield return null;
     }
+    
+    IEnumerator TeacherMoveToUser()
+    {
+        TeacherAnimator.SetBool("isTakeCube", true);
+        TeacherAnimator.SetBool("isTakeCubeWalking", true);
+        yield return new WaitForSeconds(3.5f);
+        testAni.TeacherMoveToUser = true;
+        TeacherAnimator.SetBool("isPutingCube", true);
+    }
     IEnumerator UserNeedsACube(GameObject XiaoMeiRaiseHandPic)
     {
        
@@ -735,6 +744,22 @@ public class BlockGameTask : TaskBase
         _userSpeekToTeacher = false;
         //開起綠球
         GreenTriggerBall.SetActive(true);
+        
+        npc.animator.SetBool("isTalk2", true);
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_YouCanTellTheTeacher2");
+        GameAudioController.Instance.PlayOneShot(clip);
+        yield return new WaitForSeconds(clip.length);
+        npc.animator.SetBool("isTalk2", false);
+        Debug.Log("NPC叫user要跟老師說少一個");
+        yield return new WaitForSeconds(2);
+        
+        HostAnimator.SetBool("isStandingAndTalking", true);
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_RaiseHandThenTell");
+        GameAudioController.Instance.PlayOneShot(clip);
+        XiaoMeiRaiseHandPic.GetComponent<RawImage>().enabled = true;
+        yield return new WaitForSeconds(clip.length);
+        HostAnimator.SetBool("isStandingAndTalking", false);
+        Debug.Log("主持人說明要跟小花一樣，舉手之後跟老師說少一個");
         //wait5sec
         while (RemindRaiseHand < 3)
         {
@@ -771,48 +796,98 @@ public class BlockGameTask : TaskBase
                 return false;
             });
 
-            if (_userRaiseHand && _userSpeekToTeacher && !_is5secTimeUp) // user有舉手 有說話
+            //if (_userRaiseHand && _userSpeekToTeacher && !_is5secTimeUp) // user有舉手 有說話
+            //{
+            //    //Debug.Log(RemindRaiseHand);
+            //    GameEventCenter.DispatchEvent("Text5sec_isEnabled", false); // 5秒計時器關閉
+            //    GameEventCenter.DispatchEvent("Timer5secReset");
+            //    _userRaiseHand = false;
+            //    npc.animator.SetBool("isTalk2", true);
+            //    clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_YouCanTellTheTeacher2");
+            //    GameAudioController.Instance.PlayOneShot(clip);
+            //    yield return new WaitForSeconds(clip.length);
+            //    npc.animator.SetBool("isTalk2", false);
+            //    Debug.Log("NPC叫user要跟老師說少一個");
+            //    yield return new WaitForSeconds(2);
+            //    yield return new WaitForSeconds(1);
+            //    //主持人: 你有舉手等待老師，很棒!可以獲得一個愛心
+            //    clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_YouRaiseHandToTalk");
+            //    GameAudioController.Instance.PlayOneShot(clip);
+            //    yield return new WaitForSeconds(clip.length);
+            //    Debug.Log("主持人: 你有舉手等待老師，很棒!可以獲得一個愛心");
+            //    yield return new WaitForSeconds(2);
+
+            //    Heart.SetActive(true);
+            //    clip = Resources.Load<AudioClip>("AudioClip/Awards/ruby");
+            //    GameAudioController.Instance.PlayOneShot(clip);
+            //    yield return new WaitForSeconds(clip.length);
+            //    Heart.SetActive(false);
+            //    GameEventCenter.DispatchEvent("GameHeartCounter");   // 愛心數量加一
+
+            //    clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_YouSaidYouMissCube");
+            //    GameAudioController.Instance.PlayOneShot(clip);
+            //    yield return new WaitForSeconds(clip.length);
+            //    Debug.Log("主持人: 而且你有跟老師說你少了一個積木，很棒喔!可以獲得一個寶石");
+
+            //    Ruby.SetActive(true);
+            //    clip = Resources.Load<AudioClip>("AudioClip/Awards/ruby");
+            //    GameAudioController.Instance.PlayOneShot(clip);
+            //    yield return new WaitForSeconds(clip.length);
+            //    Ruby.SetActive(false);
+            //    GameEventCenter.DispatchEvent("GameRubyCounter");   // 寶石數量加一
+            //    yield return new WaitForSeconds(2);
+            //    break;
+            //}
+            //else if (!_is5secTimeUp) // 5秒內
+            if (!_is5secTimeUp) // 5秒內
             {
                 //Debug.Log(RemindRaiseHand);
                 GameEventCenter.DispatchEvent("Text5sec_isEnabled", false); // 5秒計時器關閉
                 GameEventCenter.DispatchEvent("Timer5secReset");
-                _userRaiseHand = false;
+                if (_userRaiseHand && _userSpeekToTeacher) // user有舉手 有說話
+                {
+                    //Debug.Log(RemindRaiseHand);
+                    //GameEventCenter.DispatchEvent("Text5sec_isEnabled", false); // 5秒計時器關閉
+                    //GameEventCenter.DispatchEvent("Timer5secReset");
+                    _userRaiseHand = false;
+                    _userSpeekToTeacher = false;
+                    npc.animator.SetBool("isTalk2", true);
+                    clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_YouCanTellTheTeacher2");
+                    GameAudioController.Instance.PlayOneShot(clip);
+                    yield return new WaitForSeconds(clip.length);
+                    npc.animator.SetBool("isTalk2", false);
+                    Debug.Log("NPC叫user要跟老師說少一個");
+                    yield return new WaitForSeconds(2);
+                    //主持人: 你有舉手等待老師，很棒!可以獲得一個愛心
+                    clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_YouRaiseHandToTalk");
+                    GameAudioController.Instance.PlayOneShot(clip);
+                    yield return new WaitForSeconds(clip.length);
+                    Debug.Log("主持人: 你有舉手等待老師，很棒!可以獲得一個愛心");
+                    yield return new WaitForSeconds(2);
 
-                yield return new WaitForSeconds(1);
-                //主持人: 你有舉手等待老師，很棒!可以獲得一個愛心
-                clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_YouRaiseHandToTalk");
-                GameAudioController.Instance.PlayOneShot(clip);
-                yield return new WaitForSeconds(clip.length);
-                Debug.Log("主持人: 你有舉手等待老師，很棒!可以獲得一個愛心");
-                yield return new WaitForSeconds(2);
+                    Heart.SetActive(true);
+                    clip = Resources.Load<AudioClip>("AudioClip/Awards/ruby");
+                    GameAudioController.Instance.PlayOneShot(clip);
+                    yield return new WaitForSeconds(clip.length);
+                    Heart.SetActive(false);
+                    GameEventCenter.DispatchEvent("GameHeartCounter");   // 愛心數量加一
 
-                Heart.SetActive(true);
-                clip = Resources.Load<AudioClip>("AudioClip/Awards/ruby");
-                GameAudioController.Instance.PlayOneShot(clip);
-                yield return new WaitForSeconds(clip.length);
-                Heart.SetActive(false);
-                GameEventCenter.DispatchEvent("GameHeartCounter");   // 愛心數量加一
+                    clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_YouSaidYouMissCube");
+                    GameAudioController.Instance.PlayOneShot(clip);
+                    yield return new WaitForSeconds(clip.length);
+                    Debug.Log("主持人: 而且你有跟老師說你少了一個積木，很棒喔!可以獲得一個寶石");
 
-                clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_YouSaidYouMissCube");
-                GameAudioController.Instance.PlayOneShot(clip);
-                yield return new WaitForSeconds(clip.length);
-                Debug.Log("主持人: 而且你有跟老師說你少了一個積木，很棒喔!可以獲得一個寶石");
-
-                Ruby.SetActive(true);
-                clip = Resources.Load<AudioClip>("AudioClip/Awards/ruby");
-                GameAudioController.Instance.PlayOneShot(clip);
-                yield return new WaitForSeconds(clip.length);
-                Ruby.SetActive(false);
-                GameEventCenter.DispatchEvent("GameRubyCounter");   // 寶石數量加一
-                yield return new WaitForSeconds(2);
-                break;
-            }
-            else if (!_is5secTimeUp) // 5秒內
-            {
-                //Debug.Log(RemindRaiseHand);
-                GameEventCenter.DispatchEvent("Text5sec_isEnabled", false); // 5秒計時器關閉
-                GameEventCenter.DispatchEvent("Timer5secReset");
-                if (!_userRaiseHand && _userSpeekToTeacher)//user沒有舉手 有說話
+                    Ruby.SetActive(true);
+                    clip = Resources.Load<AudioClip>("AudioClip/Awards/ruby");
+                    GameAudioController.Instance.PlayOneShot(clip);
+                    yield return new WaitForSeconds(clip.length);
+                    Ruby.SetActive(false);
+                    GameEventCenter.DispatchEvent("GameRubyCounter");   // 寶石數量加一
+                    yield return new WaitForSeconds(2);
+                    break;
+                }
+               
+                else if (!_userRaiseHand && _userSpeekToTeacher)//user沒有舉手 有說話
                 //if (RemindRaiseHand == 0)
                 {
                     //小星提示:你可以舉手，然後跟老師說你少了什麼顏色的積木
@@ -823,6 +898,9 @@ public class BlockGameTask : TaskBase
                     npc.animator.SetBool("isTalk2", false);
                     Debug.Log("NPC叫user要跟老師說少一個");
                     yield return new WaitForSeconds(2);
+                    //_userSpeekToTeacher = false;                    
+                    RemindRaiseHand++;
+                    Debug.Log(RemindRaiseHand);
                 }
                 else if (_userRaiseHand && !_userSpeekToTeacher)// 有舉手沒說話
                 //else if(RemindRaiseHand == 1)
@@ -836,8 +914,11 @@ public class BlockGameTask : TaskBase
                     yield return new WaitForSeconds(clip.length);
                     HostAnimator.SetBool("isStandingAndTalking", false);
                     Debug.Log("主持人說明要跟小花一樣，舉手之後跟老師說少一個");
-
+                    //_userRaiseHand = false;
+                    RemindRaiseHand++;
+                    Debug.Log(RemindRaiseHand);
                 }
+                
             }
             else if (!_userRaiseHand && !_userSpeekToTeacher && _is5secTimeUp) //過了5秒 沒舉手 沒說話
             {
@@ -881,6 +962,32 @@ public class BlockGameTask : TaskBase
         GreenTriggerBall.SetActive(false);//Close GreenTriggerBall
 
         //TeacherAni
+        TeacherAnimator.SetBool("isTakeCube", true);
+        yield return new WaitForSeconds(2f);
+        testAni.TeacherMoveToUser = true;
+        TeacherAnimator.SetBool("isTakeCubeWalking", true);
+        TeacherAnimator.SetBool("isPutingCube", true);
+
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_GiveCube");
+        GameAudioController.Instance.PlayOneShot(clip);
+        yield return new WaitForSeconds(clip.length);
+        SpVoice npcsay = new SpVoice(); 
+        KeyWordRecognizer.MissingColor = "紅色";
+        npcsay.Speak(KeyWordRecognizer.MissingColor, SpeechVoiceSpeakFlags.SVSFlagsAsync);
+        yield return new WaitForSeconds(1.5f);
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_Cube");
+        GameAudioController.Instance.PlayOneShot(clip);
+        yield return new WaitForSeconds(clip.length);
+        yield return new WaitForSeconds(5);
+        testAni.TeacherMoveToUser = false;
+        Debug.Log("老師走到USER");
+        testAni.TeacherMoveBackFromUser = true;
+        TeacherAnimator.SetBool("isTakeCube", false);
+        TeacherAnimator.SetBool("isTakeCubeWalking", false);
+        TeacherAnimator.SetBool("isPutingCube", false);
+        Debug.Log("老師走回去");
+        yield return new WaitForSeconds(5);
+        testAni.TeacherMoveBackFromXiaoHua = false;
         clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_GiveUserCube");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
@@ -1143,20 +1250,19 @@ public class BlockGameTask : TaskBase
     }
     IEnumerator XiaoHuaNeedsCube(GameObject XiaoMeiRaiseHandPic)
     {
-        string XiaoHuaMissingCube = " ";
-        if(_RandomQuestion == 1)
+        if (_RandomQuestion == 1)
         {
             XiaoHuaMissingCube = "藍色";
         }
-        else if(_RandomQuestion == 2)
+        else if (_RandomQuestion == 2)
         {
             XiaoHuaMissingCube = "黃色";
         }
-        else if(_RandomQuestion == 3)
+        else if (_RandomQuestion == 3)
         {
             XiaoHuaMissingCube = "紅色";
         }
-        else if(_RandomQuestion == 4)
+        else if (_RandomQuestion == 4)
         {
             XiaoHuaMissingCube = "藍色";
         }
@@ -1169,7 +1275,7 @@ public class BlockGameTask : TaskBase
         TeacherAnimator.SetBool("isTalkToXiaoHua", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_AskFlower");
         GameAudioController.Instance.PlayOneShot(clip);
-        yield return new WaitForSeconds(clip.length);
+        yield return new WaitForSeconds(clip.length+2);
         TeacherAnimator.SetBool("isTalkToXiaoHua", false);
         yield return new WaitForSeconds(2);
         XiaoHua.SetBool("isRaiseHandAndTalkToTeacher", true);
@@ -1184,6 +1290,7 @@ public class BlockGameTask : TaskBase
         yield return new WaitForSeconds(clip.length);
         XiaoHua.SetBool("isRaiseHandAndTalkToTeacher", false);
         yield return new WaitForSeconds(2);
+        
         HostAnimator.SetBool("isStandingAndTalking", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_RaiseHandThenTell");
         XiaoMeiRaiseHandPic.GetComponent<RawImage>().enabled = true;
@@ -1191,17 +1298,34 @@ public class BlockGameTask : TaskBase
         yield return new WaitForSeconds(clip.length);
         HostAnimator.SetBool("isStandingAndTalking", false);
         yield return new WaitForSeconds(2);
-        TeacherAnimator.SetBool("isTalkToXiaoHua", true);//****************
+        
+        TeacherAnimator.SetBool("isTakeCube", true);
+        yield return new WaitForSeconds(2f);
+        testAni.TeacherMoveToXiaoHua = true;
+        TeacherAnimator.SetBool("isTakeCubeWalking", true);
+        TeacherAnimator.SetBool("isPutingCube", true);
+        
         clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_GiveCube");
         GameAudioController.Instance.PlayOneShot(clip);
-        yield return new WaitForSeconds(clip.length); 
+        yield return new WaitForSeconds(clip.length);
         npcsay.Speak(XiaoHuaMissingCube, SpeechVoiceSpeakFlags.SVSFlagsAsync);
         yield return new WaitForSeconds(1.5f);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_Cube");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        TeacherAnimator.SetBool("isTalkToXiaoHua", false);//***************************
+        yield return new WaitForSeconds(5);
+        testAni.TeacherMoveToXiaoHua = false;
+        Debug.Log("老師走到小花");
+        testAni.TeacherMoveBackFromXiaoHua = true;
+        TeacherAnimator.SetBool("isTakeCube", false);
+        TeacherAnimator.SetBool("isTakeCubeWalking", false);
+        TeacherAnimator.SetBool("isPutingCube", false);
+        Debug.Log("老師走回去");
+        yield return new WaitForSeconds(5);
+        testAni.TeacherMoveBackFromXiaoHua = false;
+        
         yield return new WaitForSeconds(2);
+        
     }
     public void KidsShouldPut()
     {
@@ -1214,6 +1338,7 @@ public class BlockGameTask : TaskBase
             }
         }
     }
+    
     public void TakeObject()//拼圖的氣球
     {
         var index = 2;/*Random.Range(0, 3);*/

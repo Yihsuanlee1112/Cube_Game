@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class KeyWordRecognizer : MonoBehaviour
 {
+    private string UserColor;
+    public static string MissingColor;
     //private KeywordRecognizer keywordRecognizer;
     //private string[] Keywords_array = new string[] { "小花", "你也丟得很好", "接的好", "我有點生氣", "我很生氣", "好"};
 
@@ -28,13 +30,51 @@ public class KeyWordRecognizer : MonoBehaviour
         if (result.Contains("紅色") || result.Contains("藍色")|| result.Contains("綠色")|| result.Contains("黃色"))
         {
             BlockGameTaskLv2._userChooseColor = true;
-            GameDataManager.FlowData.UserColor = result;
-            Debug.Log("GameDataManager.FlowData.UserColor: " + GameDataManager.FlowData.UserColor + " Result: " + result);
+            switch (result)
+            {
+                case "紅色":
+                    BlockGameTaskLv2._userChooseColor = true;
+                    UserColor = "紅色";
+                    break;
+                case "藍色":
+                    BlockGameTaskLv2._userChooseColor = true;
+                    UserColor = "藍色";
+                    break;
+                case "綠色":
+                    BlockGameTaskLv2._userChooseColor = true;
+                    UserColor = "綠色";
+                    break;
+                case "黃色":
+                    BlockGameTaskLv2._userChooseColor = true;
+                    UserColor = "黃色";
+                    break;
+            }
+            GameDataManager.FlowData.UserColor = UserColor;
+            Debug.Log("GameDataManager.FlowData.UserColor: " + GameDataManager.FlowData.UserColor + " Result: " + UserColor);
         }
-        else if (result.Contains("老師") && result.Contains("少") && result.Contains("積木"))
+        else if (result.Contains("老師") && result.Contains("少") && result.Contains("積木") && 
+            result.Contains("紅色") || result.Contains("藍色") || result.Contains("綠色") || result.Contains("黃色"))
         {
+           
+            switch (result)
+            {
+                case "紅色":
+                    MissingColor = "紅色";
+                    break;
+                case "藍色":
+                    MissingColor = "藍色";
+                    break;
+                case "綠色":
+                    MissingColor = "綠色";
+                    break;
+                case "黃色":
+                    MissingColor = "黃色";
+                    break;
+            }
             BlockGameTask._userSpeekToTeacher = true;
             BlockGameTaskLv2._userSpeekToTeacher = true;
+            Debug.Log("BlockGameTask._userSpeekToTeacher: " + BlockGameTask._userSpeekToTeacher);
+            Debug.Log("BlockGameTaskLv2._userSpeekToTeacher: " + BlockGameTaskLv2._userSpeekToTeacher);
         }
         //else if (result.Contains("接到球") && result.Contains("好棒"))
         //{

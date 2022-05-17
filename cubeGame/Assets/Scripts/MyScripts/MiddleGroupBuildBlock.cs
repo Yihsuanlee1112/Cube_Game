@@ -23,8 +23,8 @@ public class MiddleGroupBuildBlock : MonoBehaviour
         cube_GB = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().cube_GB;
         XiaoHua = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().XiaoHua;
         XiaoMei = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().XiaoMei;
-        Debug.Log("leftgroupstart");
-        while (BlockGameTask._StartTobuild)
+        Debug.Log("Middlegroupstart");
+        if (BlockGameTask._StartTobuild)
         {
             foreach (BlockEntity cube in cube_GB)
             {

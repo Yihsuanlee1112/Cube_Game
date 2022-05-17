@@ -424,7 +424,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -503,8 +503,8 @@ ModelImporter:
       name: "\u5F9E\u8B1B\u53F0\u62FF\u7A4D\u6728"
       takeName: Take 001
       internalID: 0
-      firstFrame: 1200
-      lastFrame: 1225
+      firstFrame: 1172
+      lastFrame: 1273
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

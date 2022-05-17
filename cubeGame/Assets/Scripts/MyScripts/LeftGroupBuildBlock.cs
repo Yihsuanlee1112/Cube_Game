@@ -26,7 +26,7 @@ public class LeftGroupBuildBlock : MonoBehaviour
         Green = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Green;
         Hat = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Hat;
         Debug.Log("leftgroupstart");
-        while (BlockGameTask._StartTobuild)
+        if (BlockGameTask._StartTobuild)
         {
             foreach (BlockEntity cube in cube_GA)
             {

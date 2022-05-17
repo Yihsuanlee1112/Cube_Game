@@ -6,56 +6,81 @@ using System.Linq;
 public class testAni : MonoBehaviour
 {
     //public Animator NPC, BlueCube;
-    public GameObject cube;//use list for each cubes in every Question
-
+    public GameObject Teacher;
+    public GameObject BlueCube;
+    public static bool TeacherMoveToUser = false;
+    public static bool TeacherMoveToXiaoHua = false;
+    public static bool TeacherMoveBackFromUser = false;
+    public static bool TeacherMoveBackFromXiaoHua = false;
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(PlayAni());
+       //StartCoroutine(PlayAni());
     }
     
     // Update is called once per frame
     void Update()
     {
+        float speed = 0.7f;
+        float rotateSpeed = 2f;
+        if (TeacherMoveToUser)
+        {
+            Teacher.transform.position = Vector3.MoveTowards(Teacher.transform.position, 
+                new Vector3(0.87f, 0.037f, 4.5f), speed * Time.deltaTime);
+        }
+        else if(TeacherMoveToXiaoHua)
+        {
+            Debug.Log("TeacherMoveToXiaoHua");
+            Teacher.transform.position = Vector3.MoveTowards(Teacher.transform.position, 
+                new Vector3(2.189f, 0.037f, 2.628f), speed * Time.deltaTime);
+        }
+        else if(TeacherMoveBackFromUser)
+        {
+            Debug.Log("TeacherMoveBackFromUser");
+            Teacher.transform.rotation = Quaternion.Slerp(Teacher.transform.rotation, 
+                Quaternion.Euler(0, 208f, 0), rotateSpeed * Time.deltaTime);
+            Teacher.transform.position = Vector3.MoveTowards(Teacher.transform.position, 
+                new Vector3(0.098f, 0.037f, 1.627f), speed * Time.deltaTime);
+        }
+        else if(TeacherMoveBackFromXiaoHua)
+        {
+            Debug.Log("TeacherMoveBackFromXiaoHua");
+            Teacher.transform.rotation = Quaternion.Slerp(Teacher.transform.rotation, 
+                Quaternion.Euler(0, 250f, 0), rotateSpeed * Time.deltaTime);
+            Teacher.transform.position = Vector3.MoveTowards(Teacher.transform.position, 
+                new Vector3(0.098f, 0.037f, 1.627f), speed * Time.deltaTime);
+            
+        }
+        else if(!TeacherMoveBackFromXiaoHua || !TeacherMoveBackFromUser)
+        {
+            Teacher.transform.rotation = Quaternion.Slerp(Teacher.transform.rotation,
+                Quaternion.Euler(0, 19f, 0), rotateSpeed * Time.deltaTime);
+        }
         
     }
 
    IEnumerator PlayAni()
    {
-        string CubeName = cube.name;
-        cube.GetComponent<BlockEntity>()._isChose = true;
-        //cube.GetComponent<BlockEntity>()._isOnUserTable = true;
-        yield return new WaitForSeconds(3);
-        if(cube.GetComponent<BlockEntity>()._isChose && cube.GetComponent<BlockEntity>()._isOnUserTable && !cube.GetComponent<BlockEntity>()._isUserColor)
-        {
-            Debug.Log(cube.GetComponent<BlockEntity>()._isChose);
-            Debug.Log(cube.GetComponent<BlockEntity>()._isOnUserTable);
-            Debug.Log(cube.GetComponent<BlockEntity>()._isUserColor);
-            //GameObject.Find("Tables/UserTable/block/" + CubeName).GetComponent<MeshRenderer>().enabled = true;
-            GameObject.Find("desk/block/" + CubeName).GetComponent<Animator>().Play("Take Block");
-        }
-        ////GameObject BlueCube = GameObject.Find("BlueCube");
-        //NPC.SetBool("isTakeCube", true);
-        //yield return new WaitForSeconds(3);
-        //BlueCube.Play("Take Block");
-        //NPC.SetBool("isTakeCube", false);
-        //Debug.Log("PlayAni");
-        ////BlueCube.SetBool("isTake", true);
-        //if (CubeName.contains("BlueCube"))
-        //{
-        //    for (int i = 0; i < 13; i++)
-        //    {
-        //        if (cubeName == GameObject.Find("Tables/UserTable/block").transform.GetChild(i).name)
-        //        {
-        //            Debug.Log(GameObject.Find("Tables/UserTable/block").transform.GetChild(i).name);
-        //            GameObject.Find("Tables/UserTable/block").transform.GetChild(i).GetComponent<MeshRenderer>().enabled = true;
-        //            GameObject.Find("Tables/UserTable/block").transform.GetChild(i).GetComponent<Animator>().Play("Take Block");
-        //        }
 
-        //    }
-        //}
-
+        Teacher.GetComponent<Animator>().SetBool("isTakeCube", true);
+        Teacher.GetComponent<Animator>().SetBool("isTakeCubeWalking", true);
+        Teacher.GetComponent<Animator>().SetBool("isPutingCube", true);
+        yield return new WaitForSeconds(3.5f);
+        TeacherMoveToXiaoHua = true;
+        BlueCube.GetComponent<Animator>().Play("Teacher Take box walk");
+        yield return new WaitForSeconds(10);
+        TeacherMoveToXiaoHua = false;
+        Debug.Log("老師走到小花");
+        TeacherMoveBackFromXiaoHua = true;
+        Teacher.GetComponent<Animator>().SetBool("isTakeCube", false);
+        Teacher.GetComponent<Animator>().SetBool("isTakeCubeWalking", false);
+        Teacher.GetComponent<Animator>().SetBool("isPutingCube", false);
+        Debug.Log("老師走回去");
         yield return new WaitForSeconds(5);
+        TeacherMoveBackFromXiaoHua = false;
+        yield return null;
+
+
     }
     
 

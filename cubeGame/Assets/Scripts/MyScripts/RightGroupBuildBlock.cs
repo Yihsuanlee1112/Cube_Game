@@ -23,8 +23,8 @@ public class RightGroupBuildBlock : MonoBehaviour
         cube_GC = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().cube_GC;
         Yoyo = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Yoyo;
         Red = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Red;
-        Debug.Log("leftgroupstart");
-        while (BlockGameTask._StartTobuild)
+        Debug.Log("Rightgroupstart");
+        if (BlockGameTask._StartTobuild)
         {
             foreach (BlockEntity cube in cube_GC)
             {
