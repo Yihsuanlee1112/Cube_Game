@@ -22,9 +22,10 @@ public class PlayerEntity : GameEntityBase
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             BlockGameTask._playerRound = false;
+            BlockGameTaskLv2._playerRound = false;
         }
     }
 }

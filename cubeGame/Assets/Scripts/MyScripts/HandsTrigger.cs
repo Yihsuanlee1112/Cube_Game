@@ -74,7 +74,7 @@ public class HandsTrigger : MonoBehaviour
                 //fail. color not match || fail. scale not match 
                 //_isUserColor, !_isChose
                 {
-                    //BlockGameTask._npcremind = true;
+                    BlockGameTask._npcremind = true;
                     Debug.Log("player round. fail. right color, wrong scale || fail. right color, wrong scale");
                     GameEventCenter.DispatchEvent("NPCRemind_Order");
                     //StartCoroutine(NPCEntity.NPCRemind());
@@ -87,7 +87,7 @@ public class HandsTrigger : MonoBehaviour
                 }
                 else if (!other.GetComponent<BlockEntity>()._isUserColor)
                 {//!_isUserColor
-                    //BlockGameTask._npcremind = true;
+                    BlockGameTask._npcremind = true;
                     Debug.Log("Wrong Cube, its NPCs cube. take it again");
                     GameEventCenter.DispatchEvent("NPCRemind_Order");
                     //StartCoroutine(NPCEntity.NPCRemind());
@@ -319,7 +319,7 @@ public class HandsTrigger : MonoBehaviour
                 //堆積木
                 if (!BlockGameTaskLv2._playerRound)
                 {
-                    //BLockGameTask._NPCRemind = true;
+                    BlockGameTaskLv2._npcremind = true;
                     Debug.Log("NPCs turn");
                     //StartCoroutine(NPCEntity.NPCRemind());
                     GameEventCenter.DispatchEvent("NPCRemindLv2");//輪流拼
@@ -349,6 +349,7 @@ public class HandsTrigger : MonoBehaviour
                 //fail. color not match || fail. scale not match 
                 //_isUserColor, !_isChose
                 {
+                    BlockGameTaskLv2._npcremind = true;
                     Debug.Log("player round. fail. right color, wrong scale || fail. right color, wrong scale");
                     GameEventCenter.DispatchEvent("NPCRemind_OrderLv2");
                     //StartCoroutine(NPCEntity.NPCRemind());
@@ -361,6 +362,7 @@ public class HandsTrigger : MonoBehaviour
                 }
                 else if (!other.GetComponent<BlockEntity>()._isUserColor)
                 {//!_isUserColor
+                    BlockGameTaskLv2._npcremind = true;
                     Debug.Log("Wrong Cube, its NPCs cube. take it again");
                     GameEventCenter.DispatchEvent("NPCRemind_OrderLv2");
                     //StartCoroutine(NPCEntity.NPCRemind());

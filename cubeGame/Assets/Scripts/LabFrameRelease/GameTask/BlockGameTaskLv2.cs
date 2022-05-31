@@ -80,7 +80,7 @@ public class BlockGameTaskLv2 : TaskBase
         GameEventCenter.AddEvent<BlockEntity>("CubeToAns", CubeToAns);
         GameEventCenter.AddEvent<BlockEntity>("CubeOnAns", CubeOnAns); 
         GameEventCenter.AddEvent<string>("GetFocusName", GetFocusName);
-        GameEventCenter.AddEvent<BlockEntity>("OtherGroupCubeAns", OtherGroupCubeAns);
+        GameEventCenter.AddEvent<BlockEntity>("OtherGroupCubeAnsLv2", OtherGroupCubeAnsLv2);
         GameEventCenter.AddEvent("AddCubesToList", AddCubesToList);
         GameEventCenter.AddEvent("FindQ1Cubes", FindQ1Cubes);
         GameEventCenter.AddEvent("FindQ2Cubes", FindQ2Cubes);
@@ -131,6 +131,7 @@ public class BlockGameTaskLv2 : TaskBase
         Coin = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Coin;
         Ruby = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Ruby;
         Heart = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Heart;
+        
         //VRIK初始化
         player.Init(GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().vrCamera);
 
@@ -147,12 +148,15 @@ public class BlockGameTaskLv2 : TaskBase
         //LabVisualization.VisualizationManager.Instance.VisulizationInit();
         //LabVisualization.VisualizationManager.Instance.StartDataVisualization();
 
-        eyecamera = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().eyeCamera;
-        eyecamera.Init();
-        answerindex = 0;   //初始化
+        //eyecamera = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().eyeCamera;
+        //eyecamera.Init();
+        //answerindex = 0;   //初始化
 
         //語音Recognizer 初始化
         //recognizerEntity.Init();
+        
+        // 開啟遊戲計時器
+        GameEventCenter.DispatchEvent("GameTimerText_isEnabled", true);        
         //語言選擇
         if (GameDataManager.FlowData.Language == Language.中文)
         {
@@ -387,7 +391,7 @@ public class BlockGameTaskLv2 : TaskBase
         yield return new WaitForSeconds(2);
 
         GameObject.FindWithTag("Result").SetActive(false);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
         {
             GameObject.FindWithTag("RPS").SetActive(false);
         }
@@ -477,6 +481,8 @@ public class BlockGameTaskLv2 : TaskBase
         //開始堆積木
         //小花跟老師拿積木
         yield return XiaoHuaNeedsCube(XiaoMeiRaiseHandPic);
+        cube_GB[0].GetComponent<MeshRenderer>().enabled = true;//小花少第一顆積木
+        
         userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
 
@@ -668,57 +674,54 @@ public class BlockGameTaskLv2 : TaskBase
 
     public override IEnumerator TaskStop()
     {
+        // 關閉遊戲計時器
+        GameEventCenter.DispatchEvent("GameTimerText_isEnabled", false);
+        
+        // 遊戲正常結束才會儲存數據
+        GameEventCenter.DispatchEvent("StoreEndData");
+        
         GameApplication.Instance.GameApplicationDispose(GameApplication.DisposeOptions.Back2Ui);
         yield return null;
     }
     IEnumerator SayHello()
     {
-        HostAnimator.SetBool("isSlouchStandErect", false);
+            
         HostAnimator.SetBool("isSayingHello", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath+"Teacher_SayHi");
+        GameAudioController.Instance.PlayOneShot(clip);    
+        clip = Resources.Load<AudioClip>(audioClipRootPath+"Host_SayHi");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         Debug.Log(clip);
         Debug.Log("打完招呼");
         HostAnimator.SetBool("isSayingHello", false);
-        HostAnimator.SetBool("isSlouchStandErect", true);
+        yield return null;
     }
     IEnumerator Teacher_Opening()
     {
-        HostAnimator.SetBool("isSlouchStandErect", false);
-        HostAnimator.SetBool("isStandingAndTalking", true);
+        TeacherAnimator.SetBool("isTalk", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath+"Teacher_Opening");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         Debug.Log(audioClipRootPath+"Teacher_Opening" + clip.length);
         Debug.Log("老師開完場");
-        HostAnimator.SetBool("isStandingAndTalking", false);
-        HostAnimator.SetBool("isSlouchStandErect", true);
+        TeacherAnimator.SetBool("isTalk", false);
+        yield return null;
     }
     IEnumerator Teacher_Introduction()
     {
-        HostAnimator.SetBool("isSlouchStandErect", false);
-        HostAnimator.SetBool("isStandingAndTalking", true);
+        TeacherAnimator.SetBool("isTalk", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath+"Teacher_Introduction");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         Debug.Log(audioClipRootPath+"Teacher_Introduction" + clip.length);
         Debug.Log("老師說完遊戲規則");
-        HostAnimator.SetBool("isStandingAndTalking", false);
-        HostAnimator.SetBool("isSlouchStandErect", true);
-    }
-    IEnumerator Host_RemindAllToSayRPS()
-    {
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"Host_RemindAllToSayRPS");
-        GameAudioController.Instance.PlayOneShot(clip);
-        yield return new WaitForSeconds(clip.length);
-        Debug.Log(audioClipRootPath+"Host_RemindAllToSayRPS" + clip.length);
+        TeacherAnimator.SetBool("isTalk", false);
+        yield return null;
     }
     IEnumerator Teacher_AskUserWhichPic()
     {
-        HostAnimator.SetBool("isSlouchStandErect", false);
-        HostAnimator.SetBool("isAsking", true);
-
+        TeacherAnimator.SetBool("isPoint", true);
         SpVoice npcsay = new SpVoice();
         npcsay.Speak(GameDataManager.FlowData.UserName, SpeechVoiceSpeakFlags.SVSFlagsAsync);
         yield return new WaitForSeconds(1.5f);
@@ -727,20 +730,29 @@ public class BlockGameTaskLv2 : TaskBase
         yield return new WaitForSeconds(clip.length);
         Debug.Log(audioClipRootPath+"Teacher_AskUserWhichPic" + clip.length);
         Debug.Log("老師問完選圖");
-        HostAnimator.SetBool("isAsking", false);
-        HostAnimator.SetBool("isSlouchStandErect", true);
+        TeacherAnimator.SetBool("isPoint", false);
+        yield return null;
+    }
+    IEnumerator Host_RemindAllToSayRPS()
+    {
+        HostAnimator.SetBool("isStandingAndTalking", true);
+        clip = Resources.Load<AudioClip>(audioClipRootPath+"Host_RemindAllToSayRPS");
+        GameAudioController.Instance.PlayOneShot(clip);
+        yield return new WaitForSeconds(clip.length);
+        Debug.Log(audioClipRootPath+"Host_RemindAllToSayRPS" + clip.length);
+        HostAnimator.SetBool("isStandingAndTalking", false);
+        yield return null;
     }
     IEnumerator Teacher_RemindLv2()
     {
-        HostAnimator.SetBool("isSlouchStandErect", false);
-        HostAnimator.SetBool("isStandingAndTalking", true);
+        HostAnimator.SetBool("isTalking", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath+"Teacher_LV2Remind");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         Debug.Log(audioClipRootPath+"Teacher_LV2Remind" + clip.length);
         Debug.Log("老師提醒規則");
-        HostAnimator.SetBool("isStandingAndTalking", false);
-        HostAnimator.SetBool("isSlouchStandErect", true);
+        HostAnimator.SetBool("isTalking", false);
+        yield return null;
     }
     IEnumerator NPC_AskUserFirstColor()
     {
@@ -758,6 +770,7 @@ public class BlockGameTaskLv2 : TaskBase
             yield return new WaitUntil(() => _userChooseColor);
             Debug.Log(_userChooseColor);
         } while (!_userChooseColor);
+        yield return null;
     }
     IEnumerator NPC_AskUserSecondColor()
     {
@@ -775,6 +788,7 @@ public class BlockGameTaskLv2 : TaskBase
             yield return new WaitUntil(() => _userChooseColor);
             Debug.Log(_userChooseColor);
         } while (!_userChooseColor);
+        yield return null;
     }
     IEnumerator NPC_SameColor1()
     {
@@ -782,30 +796,24 @@ public class BlockGameTaskLv2 : TaskBase
         if (GameDataManager.FlowData.UserColor == "紅色")
         {
             UserChoice1 = Colors[0];//red
-            Colors.RemoveAt(0);
             Debug.Log("GameDataManager.FlowData.UserColor: " + GameDataManager.FlowData.UserColor);
         }
         else if (GameDataManager.FlowData.UserColor == "藍色")
         {
             UserChoice1 = Colors[1];//blue
-            Colors.RemoveAt(1);
             Debug.Log("GameDataManager.FlowData.UserColor: " + GameDataManager.FlowData.UserColor);
         }
         else if (GameDataManager.FlowData.UserColor == "綠色")
         {
             UserChoice1 = Colors[2];//green
-            Colors.RemoveAt(2);
             Debug.Log("GameDataManager.FlowData.UserColor: " + GameDataManager.FlowData.UserColor);
         }
         else if (GameDataManager.FlowData.UserColor == "黃色")
         {
             UserChoice1 = Colors[3];//yellow
-            Colors.RemoveAt(3);
-            
             Debug.Log("GameDataManager.FlowData.UserColor: " + GameDataManager.FlowData.UserColor);
         }
         //GameDataManager.FlowData.UserColor = "紅色";
-        Debug.Log(GameDataManager.FlowData.UserColor);
         npc.animator.SetBool("isSad", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_SameColor1");
         GameAudioController.Instance.PlayOneShot(clip);
@@ -820,13 +828,26 @@ public class BlockGameTaskLv2 : TaskBase
         yield return new WaitForSeconds(1.5f);
         npc.animator.SetBool("isSad", false);
         GameDataManager.FlowData.UserFirstColor = GameDataManager.FlowData.UserColor;
+        Debug.Log("GameDataManager.FlowData.UserColor: " + GameDataManager.FlowData.UserColor);
+        Debug.Log("UserColor1: "+ GameDataManager.FlowData.UserFirstColor);
+        yield return null;
+    }
+    IEnumerator NPC_YouWinLv2()
+    {
+        Debug.Log(GameDataManager.FlowData.UserColor);
+        npc.animator.SetBool("isTalk", true);
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_YouWinLv2");
+        GameAudioController.Instance.PlayOneShot(clip);
+        yield return new WaitForSeconds(clip.length);
+        SpVoice npcsay = new SpVoice();
+        npcsay.Speak(GameDataManager.FlowData.UserColor, SpeechVoiceSpeakFlags.SVSFlagsAsync);
+        yield return new WaitForSeconds(1.5f);
+        npc.animator.SetBool("isTalk", false);
+        yield return new WaitForSeconds(3);
+        yield return null;
     }
     IEnumerator NPC_SameColor2()
     {
-        int RanColor = Random.Range(0, 3);//在0到2之間隨機取值
-        UserChoice2 = Colors[RanColor];
-        
-        //GameDataManager.FlowData.UserColor = "黃色";
         npc.animator.SetBool("isSad2", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_SameColor2");
         GameAudioController.Instance.PlayOneShot(clip);
@@ -840,20 +861,16 @@ public class BlockGameTaskLv2 : TaskBase
         npcsay.Speak(GameDataManager.FlowData.UserColor, SpeechVoiceSpeakFlags.SVSFlagsAsync);
         npc.animator.SetBool("isSad2", false);
         yield return new WaitForSeconds(3);
-    }
-    IEnumerator NPC_YouWinLv2()
-    {
-        Debug.Log(GameDataManager.FlowData.UserColor);
-        npc.animator.SetBool("isTalk", true);
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"NPC_YouWinLv2");
-        GameAudioController.Instance.PlayOneShot(clip);
-        yield return new WaitForSeconds(clip.length);
-        SpVoice npcsay = new SpVoice();
-        npcsay.Speak(GameDataManager.FlowData.UserColor, SpeechVoiceSpeakFlags.SVSFlagsAsync);
-        yield return new WaitForSeconds(3);
+        Debug.Log("UserColor1: " + GameDataManager.FlowData.UserFirstColor);
+        Debug.Log("GameDataManager.FlowData.UserColor: " +GameDataManager.FlowData.UserColor);
+        yield return null;
     }
     IEnumerator NPC_YouLoseLv2()
     {
+        ////決定usercolor2
+        ////int RanColor = Random.Range(0, 3);//在0到2之間隨機取值
+        ////UserChoice2 = Colors[RanColor];
+        
         npc.animator.SetBool("isExciting", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_UserLoseLv2");
         GameAudioController.Instance.PlayOneShot(clip);
@@ -867,7 +884,7 @@ public class BlockGameTaskLv2 : TaskBase
         yield return new WaitForSeconds(clip.length);
         npc.animator.SetBool("isExciting", false);
         yield return new WaitForSeconds(3);
-        
+        yield return null;
     }
     IEnumerator UserFinalColor()
     {
@@ -877,6 +894,56 @@ public class BlockGameTaskLv2 : TaskBase
         green = new Color(0, (float)0.706, 0, 1);
         yellow = new Color(1, 1, 0, 1);
 
+        //決定usercolor2
+        if (GameDataManager.FlowData.UserColor == "紅色" && GameDataManager.FlowData.UserFirstColor == "藍色" || GameDataManager.FlowData.UserColor == "藍色" && GameDataManager.FlowData.UserFirstColor == "紅色")
+        {
+            UserChoice2 = yellow;
+            GameDataManager.FlowData.UserColor = "黃色";
+            Debug.Log("UserChoice2: " + UserChoice2);
+            Debug.Log("GameDataManager.FlowData.UserColor(UserChoice2): " + GameDataManager.FlowData.UserColor);
+            Debug.Log("GameDataManager.FlowData.UserFirstColor(UserChoice1): " + GameDataManager.FlowData.UserFirstColor);
+        }
+        else if (GameDataManager.FlowData.UserColor == "紅色" && GameDataManager.FlowData.UserFirstColor == "黃色" || GameDataManager.FlowData.UserColor == "黃色" && GameDataManager.FlowData.UserFirstColor == "紅色")
+        {
+            UserChoice2 = green;
+            GameDataManager.FlowData.UserColor = "綠色";
+            Debug.Log("UserChoice2: " + UserChoice2);
+            Debug.Log("GameDataManager.FlowData.UserColor(UserChoice2): " + GameDataManager.FlowData.UserColor);
+            Debug.Log("GameDataManager.FlowData.UserFirstColor(UserChoice1): " + GameDataManager.FlowData.UserFirstColor);
+        }
+        else if (GameDataManager.FlowData.UserColor == "紅色" && GameDataManager.FlowData.UserFirstColor == "綠色" || GameDataManager.FlowData.UserColor == "綠色" && GameDataManager.FlowData.UserFirstColor == "紅色")
+        {
+            UserChoice2 = yellow;
+            GameDataManager.FlowData.UserColor = "黃色";
+            Debug.Log("UserChoice2: " + UserChoice2);
+            Debug.Log("GameDataManager.FlowData.UserColor(UserChoice2): " + GameDataManager.FlowData.UserColor);
+            Debug.Log("GameDataManager.FlowData.UserFirstColor(UserChoice1): " + GameDataManager.FlowData.UserFirstColor);
+        }
+        else if (GameDataManager.FlowData.UserColor == "黃色" && GameDataManager.FlowData.UserFirstColor == "藍色" || GameDataManager.FlowData.UserColor == "藍色" || GameDataManager.FlowData.UserFirstColor == "黃色")
+        {
+            UserChoice2 = red;
+            GameDataManager.FlowData.UserColor = "紅色";
+            Debug.Log("UserChoice2: " + UserChoice2);
+            Debug.Log("GameDataManager.FlowData.UserColor(UserChoice2): " + GameDataManager.FlowData.UserColor);
+            Debug.Log("GameDataManager.FlowData.UserFirstColor(UserChoice1): " + GameDataManager.FlowData.UserFirstColor);
+        }
+        else if (GameDataManager.FlowData.UserColor == "黃色" && GameDataManager.FlowData.UserFirstColor == "綠色" || GameDataManager.FlowData.UserColor == "綠色" || GameDataManager.FlowData.UserFirstColor == "黃色")
+        {
+            UserChoice2 = red;
+            GameDataManager.FlowData.UserColor = "紅色";
+            Debug.Log("UserChoice2: " + UserChoice2);
+            Debug.Log("GameDataManager.FlowData.UserColor(UserChoice2): " + GameDataManager.FlowData.UserColor);
+            Debug.Log("GameDataManager.FlowData.UserFirstColor(UserChoice1): " + GameDataManager.FlowData.UserFirstColor);
+        }
+        else if (GameDataManager.FlowData.UserColor == "綠色" && GameDataManager.FlowData.UserFirstColor == "藍色" || GameDataManager.FlowData.UserColor == "藍色" || GameDataManager.FlowData.UserFirstColor == "綠色")
+        {
+            UserChoice2 = red;
+            GameDataManager.FlowData.UserColor = "紅色";
+            Debug.Log("UserChoice2: " + UserChoice2);
+            Debug.Log("GameDataManager.FlowData.UserColor(UserChoice2): " + GameDataManager.FlowData.UserColor);
+            Debug.Log("GameDataManager.FlowData.UserFirstColor(UserChoice1): " + GameDataManager.FlowData.UserFirstColor);
+        }
+        
         //XX跟XX是你的顏色喔，不要拿錯囉!
         SpVoice npcsay = new SpVoice();
         npc.animator.SetBool("isTalk", true);
@@ -885,45 +952,39 @@ public class BlockGameTaskLv2 : TaskBase
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_And");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        //secondColor
-        if (UserChoice2 == red)
-        {
-            GameDataManager.FlowData.UserColor = "紅色";
-        }
-        else if (UserChoice2 == green)
-        {
-            GameDataManager.FlowData.UserColor = "綠色";
-        }
-        else if (UserChoice2 == blue)
-        {
-            GameDataManager.FlowData.UserColor = "藍色";
-        }
-        else if (UserChoice2 == yellow)
-        {
-            GameDataManager.FlowData.UserColor = "黃色";
-        }
+        
         npcsay.Speak(GameDataManager.FlowData.UserColor, SpeechVoiceSpeakFlags.SVSFlagsAsync);
         yield return new WaitForSeconds(1.5f);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_DontTakeThemWrong");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         npc.animator.SetBool("isTalk", false);
+        yield return null;
     }
     IEnumerator All_NPC_SayRPS()
     {
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"NPC_SayRPS");
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_SayRPS");
         GameAudioController.Instance.PlayOneShot(clip);
-        Debug.Log(clip.length);
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"Flower_SayRPS");
+        //Debug.Log(clip.length);
+        XiaoHua.SetBool("isPlayingRPS", true);
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Flower_SayRPS");
         GameAudioController.Instance.PlayOneShot(clip);
-        Debug.Log(clip.length);
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"Red_SayRPS");
+        //Debug.Log(clip.length);
+
+        Hat.SetBool("isPlayingRPS", true);
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Red_SayRPS");
         GameAudioController.Instance.PlayOneShot(clip);
-        Debug.Log(clip.length);
-        clip = Resources.Load<AudioClip>(audioClipRootPath+"Green_SayRPS");
+        //Debug.Log(clip.length);
+        Yoyo.SetBool("isPlayingRPS", true);
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "Green_SayRPS");
         GameAudioController.Instance.PlayOneShot(clip);
-        Debug.Log(clip.length);
-        yield return new WaitForSeconds(1);
+        //Debug.Log(clip.length);
+        yield return new WaitForSeconds(clip.length);
+        Hat.SetBool("isPlayingRPS", false);
+        XiaoHua.SetBool("isPlayingRPS", false);
+        Yoyo.SetBool("isPlayingRPS", false);
+        yield return new WaitForSeconds(2);
+        yield return null;
     }
     IEnumerator UserChooseQuestion()
     {
@@ -985,13 +1046,14 @@ public class BlockGameTaskLv2 : TaskBase
         XiaoHua.SetBool("isRaiseHandAndTalkToTeacher", false);
         yield return new WaitForSeconds(2);
 
-        HostAnimator.SetBool("isStandingAndTalking", true);
+        HostAnimator.SetBool("isPointing", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_RaiseHandThenTell");
         XiaoMeiRaiseHandPic.GetComponent<RawImage>().enabled = true;
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        HostAnimator.SetBool("isStandingAndTalking", false);
+        HostAnimator.SetBool("isPointing", false);
         yield return new WaitForSeconds(2);
+        XiaoMeiRaiseHandPic.GetComponent<RawImage>().enabled = true;
 
         TeacherAnimator.SetBool("isTakeCube", true);
         yield return new WaitForSeconds(2f);
@@ -1019,6 +1081,7 @@ public class BlockGameTaskLv2 : TaskBase
         testAni.TeacherMoveBackFromXiaoHua = false;
 
         yield return new WaitForSeconds(2);
+        yield return null;
 
     }
     IEnumerator UserNeedsACube()
@@ -1026,9 +1089,11 @@ public class BlockGameTaskLv2 : TaskBase
         yield return new WaitForSeconds(2);
         _userRaiseHand = false;
         _userSpeekToTeacher = false;
+        KeyWordRecognizer.MissingColor = null;
+
         //開起綠球
         GreenTriggerBall.SetActive(true);
-        
+
         while (RemindRaiseHand < 3)
         {
             //Debug.Log(RemindRaiseHand);
@@ -1102,17 +1167,19 @@ public class BlockGameTaskLv2 : TaskBase
             //}
             if (!_is5secTimeUp) //5秒內 
             {
-                GameEventCenter.DispatchEvent("Text5sec_isEnabledLv2", false); // 5秒計時器關閉
-                GameEventCenter.DispatchEvent("Timer5secResetLv2");
                 if (_userRaiseHand && _userSpeekToTeacher) // user有舉手 說話
                 {
+                    GameEventCenter.DispatchEvent("Text5sec_isEnabledLv2", false); // 5秒計時器關閉
+                    GameEventCenter.DispatchEvent("Timer5secResetLv2");
                     _userRaiseHand = false;
                     _userSpeekToTeacher = false;
                     yield return new WaitForSeconds(1);
                     //主持人: 你有舉手等待老師，很棒!可以獲得一個愛心
+                    HostAnimator.SetBool("isClapping", true);
                     clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_YouRaiseHandToTalk");
                     GameAudioController.Instance.PlayOneShot(clip);
                     yield return new WaitForSeconds(clip.length);
+                    HostAnimator.SetBool("isClapping", false);
                     Debug.Log("主持人: 你有舉手等待老師，很棒!可以獲得一個愛心");
                     yield return new WaitForSeconds(2);
 
@@ -1123,9 +1190,11 @@ public class BlockGameTaskLv2 : TaskBase
                     Heart.SetActive(false);
                     GameEventCenter.DispatchEvent("GameHeartCounter");   // 愛心數量加一
 
+                    HostAnimator.SetBool("isClapping", true);                    
                     clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_YouSaidYouMissCube");
                     GameAudioController.Instance.PlayOneShot(clip);
                     yield return new WaitForSeconds(clip.length);
+                    HostAnimator.SetBool("isClapping", false);
                     Debug.Log("主持人: 而且你有跟老師說你少了一個積木，很棒喔!可以獲得一個寶石");
 
                     Ruby.SetActive(true);
@@ -1141,6 +1210,8 @@ public class BlockGameTaskLv2 : TaskBase
                 //if (RemindRaiseHand == 0)
                 {
                     //小星提示:你可以舉手，然後跟老師說你少了什麼顏色的積木
+                    GameEventCenter.DispatchEvent("Text5sec_isEnabledLv2", false); // 5秒計時器關閉
+                    GameEventCenter.DispatchEvent("Timer5secResetLv2");
                     npc.animator.SetBool("isTalk2", true);
                     clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_YouCanTellTheTeacher2");
                     GameAudioController.Instance.PlayOneShot(clip);
@@ -1156,13 +1227,15 @@ public class BlockGameTaskLv2 : TaskBase
                 //else if(RemindRaiseHand == 1)
                 {
                     Debug.Log("主持人（提醒）");
+                    GameEventCenter.DispatchEvent("Text5sec_isEnabledLv2", false); // 5秒計時器關閉
+                    GameEventCenter.DispatchEvent("Timer5secResetLv2");
                     //主持人（提醒1）:我們在上課的時候，遇到問題就可以像小花一樣，先舉手等待老師，然後跟老師說
-                    HostAnimator.SetBool("isStandingAndTalking", true);
+                    HostAnimator.SetBool("isPointing", true);
                     clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_RaiseHandThenTell");
                     GameAudioController.Instance.PlayOneShot(clip);
                     //XiaoMeiRaiseHandPic.GetComponent<RawImage>().enabled = true;
                     yield return new WaitForSeconds(clip.length);
-                    HostAnimator.SetBool("isStandingAndTalking", false);
+                    HostAnimator.SetBool("isPointing", false);
                     Debug.Log("主持人說明要跟小花一樣，舉手之後跟老師說少一個");
                     //_userRaiseHand = false;
                     RemindRaiseHand++;
@@ -1200,14 +1273,14 @@ public class BlockGameTaskLv2 : TaskBase
                 }
                 else if (RemindRaiseHand == 2)
                 {
-                     Debug.Log("主持人（提醒）");
+                    Debug.Log("主持人（提醒）");
                     //主持人（提醒1）:我們在上課的時候，遇到問題就可以像小花一樣，先舉手等待老師，然後跟老師說
-                    HostAnimator.SetBool("isStandingAndTalking", true);
+                    HostAnimator.SetBool("isPointing", true);
                     clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_RaiseHandThenTell");
                     GameAudioController.Instance.PlayOneShot(clip);
                     //XiaoMeiRaiseHandPic.GetComponent<RawImage>().enabled = true;
                     yield return new WaitForSeconds(clip.length);
-                    HostAnimator.SetBool("isStandingAndTalking", false);
+                    HostAnimator.SetBool("isPointing", false);
                     Debug.Log("主持人說明要跟小花一樣，舉手之後跟老師說少一個");
                     yield return new WaitForSeconds(2);
                 }
@@ -1223,21 +1296,29 @@ public class BlockGameTaskLv2 : TaskBase
 
         //TeacherAni
         TeacherAnimator.SetBool("isTakeCube", true);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         testAni.TeacherMoveToUser = true;
         TeacherAnimator.SetBool("isTakeCubeWalking", true);
         TeacherAnimator.SetBool("isPutingCube", true);
 
-        clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_GiveCube");
-        GameAudioController.Instance.PlayOneShot(clip);
-        yield return new WaitForSeconds(clip.length);
-        SpVoice npcsay = new SpVoice();
-        KeyWordRecognizer.MissingColor = " ";
-        npcsay.Speak(KeyWordRecognizer.MissingColor, SpeechVoiceSpeakFlags.SVSFlagsAsync);
-        yield return new WaitForSeconds(1.5f);
-        clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_Cube");
-        GameAudioController.Instance.PlayOneShot(clip);
-        yield return new WaitForSeconds(clip.length);
+        if (KeyWordRecognizer.MissingColor == null)
+        {
+            clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_GiveUserCube");
+            GameAudioController.Instance.PlayOneShot(clip);
+            yield return new WaitForSeconds(clip.length);
+        }
+        else
+        {
+            clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_GiveCube");
+            GameAudioController.Instance.PlayOneShot(clip);
+            yield return new WaitForSeconds(clip.length);
+            SpVoice npcsay = new SpVoice();
+            npcsay.Speak(KeyWordRecognizer.MissingColor, SpeechVoiceSpeakFlags.SVSFlagsAsync);
+            yield return new WaitForSeconds(1.5f);
+            clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_Cube");
+            GameAudioController.Instance.PlayOneShot(clip);
+            yield return new WaitForSeconds(clip.length);
+        }
         yield return new WaitForSeconds(5);
         testAni.TeacherMoveToUser = false;
         Debug.Log("老師走到USER");
@@ -1267,39 +1348,9 @@ public class BlockGameTaskLv2 : TaskBase
         Debug.Log(UserChoice2 + " + UserChoice2");
         Debug.Log(GameDataManager.FlowData.UserColor);
         yield return new WaitForSeconds(2);
+        yield return null;
     }
-    //IEnumerator OtherGroupBuildBlock()
-    //{
-    //    //yield return LeftGroupBuildBlock();
-    //    //yield return MiddleGroupBuildBlock();
-    //    //yield return RightGroupBuildBlock();
-    //    foreach (BlockEntity cube in cube_GA)
-    //    {
-    //        if (_RoundA)  //玩家回合
-    //        {
-    //            KidA.Play("Puzzle");
-    //            GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
-    //            KidB.Play("Puzzle");
-    //            GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
-    //            KidC.Play("Puzzle");
-    //            GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
-    //            yield return new WaitForSeconds(7);
-    //            _RoundA = false;
-    //        }
-    //        else
-    //        {
-    //            KidD.Play("Puzzle");
-    //            GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
-    //            KidE.Play("Puzzle");
-    //            GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
-    //            KidF.Play("Puzzle");
-    //            GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
-    //            yield return new WaitForSeconds(7);
-    //            _RoundA = true;
-    //        }
-    //    }
-    //    yield return null;
-    //}
+    
     public void CheckCube()
     {
         foreach (BlockEntity item in Final_Order)
@@ -1377,10 +1428,11 @@ public class BlockGameTaskLv2 : TaskBase
         }
         foreach (BlockEntity cube in Final_Order)
         {
+            cube._isOnUserTable = true;
             if (UserChoice1 == cube.GetComponent<MeshRenderer>().material.color || UserChoice2 == cube.GetComponent<MeshRenderer>().material.color)
             {
-                Debug.Log(UserChoice1 + "UserChoice1");
-                Debug.Log(UserChoice2 + " + UserChoice2");
+                Debug.Log(UserChoice1 + "UserChoice1!!!!!!!!!");
+                Debug.Log(UserChoice2 + " + UserChoice2!!!!!!!!!!");
                 Debug.Log(cube.GetComponent<MeshRenderer>().material.color);
                 cube._isUserColor = true;
             }
@@ -1604,7 +1656,7 @@ public class BlockGameTaskLv2 : TaskBase
     {
         cube.OnAnsLv2();
     }
-    public void OtherGroupCubeAns(BlockEntity cube)
+    public void OtherGroupCubeAnsLv2(BlockEntity cube)
     {
         cube.OtherGroupToAns();
     }

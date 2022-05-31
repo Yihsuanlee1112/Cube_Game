@@ -23,30 +23,37 @@ public class MiddleGroupBuildBlock : MonoBehaviour
         cube_GB = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().cube_GB;
         XiaoHua = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().XiaoHua;
         XiaoMei = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().XiaoMei;
-        Debug.Log("Middlegroupstart");
+        //Debug.Log("Middlegroupstart");
         if (BlockGameTask._StartTobuild)
         {
-            foreach (BlockEntity cube in cube_GB)
+            Debug.Log("Mid RoundA: " + _RoundA);
+            if (_RoundA)  //玩家回合
             {
-                if (_RoundA)  //玩家回合
+                foreach (BlockEntity cube in cube_GB)
                 {
                     XiaoHua.SetBool("isTakeCube", true);
                     yield return new WaitForSeconds(7);
                     XiaoHua.SetBool("isTakeCube", false);
                     GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                    GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
                     _RoundA = false;
+                    yield return new WaitForSeconds(3);
                 }
-                else
+            }
+            if (!_RoundA)
+            {
+                foreach (BlockEntity cube in cube_GB)
                 {
                     XiaoMei.SetBool("isTakeCube", true);
                     yield return new WaitForSeconds(7);
                     XiaoMei.SetBool("isTakeCube", false);
                     GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                    GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
                     _RoundA = true;
+                    yield return new WaitForSeconds(3);
                 }
             }
         }
-        Debug.Log("Finished");
         yield return null;
     }
 }

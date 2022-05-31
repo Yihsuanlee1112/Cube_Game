@@ -167,7 +167,7 @@ public class MainSceneUI : MonoBehaviour
         GameEventCenter.AddEvent<bool>("wayPointArrowGreenBall_isEnabled", wayPointArrowGreenBall_isEnabled);
 
         GameEventCenter.AddEvent<string>("EyeFocusTimer", EyeFocusTimer);
-        //GameEventCenter.AddEvent("StoreEndData", StoreEndData);
+        GameEventCenter.AddEvent("StoreEndData", StoreEndData);
 
         //GameEventCenter.AddEvent("Interference", Interference);
         //GameEventCenter.AddEvent("bicycle", bicycle);
@@ -772,38 +772,39 @@ public class MainSceneUI : MonoBehaviour
         }
     }
 
-    //void StoreEndData()
-    //{
-    //    var eyedata = new EyeDataResult()
-    //    {
-    //        // 把Timer儲存的注視人物總時長，給對應的變數儲存
-    //        FocusTime_HostHead = TimerList[0].Timer,
-    //        FocusTime_StarHead = TimerList[1].Timer,
-    //        FocusTime_FlowerHead = TimerList[2].Timer,
-    //    };
-    //    GameDataManager.LabDataManager.SendData(eyedata);
+    void StoreEndData()
+    {
+        //var eyedata = new EyeDataResult()
+        //{
+        //    // 把Timer儲存的注視人物總時長，給對應的變數儲存
+        //    FocusTime_HostHead = TimerList[0].Timer,
+        //    FocusTime_StarHead = TimerList[1].Timer,
+        //    FocusTime_FlowerHead = TimerList[2].Timer,
+        //};
+        //GameDataManager.LabDataManager.SendData(eyedata);
 
-    //    var resultdata = new GameResult()
-    //    {
-    //        UserID = GameDataManager.FlowData.UserID,
-    //        UserName = GameDataManager.FlowData.UserName,
-    //        GameTime = GameTimerText.text.ToString(),
-
-    //        EyeSec=GameDataManager.FlowData.EyeSec,
-    //        HandSec=GameDataManager.FlowData.HandSec,
-    //        BreathSec=GameDataManager.FlowData.BreathSec,
-    //        GameTimeMin=GameDataManager.FlowData.GameTimeMin,
-    //        IsAdvanced=(GameDataManager.FlowData.isAdvanced==1)?"True":"False",
-    //        IsHaveInterference=(GameDataManager.FlowData._isHaveInterference==0)?"True":"False",
-    //        Interference_Bicycle=(GameDataManager.FlowData.InterferenceStatus[0]==1)?"True":"False",
-    //        Interference_Bubble = (GameDataManager.FlowData.InterferenceStatus[1] == 1) ? "True" : "False",
-    //        Interference_Rides = (GameDataManager.FlowData.InterferenceStatus[2] == 1) ? "True" : "False",
-    //        Interference_RedPlane = (GameDataManager.FlowData.InterferenceStatus[3] == 1) ? "True" : "False",
-    //        Interference_GreenPlane = (GameDataManager.FlowData.InterferenceStatus[4] == 1) ? "True" : "False",
-    //        LastPlayTime=MainUI.last_playtime
-    //    };
-    //    GameDataManager.LabDataManager.SendData(resultdata);
-    //}
+        //var resultdata = new GameResult()
+        //{
+        //    UserID = GameDataManager.FlowData.UserID,
+        //    UserName = GameDataManager.FlowData.UserName,
+        //    GameTime = GameTimerText.text.ToString(),
+        //    LastPlayTime = MainUI.last_playtime,
+        //    EyeSec = GameDataManager.FlowData.EyeSec,
+        
+        //    HandSec = GameDataManager.FlowData.HandSec,
+        //    //BreathSec = GameDataManager.FlowData.BreathSec,
+        //    GameTimeMin = GameDataManager.FlowData.GameTimeMin,
+        //    //IsAdvanced = (GameDataManager.FlowData.isAdvanced == 1) ? "True" : "False",
+        //    //IsHaveInterference = (GameDataManager.FlowData._isHaveInterference == 0) ? "True" : "False",
+        //    //Interference_Bicycle = (GameDataManager.FlowData.InterferenceStatus[0] == 1) ? "True" : "False",
+        //    //Interference_Bubble = (GameDataManager.FlowData.InterferenceStatus[1] == 1) ? "True" : "False",
+        //    //Interference_Rides = (GameDataManager.FlowData.InterferenceStatus[2] == 1) ? "True" : "False",
+        //    //Interference_RedPlane = (GameDataManager.FlowData.InterferenceStatus[3] == 1) ? "True" : "False",
+        //    //Interference_GreenPlane = (GameDataManager.FlowData.InterferenceStatus[4] == 1) ? "True" : "False"
+        //    
+        //};
+        //GameDataManager.LabDataManager.SendData(resultdata);
+    }
 
     /*
     public void Timer30sec()

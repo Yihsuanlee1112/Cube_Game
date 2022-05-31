@@ -18,10 +18,10 @@ public class MainSceneRes : GameSceneEntityRes
     public GameObject userRightHandTrigger;
 
     [Header("Question_BlockLists")]
-    public List<GameObject> Q1_QuestionCube;
-    public List<GameObject> Q2_QuestionCube;
-    public List<GameObject> Q3_QuestionCube;
-    public List<GameObject> Q4_QuestionCube;
+    //public List<GameObject> Q1_QuestionCube;
+    //public List<GameObject> Q2_QuestionCube;
+    //public List<GameObject> Q3_QuestionCube;
+    //public List<GameObject> Q4_QuestionCube;
     public List<GameObject> Question_Cube;
 
     [Header("BlockLists")]

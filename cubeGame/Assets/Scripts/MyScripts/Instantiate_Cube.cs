@@ -91,6 +91,11 @@ public class Instantiate_Cube : MonoBehaviour
         Cube_Prefabs.Add(Q3_Cube_Prefabs);
         Cube_Prefabs.Add(Q4_Cube_Prefabs);
 
+        Cube_Ans.Add(Q1_Ans);
+        Cube_Ans.Add(Q2_Ans);
+        Cube_Ans.Add(Q3_Ans);
+        Cube_Ans.Add(Q4_Ans);
+
         for (int i = 0; i < 4; i++)
         {
             Question(i, Cube_Prefabs[i], Parents[i], CubeParents[i], Cube_Ans[i]);

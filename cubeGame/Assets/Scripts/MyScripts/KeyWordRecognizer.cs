@@ -35,18 +35,22 @@ public class KeyWordRecognizer : MonoBehaviour
                 case "紅色":
                     BlockGameTaskLv2._userChooseColor = true;
                     UserColor = "紅色";
+                    MissingColor = "紅色";
                     break;
                 case "藍色":
                     BlockGameTaskLv2._userChooseColor = true;
                     UserColor = "藍色";
+                    MissingColor = "藍色";
                     break;
                 case "綠色":
                     BlockGameTaskLv2._userChooseColor = true;
                     UserColor = "綠色";
+                    MissingColor = "綠色";
                     break;
                 case "黃色":
                     BlockGameTaskLv2._userChooseColor = true;
                     UserColor = "黃色";
+                    MissingColor = "黃色";
                     break;
             }
             GameDataManager.FlowData.UserColor = UserColor;
@@ -55,22 +59,6 @@ public class KeyWordRecognizer : MonoBehaviour
         else if (result.Contains("老師") && result.Contains("少") && result.Contains("積木") && 
             result.Contains("紅色") || result.Contains("藍色") || result.Contains("綠色") || result.Contains("黃色"))
         {
-           
-            switch (result)
-            {
-                case "紅色":
-                    MissingColor = "紅色";
-                    break;
-                case "藍色":
-                    MissingColor = "藍色";
-                    break;
-                case "綠色":
-                    MissingColor = "綠色";
-                    break;
-                case "黃色":
-                    MissingColor = "黃色";
-                    break;
-            }
             BlockGameTask._userSpeekToTeacher = true;
             BlockGameTaskLv2._userSpeekToTeacher = true;
             Debug.Log("BlockGameTask._userSpeekToTeacher: " + BlockGameTask._userSpeekToTeacher);

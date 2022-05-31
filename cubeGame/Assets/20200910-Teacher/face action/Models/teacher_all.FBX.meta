@@ -849,15 +849,15 @@ ModelImporter:
       name: "teacher (8.7) \u7AD9\u8457\u8AAA\u8A71+\u8209\u53F3\u624B"
       takeName: Take 001
       internalID: 0
-      firstFrame: 779
-      lastFrame: 850
+      firstFrame: 760
+      lastFrame: 939
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
