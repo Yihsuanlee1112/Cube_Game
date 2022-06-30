@@ -34,11 +34,11 @@ public class RightGroupBuildBlock : MonoBehaviour
                     Yoyo.SetBool("isTakeCube", true);
                     yield return new WaitForSeconds(7);
                     Yoyo.SetBool("isTakeCube", false);
-                    GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
-                    GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
+                    //GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                    //GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
                     _RoundA = false;
 
-                    yield return new WaitForSeconds(3);
+                    yield return new WaitForSeconds(7);
                 }
             }
             if (!_RoundA)
@@ -48,12 +48,17 @@ public class RightGroupBuildBlock : MonoBehaviour
                     Red.SetBool("isTakeCube", true);
                     yield return new WaitForSeconds(7);
                     Red.SetBool("isTakeCube", false);
-                    GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
-                    GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
+                   // GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                    //GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
                     _RoundA = true;
-                    yield return new WaitForSeconds(3);
+                    yield return new WaitForSeconds(7);
                 }
             }
+        }
+        else
+        {
+            Yoyo.SetBool("isTakeCube", false);
+            Red.SetBool("isTakeCube", false);
         }
         yield return null;
     }

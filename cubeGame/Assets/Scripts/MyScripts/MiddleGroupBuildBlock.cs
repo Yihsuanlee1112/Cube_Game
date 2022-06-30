@@ -34,10 +34,10 @@ public class MiddleGroupBuildBlock : MonoBehaviour
                     XiaoHua.SetBool("isTakeCube", true);
                     yield return new WaitForSeconds(7);
                     XiaoHua.SetBool("isTakeCube", false);
-                    GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
-                    GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
+                    //GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                    //GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
                     _RoundA = false;
-                    yield return new WaitForSeconds(3);
+                    yield return new WaitForSeconds(7);
                 }
             }
             if (!_RoundA)
@@ -47,12 +47,17 @@ public class MiddleGroupBuildBlock : MonoBehaviour
                     XiaoMei.SetBool("isTakeCube", true);
                     yield return new WaitForSeconds(7);
                     XiaoMei.SetBool("isTakeCube", false);
-                    GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
-                    GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
+                    //GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                    //GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
                     _RoundA = true;
-                    yield return new WaitForSeconds(3);
+                    yield return new WaitForSeconds(7);
                 }
             }
+        }
+        else
+        {
+            XiaoHua.SetBool("isTakeCube", false);
+            XiaoMei.SetBool("isTakeCube", false);
         }
         yield return null;
     }

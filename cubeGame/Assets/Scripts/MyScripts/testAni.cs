@@ -9,9 +9,9 @@ public class testAni : MonoBehaviour
     public GameObject Teacher;
     public GameObject BlueCube;
     public static bool TeacherMoveToUser = false;
-    public static bool TeacherMoveToXiaoHua = false;
+    public static bool TeacherMoveToXiaoMei = false;
     public static bool TeacherMoveBackFromUser = false;
-    public static bool TeacherMoveBackFromXiaoHua = false;
+    public static bool TeacherMoveBackFromXiaoMei = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,9 +28,9 @@ public class testAni : MonoBehaviour
             Teacher.transform.position = Vector3.MoveTowards(Teacher.transform.position, 
                 new Vector3(0.87f, 0.037f, 4.5f), speed * Time.deltaTime);
         }
-        else if(TeacherMoveToXiaoHua)
+        else if(TeacherMoveToXiaoMei)
         {
-            Debug.Log("TeacherMoveToXiaoHua");
+            Debug.Log("TeacherMoveToXiaoMei");
             Teacher.transform.position = Vector3.MoveTowards(Teacher.transform.position, 
                 new Vector3(2.189f, 0.037f, 2.628f), speed * Time.deltaTime);
         }
@@ -42,16 +42,16 @@ public class testAni : MonoBehaviour
             Teacher.transform.position = Vector3.MoveTowards(Teacher.transform.position, 
                 new Vector3(0.098f, 0.037f, 1.627f), speed * Time.deltaTime);
         }
-        else if(TeacherMoveBackFromXiaoHua)
+        else if(TeacherMoveBackFromXiaoMei)
         {
-            Debug.Log("TeacherMoveBackFromXiaoHua");
+            Debug.Log("TeacherMoveBackFromXiaoMei");
             Teacher.transform.rotation = Quaternion.Slerp(Teacher.transform.rotation, 
                 Quaternion.Euler(0, 250f, 0), rotateSpeed * Time.deltaTime);
             Teacher.transform.position = Vector3.MoveTowards(Teacher.transform.position, 
                 new Vector3(0.098f, 0.037f, 1.627f), speed * Time.deltaTime);
             
         }
-        else if(!TeacherMoveBackFromXiaoHua || !TeacherMoveBackFromUser)
+        else if(!TeacherMoveBackFromXiaoMei || !TeacherMoveBackFromUser)
         {
             Teacher.transform.rotation = Quaternion.Slerp(Teacher.transform.rotation,
                 Quaternion.Euler(0, 19f, 0), rotateSpeed * Time.deltaTime);
@@ -66,18 +66,18 @@ public class testAni : MonoBehaviour
         Teacher.GetComponent<Animator>().SetBool("isTakeCubeWalking", true);
         Teacher.GetComponent<Animator>().SetBool("isPutingCube", true);
         yield return new WaitForSeconds(3.5f);
-        TeacherMoveToXiaoHua = true;
+        TeacherMoveToXiaoMei = true;
         BlueCube.GetComponent<Animator>().Play("Teacher Take box walk");
         yield return new WaitForSeconds(10);
-        TeacherMoveToXiaoHua = false;
-        Debug.Log("老師走到小花");
-        TeacherMoveBackFromXiaoHua = true;
+        TeacherMoveToXiaoMei = false;
+        Debug.Log("老師走到小美");
+        TeacherMoveBackFromXiaoMei = true;
         Teacher.GetComponent<Animator>().SetBool("isTakeCube", false);
         Teacher.GetComponent<Animator>().SetBool("isTakeCubeWalking", false);
         Teacher.GetComponent<Animator>().SetBool("isPutingCube", false);
         Debug.Log("老師走回去");
         yield return new WaitForSeconds(5);
-        TeacherMoveBackFromXiaoHua = false;
+        TeacherMoveBackFromXiaoMei = false;
         yield return null;
 
 

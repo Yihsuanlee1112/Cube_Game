@@ -36,10 +36,10 @@ public class LeftGroupBuildBlock : MonoBehaviour
                     Hat.SetBool("isTakeCube", true);
                     yield return new WaitForSeconds(7);
                     Hat.SetBool("isTakeCube", false);
-                    GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
-                    GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
+                    //GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                    //GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
                     _RoundA = false;
-                    yield return new WaitForSeconds(3);
+                    yield return new WaitForSeconds(7);
                 }
             }
             if (!_RoundA)
@@ -49,14 +49,20 @@ public class LeftGroupBuildBlock : MonoBehaviour
                     Green.SetBool("isTakeCube", true);
                     yield return new WaitForSeconds(7);
                     Green.SetBool("isTakeCube", false);
-                    GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
-                    GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
+                    //GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                    //GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
                     _RoundA = true;
-                    yield return new WaitForSeconds(3);
+                    yield return new WaitForSeconds(7);
                 }
             }
         }
-        yield return null;
+        else
+        {
+            Hat.SetBool("isTakeCube", false);
+            Green.SetBool("isTakeCube", false);
+        }
+
+            yield return null;
     }
 
 }

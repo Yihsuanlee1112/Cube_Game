@@ -1,1 +1,5 @@
-{"SendToServer":true,"ServerPath":"http://120.132.106.14:4000/api/data","LocalSaveDataTimeLayout":"yyyyMMddHH","ProjectId":"Null"}
+{
+  "SendToServer": true,
+  "ServerPath": "http://ericwuwu.xrrehab.net:5055/api/mackay",
+  "LocalSaveDataTimeLayout": "yyyyMMddHH",
+  "ProjectId":"MaJieBlockGame"}

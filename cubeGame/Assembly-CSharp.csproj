@@ -388,6 +388,7 @@
      <Compile Include="Assets\Scripts\MyScripts\HandsTrigger.cs" />
      <Compile Include="Assets\Scripts\MyScripts\Instantiate_Cube.cs" />
      <Compile Include="Assets\Scripts\MyScripts\KeyWordRecognizer.cs" />
+     <Compile Include="Assets\Scripts\MyScripts\Lab317DataBase.cs" />
      <Compile Include="Assets\Scripts\MyScripts\LeftGroupBuildBlock.cs" />
      <Compile Include="Assets\Scripts\MyScripts\MiddleGroupBuildBlock.cs" />
      <Compile Include="Assets\Scripts\MyScripts\putCube.cs" />

@@ -4,6 +4,7 @@ using GameData;
 using LabData;
 using UnityEngine;
 using UnityEngine.UI;
+using lab317;
 
 public class MainUI : MonoBehaviour
 {
@@ -53,6 +54,9 @@ public class MainUI : MonoBehaviour
             //};
             GameDataManager.FlowData = gameData;
             GameDataManager.LabDataManager.LabDataCollectInit(() => GameDataManager.FlowData.UserId);
+            //上傳startPage
+            GameDataManager.LabDataManager.SendData(new StartPage(GameDataManager.FlowData.UserId));
+            Debug.Log("Send");
             GameSceneManager.Instance.Change2MainScene();
         });
        

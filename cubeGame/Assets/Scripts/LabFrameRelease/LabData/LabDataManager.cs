@@ -85,9 +85,6 @@ namespace LabData
                 LogFilePath = labDataSavePath + "/ log.txt"
             };
 
-            //Docker
-            options.EndpointAddress = "http://localhost/api/data";
-
             //server
             _sendToServer = LabTools.GetConfig<LabDataConfig>().SendToServer;
             options.EndpointAddress = LabTools.GetConfig<LabDataConfig>().ServerPath;

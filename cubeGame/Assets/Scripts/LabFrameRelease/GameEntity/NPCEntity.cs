@@ -103,11 +103,11 @@ public class NPCEntity : GameEntityBase
         //yield return new WaitForSeconds(clip.length);
         if (GameDataManager.FlowData.Language == Language.中文)
         {
-            GameAudioController.Instance.PlayOneShot(ChineseSpeechList[2]);//NPC_Remind_Order
+            GameAudioController.Instance.PlayOneShot(ChineseSpeechList[3]);//NPC_Remind_Order
         }
         else
         {
-            GameAudioController.Instance.PlayOneShot(EnglishSpeechList[2]);//NPC_Remind_Order
+            GameAudioController.Instance.PlayOneShot(EnglishSpeechList[3]);//NPC_Remind_Order
         }
     }
     public void NPCRemind_OrderLv2()

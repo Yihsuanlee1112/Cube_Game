@@ -449,6 +449,7 @@ public class HandsTrigger : MonoBehaviour
             else if (other.gameObject.tag == "greenTriggerBall")
             {
                 Debug.Log("User Raise Hand");
+                BlockGameTask._userRaiseHand = true;
                 BlockGameTaskLv2._userRaiseHand = true;
             }
             
@@ -456,6 +457,7 @@ public class HandsTrigger : MonoBehaviour
             else if (other.gameObject.tag == "redTriggerBall")
             {
                 Debug.Log("User Celebrate");
+                BlockGameTask._userCelebrate = true;
                 BlockGameTaskLv2._userCelebrate = true;
             }
 
@@ -522,7 +524,7 @@ public class HandsTrigger : MonoBehaviour
             }
             else if (other.gameObject.tag == "Scissors4P")//Paper
             {
-                BlockGameTaskLv2._ShowResult = 0;
+                BlockGameTaskLv2._ShowResult = 1;
                 GameObject.Find("Scissors").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Scissors collider false");
                 GameEventCenter.DispatchEvent("CloseAnimator4P");

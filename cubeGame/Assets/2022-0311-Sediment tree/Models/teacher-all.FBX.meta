@@ -383,7 +383,7 @@ ModelImporter:
     second: "\u653E\u7A4D\u6728"
   - first:
       74: 2752861862465561947
-    second: "\u770B\u5411\u5C0F\u82B1\u8AAA\u8A71"
+    second: "\u770B\u5411\u5C0F\u7F8E\u8AAA\u8A71"
   - first:
       74: -998496362607748373
     second: Take 001
@@ -590,7 +590,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: "\u770B\u5411\u5C0F\u82B1\u8AAA\u8A71"
+      name: "\u770B\u5411\u5C0F\u7F8E\u8AAA\u8A71"
       takeName: Take 001
       internalID: 0
       firstFrame: 1584
