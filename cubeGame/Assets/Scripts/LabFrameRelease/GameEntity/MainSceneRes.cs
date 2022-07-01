@@ -54,6 +54,7 @@ public class MainSceneRes : GameSceneEntityRes
     public Animator NPC_animator;
     public Animator TeacherAnimator;
     public Animator XiaoHua, XiaoMei, Green, Yoyo, Red, Hat;
+    public Animator TeacherAnimator2, npc2, XiaoHua2, XiaoMei2, Green2, Yoyo2, Hat2, Red2; 
 
     [Header("Instantiate")]
     public Instantiate_Cube Instantiate_Cube;

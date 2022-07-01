@@ -14,6 +14,7 @@ public class BlockGameTask : TaskBase
     private NPCEntity npc;
     private Animator HostAnimator, TeacherAnimator;
     private Animator XiaoHua, XiaoMei, Green, Yoyo, Red, Hat;
+    private Animator TeacherAnimator2, npc2, XiaoHua2, XiaoMei2, Green2, Yoyo2, Hat2, Red2;
     private GameObject GreenTriggerBall;
     private GameObject RedTriggerBall;
     private List<BlockEntity> Q1_cube;
@@ -121,6 +122,14 @@ public class BlockGameTask : TaskBase
         Yoyo = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Yoyo;
         Red = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Red;
         Hat = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Hat;
+        TeacherAnimator2 = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().TeacherAnimator2;
+        npc2 = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().npc2;
+        XiaoHua2 = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().XiaoHua2;
+        XiaoMei2 = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().XiaoMei2;
+        Hat2 = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Hat2;
+        Yoyo2 = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Yoyo2;
+        Green2 = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Green2;
+        Red2 = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Red2;
         Coin = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Coin;
         Ruby = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Ruby;
         Heart = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Heart;
