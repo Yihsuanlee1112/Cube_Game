@@ -461,6 +461,9 @@ ModelImporter:
   - first:
       74: 2629027670695168486
     second: "\u5750\u5728\u6905\u5B50\u4E0A\u958B\u5FC3\u62CD\u62CD\u624B\u8AAA\u8A71"
+  - first:
+      74: 1469082814977463462
+    second: Take 001(0504)
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -1019,6 +1022,35 @@ ModelImporter:
       internalID: 0
       firstFrame: 3500
       lastFrame: 3700
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Take 001(0504)
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 3701
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

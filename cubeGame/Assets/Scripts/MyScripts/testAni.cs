@@ -15,7 +15,7 @@ public class testAni : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       //StartCoroutine(PlayAni());
+       StartCoroutine(PlayAni());
     }
     
     // Update is called once per frame
@@ -62,24 +62,27 @@ public class testAni : MonoBehaviour
    IEnumerator PlayAni()
    {
 
-        Teacher.GetComponent<Animator>().SetBool("isTakeCube", true);
-        Teacher.GetComponent<Animator>().SetBool("isTakeCubeWalking", true);
-        Teacher.GetComponent<Animator>().SetBool("isPutingCube", true);
-        yield return new WaitForSeconds(3.5f);
-        TeacherMoveToXiaoMei = true;
-        BlueCube.GetComponent<Animator>().Play("Teacher Take box walk");
-        yield return new WaitForSeconds(10);
-        TeacherMoveToXiaoMei = false;
-        Debug.Log("老師走到小美");
-        TeacherMoveBackFromXiaoMei = true;
-        Teacher.GetComponent<Animator>().SetBool("isTakeCube", false);
-        Teacher.GetComponent<Animator>().SetBool("isTakeCubeWalking", false);
-        Teacher.GetComponent<Animator>().SetBool("isPutingCube", false);
-        Debug.Log("老師走回去");
-        yield return new WaitForSeconds(5);
-        TeacherMoveBackFromXiaoMei = false;
-        yield return null;
+        //Teacher.GetComponent<Animator>().SetBool("isTakeCube", true);
+        //Teacher.GetComponent<Animator>().SetBool("isTakeCubeWalking", true);
+        //Teacher.GetComponent<Animator>().SetBool("isPutingCube", true);
+        //yield return new WaitForSeconds(3.5f);
+        //TeacherMoveToXiaoMei = true;
+        //BlueCube.GetComponent<Animator>().Play("Teacher Take box walk");
+        //yield return new WaitForSeconds(10);
+        //TeacherMoveToXiaoMei = false;
+        //Debug.Log("老師走到小美");
+        //TeacherMoveBackFromXiaoMei = true;
+        //Teacher.GetComponent<Animator>().SetBool("isTakeCube", false);
+        //Teacher.GetComponent<Animator>().SetBool("isTakeCubeWalking", false);
+        //Teacher.GetComponent<Animator>().SetBool("isPutingCube", false);
+        //Debug.Log("老師走回去");
+        //yield return new WaitForSeconds(5);
+        //TeacherMoveBackFromXiaoMei = false;
+        //yield return null;
 
+        //Teacher.GetComponent<Animator>().SetBool("isTakeCubeToUser", true);
+        //BlueCube.GetComponent<Animator>().SetBool("isToUser", true);
+        yield return null;
 
     }
     
