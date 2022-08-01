@@ -32,8 +32,10 @@ public class BlockEntity : GameEntityBase
             Debug.Log(gameObject.GetComponent<BlockEntity>()._isChose);
             Debug.Log(gameObject.GetComponent<BlockEntity>()._isOnUserTable);
             Debug.Log(gameObject.GetComponent<BlockEntity>()._isUserColor);
+            Debug.Log(GameObject.Find("Parents/Q" + BlockGameTask._RandomQuestion + "_Parent/block/" + cubeName));
             GameObject.Find("Parents/Q" + BlockGameTask._RandomQuestion + "_Parent/block/" + cubeName).GetComponent<MeshRenderer>().enabled = true;
             GameObject.Find("Parents/Q" + BlockGameTask._RandomQuestion + "_Parent/block/" + cubeName).GetComponent<Animator>().Play("Take Block");
+            Debug.Log(GameObject.Find("Parents/Q" + BlockGameTask._RandomQuestion + "_Parent/block/" + cubeName));
             //GameObject.Find("Parents/Q" + BlockGameTask._RandomQuestion + "_Parent/block/" + cubeName).GetComponent<Animator>().SetBool("isTake", true);
             //GameObject.Find("desk/block/" + CubeName).GetComponent<Animator>().Play("Take Block");
         }

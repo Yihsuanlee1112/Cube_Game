@@ -26,40 +26,48 @@ public class RightGroupBuildBlock : MonoBehaviour
         //Debug.Log("Rightgroupstart");
         if (BlockGameTask._StartTobuild)
         {
-            Debug.Log("Right RoundA: " + _RoundA);
-            if (_RoundA)  //玩家回合
+            for (int i= 0; i < 10; i++)
             {
-                foreach (BlockEntity cube in cube_GC)
+                Debug.Log("Right RoundA: " + _RoundA);
+                if (_RoundA)  //玩家回合
                 {
-                    Yoyo.SetBool("isTakeCube", true);
-                    yield return new WaitForSeconds(7);
-                    Yoyo.SetBool("isTakeCube", false);
-                    //GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
-                    //GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
-                    _RoundA = false;
+                    foreach (BlockEntity cube in cube_GC)
+                    {
+                        Yoyo.SetBool("isTakeCube", true);
+                        yield return new WaitForSeconds(7);
+                        Yoyo.SetBool("isTakeCube", false);
+                        GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                        GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
+                        _RoundA = false;
 
-                    yield return new WaitForSeconds(7);
+                        yield return new WaitForSeconds(7);
+                    }
                 }
-            }
-            if (!_RoundA)
-            {
-                foreach (BlockEntity cube in cube_GC)
+                if (!_RoundA)
                 {
-                    Red.SetBool("isTakeCube", true);
-                    yield return new WaitForSeconds(7);
-                    Red.SetBool("isTakeCube", false);
-                   // GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
-                    //GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
-                    _RoundA = true;
-                    yield return new WaitForSeconds(7);
+                    foreach (BlockEntity cube in cube_GC)
+                    {
+                        Red.SetBool("isTakeCube", true);
+                        yield return new WaitForSeconds(7);
+                        Red.SetBool("isTakeCube", false);
+                        GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                        GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
+                        _RoundA = true;
+                        yield return new WaitForSeconds(7);
+                    }
                 }
             }
         }
-        else
-        {
-            Yoyo.SetBool("isTakeCube", false);
-            Red.SetBool("isTakeCube", false);
-        }
+        //else
+        //{
+        //    Yoyo.SetBool("isTakeCube", false);
+        //    Red.SetBool("isTakeCube", false);
+        //    //Yoyo.SetBool("isExiting", true);
+        //    //Red.SetBool("isExiting", true);
+        //    //yield return new WaitForSeconds(5);
+        //    //Yoyo.SetBool("isExiting", false);
+        //    //Red.SetBool("isExiting", false);
+        //}
         yield return null;
     }
 }

@@ -6,8 +6,10 @@ using System.Linq;
 public class testAni : MonoBehaviour
 {
     //public Animator NPC, BlueCube;
-    public GameObject Teacher;
+    public GameObject Teacher, Teacher2;
     public GameObject BlueCube;
+    public GameObject Hat1, Hat2, Green1, Green2, star1, star2,
+        yoyo1, yoyo2, Red1, Red2, Mei1, Mei2, Hua1, Hua2;
     public static bool TeacherMoveToUser = false;
     public static bool TeacherMoveToXiaoMei = false;
     public static bool TeacherMoveBackFromUser = false;
@@ -15,7 +17,7 @@ public class testAni : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       StartCoroutine(PlayAni());
+       //StartCoroutine(PlayAni());
     }
     
     // Update is called once per frame
@@ -80,8 +82,73 @@ public class testAni : MonoBehaviour
         //TeacherMoveBackFromXiaoMei = false;
         //yield return null;
 
-        //Teacher.GetComponent<Animator>().SetBool("isTakeCubeToUser", true);
+        Teacher2.GetComponent<Animator>().SetBool("isTakeCubeToUser", true);
+        //BlueCube.GetComponent<Animator>().Play("拿積木走向 user後走回去");
+        BlueCube.GetComponent<Animator>().SetBool("isToUser", true);
+        yield return new WaitForSeconds(14);
+        Teacher2.GetComponent<Animator>().SetBool("isTakeCubeToUser", false);
+        //BlueCube.GetComponent<Animator>().SetBool("isToUser", false);
+        //yield return new WaitForSeconds(0.005f);
+        //star.GetComponent<Animator>().SetBool("isLeftClap", true);
+        //yield return new WaitForSeconds(3);
+
+        //yoyo1.GetComponent<Animator>().SetBool("isClapRightHand", true);
+        //yield return new WaitForSeconds(3);
+        //yoyo1.GetComponent<Animator>().SetBool("isClapRightHand", false);
+        //yield return new WaitForSeconds(3);
+        //yoyo2.GetComponent<Animator>().SetBool("isClapRightHand", true);
+        ////yoyo2.GetComponent<Animator>().Play("右手擊掌");
+        //yield return new WaitForSeconds(3);
+        //yoyo2.GetComponent<Animator>().SetBool("isClapRightHand", false);
+
+        //yield return new WaitForSeconds(3);
+        //star1.GetComponent<Animator>().SetBool("isClapLeftHand", true);
+        //yield return new WaitForSeconds(3);
+        //star1.GetComponent<Animator>().SetBool("isClapLeftHand", false);
+        //star1.GetComponent<Animator>().SetBool("isClapLeftHandInSpace", true);
+        //yield return new WaitForSeconds(3);
+        //star1.GetComponent<Animator>().SetBool("isClapLeftHandInSpace", false);
+
+        //yield return new WaitForSeconds(3);
+        //star2.GetComponent<Animator>().SetBool("isClapLeftHand", true);
+        //yield return new WaitForSeconds(3);
+        //star2.GetComponent<Animator>().SetBool("isClapLeftHand", false);
+        //star2.GetComponent<Animator>().SetBool("isClapLeftHandInSpace", true);
+        //yield return new WaitForSeconds(3);
+        //star2.GetComponent<Animator>().SetBool("isClapLeftHandInSpace", false);
+        //Debug.Log("老師走回去");
+
+
+        //Teacher.GetComponent<Animator>().SetBool("isTalk", true);
+        //Teacher2.GetComponent<Animator>().SetBool("isTalk", true);
+        //yield return new WaitForSeconds(0.005f);
         //BlueCube.GetComponent<Animator>().SetBool("isToUser", true);
+        //Teacher.GetComponent<Animator>().SetBool("isTakeCubeToUser", false);
+        //star1.GetComponent<Animator>().SetBool("isClapLeftHand", true);
+        //star2.GetComponent<Animator>().SetBool("isClapLeftHand", true);
+
+        //Hat1.GetComponent<Animator>().SetBool("isClapRightHand", true);
+        //Hat2.GetComponent<Animator>().SetBool("isClapRightHand", true);
+
+        //Mei1.GetComponent<Animator>().SetBool("isRaiseHand", true);
+        //yield return new WaitForSeconds(2);
+        //Teacher2.GetComponent<Animator>().SetBool("isTalkingToXiaoMei", true);
+        //yield return new WaitForSeconds(5);
+        //Teacher2.GetComponent<Animator>().SetBool("isTalkingToXiaoMei", false);
+        //Mei1.GetComponent<Animator>().SetBool("isRaiseHand", false);
+        //Mei1.GetComponent<Animator>().SetBool("isRaiseHandAndTalkToTeacher", true);
+        //yield return new WaitForSeconds(3);
+        //Mei1.GetComponent<Animator>().SetBool("isRaiseHandAndTalkToTeacher", false);
+        //Teacher2.GetComponent<Animator>().SetBool("isTakeCubeToXiaoMei", true);
+        //yield return new WaitForSeconds(18);
+        //Teacher2.GetComponent<Animator>().SetBool("isTakeCubeToXiaoMei", false) ;
+        //Mei2.GetComponent<Animator>().SetBool("isClapRightHand", true);
+
+        //Hua1.GetComponent<Animator>().SetBool("isClapRightHand", true);
+        //Hua2.GetComponent<Animator>().SetBool("isClapRightHand", true);
+
+        //yoyo1.GetComponent<Animator>().SetBool("isClapRightHand", true);
+        //yoyo2.GetComponent<Animator>().SetBool("isClapRightHand", true);
         yield return null;
 
     }

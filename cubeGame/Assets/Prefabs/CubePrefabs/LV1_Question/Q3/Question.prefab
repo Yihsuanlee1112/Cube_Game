@@ -4068,7 +4068,7 @@ PrefabInstance:
     - target: {fileID: 2663111408688741522, guid: 4cefddfbdd05cbe418db60f8e6d30c5d,
         type: 3}
       propertyPath: m_Name
-      value: GreenCube_1
+      value: Q3GreenCube_1
       objectReference: {fileID: 0}
     - target: {fileID: 2663111408688741522, guid: 4cefddfbdd05cbe418db60f8e6d30c5d,
         type: 3}
@@ -4189,7 +4189,7 @@ PrefabInstance:
     - target: {fileID: 2663111408688741522, guid: 4cefddfbdd05cbe418db60f8e6d30c5d,
         type: 3}
       propertyPath: m_Name
-      value: BlueCuboid_4
+      value: Q3BlueCuboid_4
       objectReference: {fileID: 0}
     - target: {fileID: 2663111408688741522, guid: 4cefddfbdd05cbe418db60f8e6d30c5d,
         type: 3}
@@ -4310,7 +4310,7 @@ PrefabInstance:
     - target: {fileID: 2663111408688741522, guid: 4cefddfbdd05cbe418db60f8e6d30c5d,
         type: 3}
       propertyPath: m_Name
-      value: BlueCuboid_1
+      value: Q3BlueCuboid_1
       objectReference: {fileID: 0}
     - target: {fileID: 2663111408688741522, guid: 4cefddfbdd05cbe418db60f8e6d30c5d,
         type: 3}
@@ -4431,7 +4431,7 @@ PrefabInstance:
     - target: {fileID: 2663111408688741522, guid: 4cefddfbdd05cbe418db60f8e6d30c5d,
         type: 3}
       propertyPath: m_Name
-      value: BlueCuboid_3
+      value: Q3BlueCuboid_3
       objectReference: {fileID: 0}
     - target: {fileID: 2663111408688741522, guid: 4cefddfbdd05cbe418db60f8e6d30c5d,
         type: 3}
@@ -4552,7 +4552,7 @@ PrefabInstance:
     - target: {fileID: 2663111408688741522, guid: 4cefddfbdd05cbe418db60f8e6d30c5d,
         type: 3}
       propertyPath: m_Name
-      value: BlueCuboid_2
+      value: Q3BlueCuboid_2
       objectReference: {fileID: 0}
     - target: {fileID: 2663111408688741522, guid: 4cefddfbdd05cbe418db60f8e6d30c5d,
         type: 3}
@@ -4673,7 +4673,7 @@ PrefabInstance:
     - target: {fileID: 2663111408688741522, guid: 4cefddfbdd05cbe418db60f8e6d30c5d,
         type: 3}
       propertyPath: m_Name
-      value: YellowCube
+      value: Q3YellowCube
       objectReference: {fileID: 0}
     - target: {fileID: 2663111408688741522, guid: 4cefddfbdd05cbe418db60f8e6d30c5d,
         type: 3}
@@ -4794,7 +4794,7 @@ PrefabInstance:
     - target: {fileID: 2663111408688741522, guid: 4cefddfbdd05cbe418db60f8e6d30c5d,
         type: 3}
       propertyPath: m_Name
-      value: GreenCube_2
+      value: Q3GreenCube_2
       objectReference: {fileID: 0}
     - target: {fileID: 2663111408688741522, guid: 4cefddfbdd05cbe418db60f8e6d30c5d,
         type: 3}
@@ -4915,7 +4915,7 @@ PrefabInstance:
     - target: {fileID: 3140672130428167621, guid: b57748f6a6719f041bbe4d0f65a800bb,
         type: 3}
       propertyPath: m_Name
-      value: RedCuboid_2
+      value: Q3RedCuboid_2
       objectReference: {fileID: 0}
     - target: {fileID: 3140672130428167621, guid: b57748f6a6719f041bbe4d0f65a800bb,
         type: 3}
@@ -5036,7 +5036,7 @@ PrefabInstance:
     - target: {fileID: 3140672130428167621, guid: b57748f6a6719f041bbe4d0f65a800bb,
         type: 3}
       propertyPath: m_Name
-      value: RedCuboid_1
+      value: Q3RedCuboid_1
       objectReference: {fileID: 0}
     - target: {fileID: 3140672130428167621, guid: b57748f6a6719f041bbe4d0f65a800bb,
         type: 3}
@@ -5157,7 +5157,7 @@ PrefabInstance:
     - target: {fileID: 2663111408688741522, guid: 4cefddfbdd05cbe418db60f8e6d30c5d,
         type: 3}
       propertyPath: m_Name
-      value: YellowCuboid3
+      value: Q3YellowCuboid3
       objectReference: {fileID: 0}
     - target: {fileID: 2663111408688741522, guid: 4cefddfbdd05cbe418db60f8e6d30c5d,
         type: 3}

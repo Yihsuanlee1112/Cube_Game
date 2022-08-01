@@ -306,11 +306,11 @@ public class BlockGameTaskLv2 : TaskBase
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = false;
         yield return new WaitForSeconds(1);
         //其他沒有贏的組，老師一組發一張圖案
-        HostAnimator.SetBool("isStandingAndTalking", true);
+        TeacherAnimator.SetBool("isTalk", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_GiveQuestionToOtherGroups");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        HostAnimator.SetBool("isStandingAndTalking", false);
+        TeacherAnimator.SetBool("isTalk", false);
         yield return new WaitForSeconds(2);
 
         //User跟對面NPC猜拳**********************************************************************************
@@ -402,42 +402,42 @@ public class BlockGameTaskLv2 : TaskBase
         yield return new WaitForSeconds(2);
         yield return NPC_AskUserSecondColor();
         yield return new WaitForSeconds(3);
-        yield return NPC_SameColor2();
-        yield return new WaitForSeconds(3);
-        //user lose
-        _userChooseRPS = false;
-        userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
-        userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
+        yield return NPC_IfUserChoseSameColor();
+        //yield return NPC_SameColor2();
+        ////user lose
+        //_userChooseRPS = false;
+        //userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
+        //userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
 
-        GameEventCenter.DispatchEvent("TwoPlayerRPS");
-        GameObject.Find("TwoPlayerChoose(Clone)/Canvas").SetActive(false);
-        GameObject.Find("TwoPlayerChoose(Clone)/Canvas2").SetActive(true);
-        //NPC說剪刀石頭布
-        npc.animator.SetBool("isPlayingRPS", true);
-        clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_SayRPS");
-        GameAudioController.Instance.PlayOneShot(clip);
-        yield return new WaitForSeconds(clip.length);
-        npc.animator.SetBool("isPlayingRPS", false);
+        //GameEventCenter.DispatchEvent("TwoPlayerRPS");
+        //GameObject.Find("TwoPlayerChoose(Clone)/Canvas").SetActive(false);
+        //GameObject.Find("TwoPlayerChoose(Clone)/Canvas2").SetActive(true);
+        ////NPC說剪刀石頭布
+        //npc.animator.SetBool("isPlayingRPS", true);
+        //clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_SayRPS");
+        //GameAudioController.Instance.PlayOneShot(clip);
+        //yield return new WaitForSeconds(clip.length);
+        //npc.animator.SetBool("isPlayingRPS", false);
         
-        do
-        {
-            Debug.Log("User choose RPS");
-            Debug.Log(_userChooseRPS);
-            yield return new WaitUntil(() => _userChooseRPS);
-            Debug.Log(_userChooseRPS);
-        } while (!_userChooseRPS);
-        userRightHandTrigger.GetComponent<BoxCollider>().enabled = false;
-        userLeftHandTrigger.GetComponent<BoxCollider>().enabled = false;
-        yield return new WaitForSeconds(2);
+        //do
+        //{
+        //    Debug.Log("User choose RPS");
+        //    Debug.Log(_userChooseRPS);
+        //    yield return new WaitUntil(() => _userChooseRPS);
+        //    Debug.Log(_userChooseRPS);
+        //} while (!_userChooseRPS);
+        //userRightHandTrigger.GetComponent<BoxCollider>().enabled = false;
+        //userLeftHandTrigger.GetComponent<BoxCollider>().enabled = false;
+        //yield return new WaitForSeconds(2);
 
-        GameObject.FindWithTag("Result").SetActive(false);
-        for (int i = 0; i < 2; i++)
-        {
-            GameObject.FindWithTag("RPS").SetActive(false);
-        }
-        yield return new WaitForSeconds(2);
+        //GameObject.FindWithTag("Result").SetActive(false);
+        //for (int i = 0; i < 2; i++)
+        //{
+        //    GameObject.FindWithTag("RPS").SetActive(false);
+        //}
+        //yield return new WaitForSeconds(2);
         //小星說: 我贏了! XX是我的積木
-        yield return NPC_YouLoseLv2();
+        //yield return NPC_YouLoseLv2();
         yield return new WaitForSeconds(2);
         yield return UserFinalColor();
 
@@ -578,7 +578,6 @@ public class BlockGameTaskLv2 : TaskBase
                         }
                         npc.animator.SetBool("isTakeCube", false);
                         //npc.animator.SetBool("isDefault", true);
-                        yield return new WaitForSeconds(1f);
                         break;
                     }
                 }
@@ -591,16 +590,19 @@ public class BlockGameTaskLv2 : TaskBase
 
         userRightHandTrigger.GetComponent<BoxCollider>().enabled = false;
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = false;
-        
+
         //結束後語音
         //小星: 耶!我們完成了!（小星雙手舉高）等待2秒
         //npc.animator.Play("坐在椅子上開心 雙手舉高，眼睛跟嘴巴要笑(上揚)");
-        npc.animator.Play("坐在椅子上開心 雙手舉高，眼睛跟嘴巴要笑(上揚)");
+        npc.animator.SetBool("isHappy", true);
         yield return new WaitForSeconds(1);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_Hooray");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        npc.animator.Play("坐在椅子上+舉手! 舉左手");
+        npc.animator.SetBool("isHappy", false);
+        npc.animator.SetBool("isClapHand", true);
+        yield return new WaitForSeconds(3.5f);
+        npc.animator.SetBool("isClapHand", false);
         //RedTriggerBall
         RedTriggerBall.SetActive(true);
         yield return new WaitForSeconds(2);
@@ -662,6 +664,9 @@ public class BlockGameTaskLv2 : TaskBase
                     clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_CelebrateLv2");
                     GameAudioController.Instance.PlayOneShot(clip);
                     yield return new WaitForSeconds(clip.length);
+                    npc.animator.SetBool("isClapHandInSpace", true);
+                    yield return new WaitForSeconds(3);
+                    npc.animator.SetBool("isClapHandInSpace", false);
                 }
                 else if (RemindCelebrate == 2)
                 {
@@ -678,7 +683,13 @@ public class BlockGameTaskLv2 : TaskBase
             GameEventCenter.DispatchEvent("Text2sec_isEnabledLv2", false); // 2秒計時器關閉
             GameEventCenter.DispatchEvent("Timer2secResetLv2");
         }
-
+        Hat.SetBool("isClapHand", true);
+        Red.SetBool("isClapHand", true);
+        Green.SetBool("isClapHand", true);
+        XiaoHua.SetBool("isClapHand", true);
+        XiaoMei.SetBool("isClapHand", true);
+        Yoyo.SetBool("isClapHand", true);
+        
         clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_GetFiveCoins");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
@@ -693,6 +704,20 @@ public class BlockGameTaskLv2 : TaskBase
         }
 
         RemindCelebrate = 0;//歸零
+        Debug.Log(RemindCelebrate);
+        Hat.SetBool("isHappy", true);
+        Red.SetBool("isHappy", true);
+        Green.SetBool("isExiting", true);
+        XiaoHua.SetBool("isHappy", true);
+        XiaoMei.SetBool("isExiting", true);
+        Yoyo.SetBool("isExiting", true);
+        yield return new WaitForSeconds(5);
+        Hat.SetBool("isHappy", false);
+        Red.SetBool("isHappy", false);
+        Green.SetBool("isExiting", false);
+        XiaoHua.SetBool("isHappy", false);
+        XiaoMei.SetBool("isExiting", false);
+        Yoyo.SetBool("isExiting", false);
         yield return null;
     }
 
@@ -871,46 +896,79 @@ public class BlockGameTaskLv2 : TaskBase
         yield return new WaitForSeconds(3);
         yield return null;
     }
-    IEnumerator NPC_ChoseSameColor()
+    IEnumerator NPC_IfUserChoseSameColor()
     {
-         if(GameDataManager.FlowData.UserColor == GameDataManager.FlowData.UserFirstColor)
+        if(GameDataManager.FlowData.UserColor == GameDataManager.FlowData.UserFirstColor)
         {
             if (GameDataManager.FlowData.UserFirstColor == "紅色")
             {
-                UserChoice1 = Colors[0];//red
-                colorClip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_Red");
+                GameDataManager.FlowData.UserColor = "藍色";
                 Debug.Log("GameDataManager.FlowData.UserColor: " + GameDataManager.FlowData.UserColor);
             }
             else if (GameDataManager.FlowData.UserFirstColor == "藍色")
             {
-                UserChoice1 = Colors[1];//blue
-                colorClip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_Blue");
+                GameDataManager.FlowData.UserColor = "綠色";
                 Debug.Log("GameDataManager.FlowData.UserColor: " + GameDataManager.FlowData.UserColor);
             }
             else if (GameDataManager.FlowData.UserFirstColor == "綠色")
             {
-                UserChoice1 = Colors[2];//green
-                colorClip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_Green");
+                GameDataManager.FlowData.UserColor = "黃色";
                 Debug.Log("GameDataManager.FlowData.UserColor: " + GameDataManager.FlowData.UserColor);
             }
             else if (GameDataManager.FlowData.UserFirstColor == "黃色")
             {
-                UserChoice1 = Colors[3];//yellow
-                colorClip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_Yellow");
+                GameDataManager.FlowData.UserColor = "紅色";
                 Debug.Log("GameDataManager.FlowData.UserColor: " + GameDataManager.FlowData.UserColor);
             }
             npc.animator.SetBool("isSad2", true);
             //可是你剛剛已經選了這個顏色，這樣子我拚太多了!我們要分工合作，一人兩個顏色!
-            clip = Resources.Load<AudioClip>(audioClipRootPath + " ");            
+            clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_YouChoseTheSameColor");            
             GameAudioController.Instance.PlayOneShot(clip);
             yield return new WaitForSeconds(clip.length);
-            GameAudioController.Instance.PlayOneShot(colorClip2);
             npc.animator.SetBool("isSad2", false);
+            yield return new WaitForSeconds(2);
+        }
+        else
+        {
+            yield return NPC_SameColor2();
+            //user lose
+            _userChooseRPS = false;
+            userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
+            userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
+
+            GameEventCenter.DispatchEvent("TwoPlayerRPS");
+            GameObject.Find("TwoPlayerChoose(Clone)/Canvas").SetActive(false);
+            GameObject.Find("TwoPlayerChoose(Clone)/Canvas2").SetActive(true);
+            //NPC說剪刀石頭布
+            npc.animator.SetBool("isPlayingRPS", true);
+            clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_SayRPS");
+            GameAudioController.Instance.PlayOneShot(clip);
+            yield return new WaitForSeconds(clip.length);
+            npc.animator.SetBool("isPlayingRPS", false);
+
+            do
+            {
+                Debug.Log("User choose RPS");
+                Debug.Log(_userChooseRPS);
+                yield return new WaitUntil(() => _userChooseRPS);
+                Debug.Log(_userChooseRPS);
+            } while (!_userChooseRPS);
+            userRightHandTrigger.GetComponent<BoxCollider>().enabled = false;
+            userLeftHandTrigger.GetComponent<BoxCollider>().enabled = false;
+            yield return new WaitForSeconds(2);
+
+            GameObject.FindWithTag("Result").SetActive(false);
+            for (int i = 0; i < 2; i++)
+            {
+                GameObject.FindWithTag("RPS").SetActive(false);
+            }
+            yield return new WaitForSeconds(2);
+            //小星說: 我贏了! XX是我的積木
+            yield return NPC_YouLoseLv2();
         }
     }
     IEnumerator NPC_SameColor2()
     {
-       
         Debug.Log(GameDataManager.FlowData.UserColor);
         if (GameDataManager.FlowData.UserColor == "紅色")
         {
@@ -1093,37 +1151,42 @@ public class BlockGameTaskLv2 : TaskBase
     }
     IEnumerator XiaoMeiNeedsCube(GameObject XiaoMeiRaiseHandPic)
     {
+        GameObject TeacherGiveXiaoMeiCube = null;
         if (_RandomQuestion == 1)
         {
             XiaoMeiMissingCube = "藍色";
+            TeacherGiveXiaoMeiCube = GameObject.Find("TeacherWithCubes/teacher/BlueCuboid");
             XiaoMeiColor = Resources.Load<AudioClip>(audioClipRootPath + "XiaoMei_BlueCube");
         }
         else if (_RandomQuestion == 2)
         {
             XiaoMeiMissingCube = "黃色";
+            TeacherGiveXiaoMeiCube = GameObject.Find("TeacherWithCubes/teacher/RedCuboid");
             XiaoMeiColor = Resources.Load<AudioClip>(audioClipRootPath + "XiaoMei_YellowCube");
         }
         else if (_RandomQuestion == 3)
         {
-            XiaoMeiMissingCube = "紅色"; 
+            XiaoMeiMissingCube = "紅色";
+            TeacherGiveXiaoMeiCube = GameObject.Find("TeacherWithCubes/teacher/BlueCuboid3");
             XiaoMeiColor = Resources.Load<AudioClip>(audioClipRootPath + "XiaoMei_RedCube");
         }
         else if (_RandomQuestion == 4)
         {
             XiaoMeiMissingCube = "藍色";
+            TeacherGiveXiaoMeiCube = GameObject.Find("TeacherWithCubes/teacher/BlueCuboid3");
             XiaoMeiColor = Resources.Load<AudioClip>(audioClipRootPath + "XiaoMei_BlueCube");
         }
-        XiaoHua.SetBool("isRaiseLeftHand", true);
+        XiaoHua.SetBool("isRaiseHand", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "XiaoMei_CallTeacher");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        XiaoHua.SetBool("isRaiseLeftHand", false);
+        XiaoHua.SetBool("isRaiseHand", false);
         yield return new WaitForSeconds(2);
-        TeacherAnimator.SetBool("isTalkToXiaoHua", true);
+        TeacherAnimator.SetBool("isTalkingToXiaoMei", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_AskXiaoMei");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length + 2);
-        TeacherAnimator.SetBool("isTalkToXiaoHua", false);
+        TeacherAnimator.SetBool("isTalkingToXiaoMei", false);
         yield return new WaitForSeconds(2);
         XiaoHua.SetBool("isRaiseHandAndTalkToTeacher", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "XiaoMei_INeedACube");
@@ -1143,11 +1206,13 @@ public class BlockGameTaskLv2 : TaskBase
         yield return new WaitForSeconds(2);
         XiaoMeiRaiseHandPic.GetComponent<RawImage>().enabled = false;
 
-        TeacherAnimator.SetBool("isTakeCube", true);
-        yield return new WaitForSeconds(2f);
-        testAni.TeacherMoveToXiaoMei = true;
-        TeacherAnimator.SetBool("isTakeCubeWalking", true);
-        TeacherAnimator.SetBool("isPutingCube", true);
+        //TeacherAnimator.SetBool("isTakeCube", true);
+        //yield return new WaitForSeconds(2f);
+        //testAni.TeacherMoveToXiaoMei = true;
+        //TeacherAnimator.SetBool("isTakeCubeWalking", true);
+        //TeacherAnimator.SetBool("isPutingCube", true);
+        TeacherAnimator.SetBool("isTakeCubeToXiaoMei", true);
+        TeacherGiveXiaoMeiCube.GetComponent<Animator>().SetBool("isToXiaoMei", true);
 
         clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_GiveCube");
         GameAudioController.Instance.PlayOneShot(clip);
@@ -1176,17 +1241,22 @@ public class BlockGameTaskLv2 : TaskBase
             GameAudioController.Instance.PlayOneShot(clip);
             yield return new WaitForSeconds(clip.length);
         }
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(7);
         cube_GB[0].GetComponent<MeshRenderer>().enabled = true;//小美少第一顆積木
-        testAni.TeacherMoveToXiaoMei = false;
-        Debug.Log("老師走到小花");
-        testAni.TeacherMoveBackFromXiaoMei = true;
-        TeacherAnimator.SetBool("isTakeCube", false);
-        TeacherAnimator.SetBool("isTakeCubeWalking", false);
-        TeacherAnimator.SetBool("isPutingCube", false);
+        yield return new WaitForSeconds(7);
+        TeacherAnimator.SetBool("isTakeCubeToXiaoMei", false);
+        TeacherGiveXiaoMeiCube.GetComponent<Animator>().SetBool("isToXiaoMei", false);
+        yield return new WaitForSeconds(2);
+        TeacherGiveXiaoMeiCube.GetComponent<MeshRenderer>().enabled = true;
+        //testAni.TeacherMoveToXiaoMei = false;
+        //Debug.Log("老師走到小花");
+        //testAni.TeacherMoveBackFromXiaoMei = true;
+        //TeacherAnimator.SetBool("isTakeCube", false);
+        //TeacherAnimator.SetBool("isTakeCubeWalking", false);
+        //TeacherAnimator.SetBool("isPutingCube", false);
         Debug.Log("老師走回去");
-        yield return new WaitForSeconds(5);
-        testAni.TeacherMoveBackFromXiaoMei = false;
+        //yield return new WaitForSeconds(5);
+        //testAni.TeacherMoveBackFromXiaoMei = false;
 
         yield return new WaitForSeconds(2);
         yield return null;
@@ -1198,7 +1268,7 @@ public class BlockGameTaskLv2 : TaskBase
         _userRaiseHand = false;
         _userSpeekToTeacher = false;
         KeyWordRecognizer.MissingColor = null;
-
+        GameObject UserNewCube = null;
         //開起綠球
         GreenTriggerBall.SetActive(true);
         npc.animator.SetBool("isTalk2", true);
@@ -1405,15 +1475,79 @@ public class BlockGameTaskLv2 : TaskBase
             GameEventCenter.DispatchEvent("Timer5secResetLv2");
         }
         RemindRaiseHand = 0;
-        yield return new WaitForSeconds(1);
         GreenTriggerBall.SetActive(false);//Close GreenTriggerBall
 
+        Vector3 CubeScale, Cube2Scale, CuboidScale, Cuboid3Scale;
+        CubeScale = new Vector3(0.05f, 0.05f, 0.05f);
+        Cube2Scale = new Vector3(0.1f, 0.1f, 0.1f);
+        CuboidScale = new Vector3(0.1f, 0.05f, 0.05f);
+        Cuboid3Scale = new Vector3(0.15f, 0.05f, 0.05f);
+        //red
+        if (GameObject.Find(MissingCube).transform.localScale == CubeScale && GameObject.Find(MissingCube).GetComponent<MeshRenderer>().material.color == Colors[0])//Red
+        {
+            UserNewCube = GameObject.Find("TeacherWithCubes/teacher/RedCube");
+        }
+        else if (GameObject.Find(MissingCube).transform.localScale == Cube2Scale && GameObject.Find(MissingCube).GetComponent<MeshRenderer>().material.color == Colors[0])
+        {
+            UserNewCube = GameObject.Find("TeacherWithCubes/teacher/RedCube2");
+        }
+        else if (GameObject.Find(MissingCube).transform.localScale == CuboidScale && GameObject.Find(MissingCube).GetComponent<MeshRenderer>().material.color == Colors[0])
+        {
+            UserNewCube = GameObject.Find("TeacherWithCubes/teacher/RedCuboid");
+        }
+        else if (GameObject.Find(MissingCube).transform.localScale == Cuboid3Scale && GameObject.Find(MissingCube).GetComponent<MeshRenderer>().material.color == Colors[0])
+        {
+            UserNewCube = GameObject.Find("TeacherWithCubes/teacher/RedCuboid3");
+        }
+        //blue
+        else if (GameObject.Find(MissingCube).transform.localScale == CubeScale && GameObject.Find(MissingCube).GetComponent<MeshRenderer>().material.color == Colors[1])
+        {
+            UserNewCube = GameObject.Find("TeacherWithCubes/teacher/BlueCube");
+        }
+        else if (GameObject.Find(MissingCube).transform.localScale == CuboidScale && GameObject.Find(MissingCube).GetComponent<MeshRenderer>().material.color == Colors[1])
+        {
+            UserNewCube = GameObject.Find("TeacherWithCubes/teacher/BlueCuboid");
+        }
+        else if (GameObject.Find(MissingCube).transform.localScale == Cuboid3Scale && GameObject.Find(MissingCube).GetComponent<MeshRenderer>().material.color == Colors[1])
+        {
+            UserNewCube = GameObject.Find("TeacherWithCubes/teacher/BlueCuboid3");
+        }
+        //green
+        else if (GameObject.Find(MissingCube).transform.localScale == CubeScale && GameObject.Find(MissingCube).GetComponent<MeshRenderer>().material.color == Colors[2])
+        {
+            UserNewCube = GameObject.Find("TeacherWithCubes/teacher/GreenCube");
+        }
+        else if (GameObject.Find(MissingCube).transform.localScale == CuboidScale && GameObject.Find(MissingCube).GetComponent<MeshRenderer>().material.color == Colors[2])
+        {
+            UserNewCube = GameObject.Find("TeacherWithCubes/teacher/GreenCuboid");
+        }
+        else if (GameObject.Find(MissingCube).transform.localScale == Cuboid3Scale && GameObject.Find(MissingCube).GetComponent<MeshRenderer>().material.color == Colors[2])
+        {
+            UserNewCube = GameObject.Find("TeacherWithCubes/teacher/GreenCuboid3");
+        }
+        //yellow
+        else if (GameObject.Find(MissingCube).transform.localScale == CubeScale && GameObject.Find(MissingCube).GetComponent<MeshRenderer>().material.color == Colors[2])
+        {
+            UserNewCube = GameObject.Find("TeacherWithCubes/teacher/YellowCube");
+        }
+        else if (GameObject.Find(MissingCube).transform.localScale == CuboidScale && GameObject.Find(MissingCube).GetComponent<MeshRenderer>().material.color == Colors[2])
+        {
+            UserNewCube = GameObject.Find("TeacherWithCubes/teacher/YellowCuboid");
+        }
+        else if (GameObject.Find(MissingCube).transform.localScale == Cuboid3Scale && GameObject.Find(MissingCube).GetComponent<MeshRenderer>().material.color == Colors[2])
+        {
+            UserNewCube = GameObject.Find("TeacherWithCubes/teacher/YellowCuboid3");
+        }
+        //GameEventCenter.DispatchEvent("TeacherGiveCube");
+        Debug.Log("UserNewCube: " + UserNewCube);
         //TeacherAni
-        TeacherAnimator.SetBool("isTakeCube", true);
-        yield return new WaitForSeconds(3f);
-        testAni.TeacherMoveToUser = true;
-        TeacherAnimator.SetBool("isTakeCubeWalking", true);
-        TeacherAnimator.SetBool("isPutingCube", true);
+        //TeacherAnimator.SetBool("isTakeCube", true);
+        //yield return new WaitForSeconds(3f);
+        //testAni.TeacherMoveToUser = true;
+        //TeacherAnimator.SetBool("isTakeCubeWalking", true);
+        //TeacherAnimator.SetBool("isPutingCube", true);
+        UserNewCube.GetComponent<Animator>().SetBool("isToUser", true);
+        TeacherAnimator.GetComponent<Animator>().SetBool("isTakeCubeToUser", true);
 
         if (KeyWordRecognizer.MissingColor == null)
         {
@@ -1457,18 +1591,25 @@ public class BlockGameTaskLv2 : TaskBase
             GameAudioController.Instance.PlayOneShot(clip);
             yield return new WaitForSeconds(clip.length);
         }
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(7);
+        UserNewCube.GetComponent<MeshRenderer>().enabled = false;
         GameObject.Find(MissingCube).GetComponent<BoxCollider>().enabled = true;
         GameObject.Find(MissingCube).GetComponent<MeshRenderer>().enabled = true;
-        testAni.TeacherMoveToUser = false;
+        //testAni.TeacherMoveToUser = false;
         Debug.Log("老師走到USER");
-        testAni.TeacherMoveBackFromUser = true;
-        TeacherAnimator.SetBool("isTakeCube", false);
-        TeacherAnimator.SetBool("isTakeCubeWalking", false);
-        TeacherAnimator.SetBool("isPutingCube", false);
+        yield return new WaitForSeconds(7);
+        UserNewCube.GetComponent<Animator>().SetBool("isToUser", false);
+        TeacherAnimator.SetBool("isTakeCubeToUser", false);
+        yield return new WaitForSeconds(2);
+        UserNewCube.GetComponent<MeshRenderer>().enabled = true;
         Debug.Log("老師走回去");
-        yield return new WaitForSeconds(5);
-        testAni.TeacherMoveBackFromUser = false;
+        //testAni.TeacherMoveBackFromUser = true;
+        //TeacherAnimator.SetBool("isTakeCube", false);
+        //TeacherAnimator.SetBool("isTakeCubeWalking", false);
+        //TeacherAnimator.SetBool("isPutingCube", false);
+        //Debug.Log("老師走回去");
+        //yield return new WaitForSeconds(5);
+        //testAni.TeacherMoveBackFromUser = false;
         yield return null;
     }
     IEnumerator UserChooseColor()

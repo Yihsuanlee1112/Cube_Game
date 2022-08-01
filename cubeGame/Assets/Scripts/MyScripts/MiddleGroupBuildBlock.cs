@@ -26,39 +26,49 @@ public class MiddleGroupBuildBlock : MonoBehaviour
         //Debug.Log("Middlegroupstart");
         if (BlockGameTask._StartTobuild)
         {
-            Debug.Log("Mid RoundA: " + _RoundA);
-            if (_RoundA)  //玩家回合
+            for (int i = 0; i < 10; i++)
             {
-                foreach (BlockEntity cube in cube_GB)
+                Debug.Log("Mid RoundA: " + _RoundA);
+                if (_RoundA)  //玩家回合
                 {
-                    XiaoHua.SetBool("isTakeCube", true);
-                    yield return new WaitForSeconds(7);
-                    XiaoHua.SetBool("isTakeCube", false);
-                    //GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
-                    //GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
-                    _RoundA = false;
-                    yield return new WaitForSeconds(7);
+                    foreach (BlockEntity cube in cube_GB)
+                    {
+                        XiaoHua.SetBool("isTakeCube", true);
+                        //XiaoHua.Play("堆積木");
+                        yield return new WaitForSeconds(7);
+                        XiaoHua.SetBool("isTakeCube", false);
+                        GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                        GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
+                        _RoundA = false;
+                        yield return new WaitForSeconds(7);
+                    }
                 }
-            }
-            if (!_RoundA)
-            {
-                foreach (BlockEntity cube in cube_GB)
+                if (!_RoundA)
                 {
-                    XiaoMei.SetBool("isTakeCube", true);
-                    yield return new WaitForSeconds(7);
-                    XiaoMei.SetBool("isTakeCube", false);
-                    //GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
-                    //GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
-                    _RoundA = true;
-                    yield return new WaitForSeconds(7);
+                    foreach (BlockEntity cube in cube_GB)
+                    {
+                        XiaoMei.SetBool("isTakeCube", true);
+                        //XiaoMei.Play("堆積木");
+                        yield return new WaitForSeconds(7);
+                        XiaoMei.SetBool("isTakeCube", false);
+                        GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                        GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
+                        _RoundA = true;
+                        yield return new WaitForSeconds(7);
+                    }
                 }
             }
         }
-        else
-        {
-            XiaoHua.SetBool("isTakeCube", false);
-            XiaoMei.SetBool("isTakeCube", false);
-        }
+        //else
+        //{
+        //    XiaoHua.SetBool("isTakeCube", false);
+        //    XiaoMei.SetBool("isTakeCube", false);
+        //    //XiaoHua.SetBool("isClapHand", true);
+        //    //XiaoMei.SetBool("isClapHand", true);
+        //    //yield return new WaitForSeconds(3.5f);
+        //    //XiaoHua.SetBool("isClapHand", false);
+        //    //XiaoMei.SetBool("isClapHand", false);
+        //}
         yield return null;
     }
 }

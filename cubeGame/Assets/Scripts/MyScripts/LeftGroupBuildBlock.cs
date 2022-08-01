@@ -28,39 +28,49 @@ public class LeftGroupBuildBlock : MonoBehaviour
         //Debug.Log("leftgroupstart");
         if (BlockGameTask._StartTobuild)
         {
-            Debug.Log("Left RoundA: " + _RoundA);
-            if (_RoundA)  //玩家回合
+            for (int i = 0; i < 10; i++)
             {
-                foreach (BlockEntity cube in cube_GA)
+                Debug.Log("Left RoundA: " + _RoundA);
+                if (_RoundA)  //玩家回合
                 {
-                    Hat.SetBool("isTakeCube", true);
-                    yield return new WaitForSeconds(7);
-                    Hat.SetBool("isTakeCube", false);
-                    //GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
-                    //GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
-                    _RoundA = false;
-                    yield return new WaitForSeconds(7);
+                    foreach (BlockEntity cube in cube_GA)
+                    {
+                        Hat.SetBool("isTakeCube", true);
+                        //Hat.Play("堆積木");
+                        yield return new WaitForSeconds(7);
+                        Hat.SetBool("isTakeCube", false);
+                        GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                        GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
+                        _RoundA = false;
+                        yield return new WaitForSeconds(7);
+                    }
                 }
-            }
-            if (!_RoundA)
-            {
-                foreach (BlockEntity cube in cube_GA)
+                if (!_RoundA)
                 {
-                    Green.SetBool("isTakeCube", true);
-                    yield return new WaitForSeconds(7);
-                    Green.SetBool("isTakeCube", false);
-                    //GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
-                    //GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
-                    _RoundA = true;
-                    yield return new WaitForSeconds(7);
+                    foreach (BlockEntity cube in cube_GA)
+                    {
+                        Green.SetBool("isTakeCube", true);
+                        //Green.Play("堆積木");
+                        yield return new WaitForSeconds(7);
+                        Green.SetBool("isTakeCube", false);
+                        GameEventCenter.DispatchEvent("OtherGroupCubeAns", cube);
+                        GameEventCenter.DispatchEvent("OtherGroupCubeAnsLv2", cube);
+                        _RoundA = true;
+                        yield return new WaitForSeconds(7);
+                    }
                 }
             }
         }
-        else
-        {
-            Hat.SetBool("isTakeCube", false);
-            Green.SetBool("isTakeCube", false);
-        }
+        //else
+        //{
+        //    Hat.SetBool("isTakeCube", false);
+        //    Green.SetBool("isTakeCube", false);
+        //    //Hat.SetBool("isHappy", true);
+        //    //Green.SetBool("isHappy", true);
+        //    //yield return new WaitForSeconds(5);
+        //    //Hat.SetBool("isHappy", false);
+        //    //Green.SetBool("isHappy", false);
+        //}
 
             yield return null;
     }

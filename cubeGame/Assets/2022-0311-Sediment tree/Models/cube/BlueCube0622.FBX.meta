@@ -31,11 +31,11 @@ ModelImporter:
       74: 8335858360591158690
     second: "\u62FF\u7A4D\u6728\u8D70\u5411 \u5C0F\u7F8E\u5F8C\u8D70\u56DE\u53BB"
   - first:
-      74: -5405653242291790180
+      74: 2120678792316526642
     second: "\u62FF\u7A4D\u6728\u8D70\u5411 user\u5F8C\u8D70\u56DE\u53BB"
   - first:
-      74: 9147881677682573428
-    second: CubeDefault
+      74: 776891100328357486
+    second: "\u7A4D\u6728Default"
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -152,7 +152,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: CubeDefault
+      name: "\u7A4D\u6728Default"
       takeName: Take 001
       internalID: 0
       firstFrame: 0
