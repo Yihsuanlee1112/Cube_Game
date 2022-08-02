@@ -16,7 +16,8 @@ public class MainSceneUI : MonoBehaviour
     public Text GameCoinText;  // 金幣數量
     public Text RubyText;  // 寶石數量
     public Text HeartText;  // 愛心數量
-
+    public Text ShowRecResult; //語音辨識結果
+    
     public Animator LeftStar;
     public Animator MidStar;
     public Animator RightStar;

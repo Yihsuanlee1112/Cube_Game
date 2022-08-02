@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class KeyWordRecognizer : MonoBehaviour
 {
     private string UserColor;
     public static string MissingColor;
+    public Text ShowTextOnUI;
+    public Text ShowAllTextOnUI;
+
     //private KeywordRecognizer keywordRecognizer;
     //private string[] Keywords_array = new string[] { "小花", "你也丟得很好", "接的好", "我有點生氣", "我很生氣", "好"};
 
@@ -23,9 +27,14 @@ public class KeyWordRecognizer : MonoBehaviour
     {
 
     }
-
+    public void getAllResult(string result)
+    {
+        ShowAllTextOnUI.text = result;
+        Debug.Log("bbbb");
+    }
     public void GetResult(string result)
     {
+        ShowTextOnUI.text = result;
         Debug.Log("Keyword: " + result);
         if (result.Contains("紅色") || result.Contains("藍色")|| result.Contains("綠色")|| result.Contains("黃色"))
         {

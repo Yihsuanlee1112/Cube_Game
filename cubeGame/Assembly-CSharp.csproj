@@ -394,6 +394,7 @@
      <Compile Include="Assets\Scripts\MyScripts\putCube.cs" />
      <Compile Include="Assets\Scripts\MyScripts\QuadTriggerDisabled.cs" />
      <Compile Include="Assets\Scripts\MyScripts\QuestionCube.cs" />
+     <Compile Include="Assets\Scripts\MyScripts\QuitGame.cs" />
      <Compile Include="Assets\Scripts\MyScripts\RightGroupBuildBlock.cs" />
      <Compile Include="Assets\Scripts\MyScripts\RockPaperScissors.cs" />
      <Compile Include="Assets\Scripts\MyScripts\SkipControl.cs" />
