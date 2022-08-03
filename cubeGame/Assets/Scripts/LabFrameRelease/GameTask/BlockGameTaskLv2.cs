@@ -10,7 +10,8 @@ using LabData;
 public class BlockGameTaskLv2 : TaskBase
 {
     private GameObject VRCamera;
-    private CameraEntity eyecamera;
+    private EyeCameraEntity eyecamera;                  // 專門看眼動泡泡的camera
+    public static GameObject eyebubble { get; set; }
     private PlayerEntity player;
     private GameObject userLeftHandTrigger;
     private GameObject userRightHandTrigger;
@@ -140,17 +141,20 @@ public class BlockGameTaskLv2 : TaskBase
         npc.EntityInit();
 
         //設定VR中可看到UI
-        yield return new WaitForSeconds(0.5f);
         //mainSceneUI.worldCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         //mainSceneUI.planeDistance = 1;
 
         //啟動眼球追蹤
-        yield return new WaitForSeconds(0.5f);
         //LabVisualization.VisualizationManager.Instance.VisulizationInit();
         //LabVisualization.VisualizationManager.Instance.StartDataVisualization();
 
-        //eyecamera = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().eyeCamera;
-        //eyecamera.Init();
+        // 宣告泡泡為全域 在EyeTrackEquipment.cs設定泡泡的localPosition
+        eyebubble = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().eyeBubble;
+
+        // 只看眼動泡泡的camera宣告和初始化
+        eyecamera = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().eyeCamera;
+        eyecamera.Init();
+
         //answerindex = 0;   //初始化
 
         //語音Recognizer 初始化

@@ -329,6 +329,7 @@
      <Compile Include="Assets\Scripts\LabFrameRelease\GameDataModules\GobalData.cs" />
      <Compile Include="Assets\Scripts\LabFrameRelease\GameEntity\BlockEntity.cs" />
      <Compile Include="Assets\Scripts\LabFrameRelease\GameEntity\CameraEntity.cs" />
+     <Compile Include="Assets\Scripts\LabFrameRelease\GameEntity\EyeCameraEntity.cs" />
      <Compile Include="Assets\Scripts\LabFrameRelease\GameEntity\GameEntityBase.cs" />
      <Compile Include="Assets\Scripts\LabFrameRelease\GameEntity\GameEntityController.cs" />
      <Compile Include="Assets\Scripts\LabFrameRelease\GameEntity\GameEntityManager.cs" />

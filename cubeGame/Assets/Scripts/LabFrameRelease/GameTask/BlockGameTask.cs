@@ -30,7 +30,8 @@ public class BlockGameTask : TaskBase
     private List<BlockEntity> cube_GC;
     private List<Color> Colors;
     //private List<GameObject> objectlist;
-    private CameraEntity eyecamera;
+    private EyeCameraEntity eyecamera;                  // 專門看眼動泡泡的camera
+    public static GameObject eyebubble { get; set; }
 
     private GameObject Coin;
     private GameObject Ruby;
@@ -153,16 +154,16 @@ public class BlockGameTask : TaskBase
         //mainSceneUI.planeDistance = 1;
 
         //啟動眼球追蹤
-        yield return new WaitForSeconds(0.5f);
         //LabVisualization.VisualizationManager.Instance.VisulizationInit();
         //LabVisualization.VisualizationManager.Instance.StartDataVisualization();
 
         // 宣告泡泡為全域 在EyeTrackEquipment.cs設定泡泡的localPosition
-        //eyebubble = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().eyeBubble;
+        eyebubble = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().eyeBubble;
 
         // 只看眼動泡泡的camera宣告和初始化
-        //eyecamera = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().eyeCamera;
-        //eyecamera.Init();
+        eyecamera = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().eyeCamera;
+        eyecamera.Init();
+
         //answerindex = 0;   //初始化
 
         //語音Recognizer 初始化

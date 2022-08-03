@@ -7,8 +7,8 @@ public class MainSceneRes : GameSceneEntityRes
     [Header("Entities")]
     public PlayerEntity player;
     public NPCEntity npc;
-    public CameraEntity eyeCamera;
-
+    //public CameraEntity eyeCamera;
+    public EyeCameraEntity eyeCamera;
 
     [Header("GameObjects")]
     public GameObject GreenTriggerBall;
@@ -17,6 +17,7 @@ public class MainSceneRes : GameSceneEntityRes
     public GameObject VRCamera;
     public GameObject userLeftHandTrigger;
     public GameObject userRightHandTrigger;
+    public GameObject eyeBubble;
 
     [Header("Question_BlockLists")]
     //public List<GameObject> Q1_QuestionCube;
