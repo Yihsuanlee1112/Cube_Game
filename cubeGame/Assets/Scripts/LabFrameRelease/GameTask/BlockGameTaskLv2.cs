@@ -9,6 +9,7 @@ using LabData;
 
 public class BlockGameTaskLv2 : TaskBase
 {
+    private GameObject VRCamera;
     private CameraEntity eyecamera;
     private PlayerEntity player;
     private GameObject userLeftHandTrigger;
@@ -131,9 +132,9 @@ public class BlockGameTaskLv2 : TaskBase
         Coin = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Coin;
         Ruby = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Ruby;
         Heart = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Heart;
-
+        VRCamera = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().VRCamera;
         //VRIK初始化
-        player.Init(GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().vrCamera);
+        player.GetComponent<PlayerEntity>().Init(VRCamera);
 
         //NPC初始化
         npc.EntityInit();

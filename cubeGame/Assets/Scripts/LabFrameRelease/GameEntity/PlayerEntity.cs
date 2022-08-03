@@ -16,6 +16,7 @@ public class PlayerEntity : GameEntityBase
     }
     public void Init(GameObject vrCamera)
     {
+        Debug.Log("VRIK初始化");
         vRIKInput = new VRIKInput();
         StartCoroutine(vRIKInput.VRIKStart(vrCamera, gameObject));
     }

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class BlockGameTask : TaskBase
 {
+    private GameObject VRCamera;
     private PlayerEntity player;
     private GameObject userLeftHandTrigger;
     private GameObject userRightHandTrigger;
@@ -135,11 +136,13 @@ public class BlockGameTask : TaskBase
         Coin = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Coin;
         Ruby = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Ruby;
         Heart = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().Heart;
+
+        VRCamera = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().VRCamera;
         //mainSceneUI = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().MainSceneUI;
 
 
         //VRIK初始化
-        player.Init(GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().vrCamera);
+        player.GetComponent<PlayerEntity>().Init(VRCamera);
 
         //NPC初始化
         npc.EntityInit();

@@ -14,7 +14,7 @@ public class MainSceneRes : GameSceneEntityRes
     public GameObject GreenTriggerBall;
     public GameObject RedTriggerBall;
     public GameObject NPC_Hand;
-    public GameObject vrCamera;
+    public GameObject VRCamera;
     public GameObject userLeftHandTrigger;
     public GameObject userRightHandTrigger;
 
