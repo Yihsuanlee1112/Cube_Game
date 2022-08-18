@@ -65,7 +65,14 @@ public class KeyWordRecognizer : MonoBehaviour
             GameDataManager.FlowData.UserColor = UserColor;
             Debug.Log("GameDataManager.FlowData.UserColor: " + GameDataManager.FlowData.UserColor + " Result: " + UserColor);
         }
-        else if (result.Contains("老師") && result.Contains("少") && result.Contains("積木") && 
+        else if (result.Contains("老師"))
+        {
+            BlockGameTask._userSpeekToTeacher = true;
+            BlockGameTaskLv2._userSpeekToTeacher = true;
+            Debug.Log("BlockGameTask._userSpeekToTeacher: " + BlockGameTask._userSpeekToTeacher);
+            Debug.Log("BlockGameTaskLv2._userSpeekToTeacher: " + BlockGameTaskLv2._userSpeekToTeacher);
+        }
+        else if (result.Contains("少") && result.Contains("積木") &&
             result.Contains("紅色") || result.Contains("藍色") || result.Contains("綠色") || result.Contains("黃色"))
         {
             BlockGameTask._userSpeekToTeacher = true;

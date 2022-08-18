@@ -24,7 +24,7 @@ public class Instantiate_Cube : MonoBehaviour
     [Header("積木和題目的父物件")]
     public List<GameObject> Parents;
     float interval = 0.079f; //3.623-3.544 但好像間隔不平均(?
-    float interval2 = 0.025f;
+    float interval2 = 0.6f;
     
     [Header("桌子的位置")]
     public List<GameObject> Tables;
@@ -57,6 +57,7 @@ public class Instantiate_Cube : MonoBehaviour
         GameEventCenter.AddEvent("InstatiateCube", InstatiateCube);
         GameEventCenter.AddEvent("InstatiateCubeLv2", InstatiateCubeLv2);
         GameEventCenter.AddEvent("CubeOnDesk", CubeOnDesk);
+        GameEventCenter.AddEvent("InstantiateQuestion", InstantiateQuestion);
     }
     void Start()
     {
@@ -91,7 +92,7 @@ public class Instantiate_Cube : MonoBehaviour
         Cube_Prefabs.Add(Q3_Cube_Prefabs);
         Cube_Prefabs.Add(Q4_Cube_Prefabs);
 
-        Cube_Ans.Add(Q1_Ans);
+        Cube_Ans.Add(Q1_Ans);//***********
         Cube_Ans.Add(Q2_Ans);
         Cube_Ans.Add(Q3_Ans);
         Cube_Ans.Add(Q4_Ans);
@@ -133,6 +134,40 @@ public class Instantiate_Cube : MonoBehaviour
             // 先把CubeAns放進Cube
             cube.GetComponent<BlockEntity>().ansTransform = CubeAns[cubeAnsIndex];
             cubeAnsIndex++;
+
+            // 然後在生成
+            CubesPos.z = CubesPos.z + interval;
+            //CubesPos.y = CubesPos.y + interval2;
+            GameObject cubeInstantiate = Instantiate(cube, CubesPos, Quaternion.identity);
+            cubeInstantiate.transform.SetParent(CubeParent.transform);
+
+            AllCubes.Add(cubeInstantiate.GetComponent<BlockEntity>());
+            /*
+            if (PicNum+1 == BlockGameTask._RandomQuestion)
+            {
+                // user的積木放在MainSceneRes的Cubes裡面才能判斷順序
+                Cubes.Add(cubeInstantiate.GetComponent<BlockEntity>());
+            }
+            */
+        }
+    }
+    public void QuestionLv2(int PicNum, List<GameObject> CubePrefabs, GameObject Parent, GameObject CubeParent)//, List<GameObject> CubeAns)
+    {
+        AllCubes = GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().AllCubes;
+        Vector3 PicsPos = new Vector3((float)0.0, (float)0.0, (float)0.0);
+        Vector3 CubesPos = new Vector3((float)0.0, (float)0.0, (float)0.0);
+        int cubeAnsIndex = 0;
+
+        // 生成題目
+        GameObject picInstantiate = Instantiate(Question_Prefabs[PicNum], PicsPos, Quaternion.Euler(0, 180, 0)); // 因為場景X和Z方向不同，所以4張圖統一轉向
+        picInstantiate.transform.SetParent(Parent.transform);
+
+        // 生成積木
+        foreach (GameObject cube in CubePrefabs)
+        {
+            // 先把CubeAns放進Cube
+            //cube.GetComponent<BlockEntity>().ansTransform = CubeAns[cubeAnsIndex];
+            //cubeAnsIndex++;
 
             // 然後在生成
             CubesPos.z = CubesPos.z + interval;
@@ -197,5 +232,19 @@ public class Instantiate_Cube : MonoBehaviour
                 otherTable++;
             }
         }
+    }
+
+    public void InstantiateQuestion()
+    {
+        //GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").GetComponent<RawImage>().enabled = true;
+        GameObject QuestionPicWithNum = Instantiate(GameObject.Find("Parents/Q" + BlockGameTask._RandomQuestion + "_Parent/Question(Clone)"));
+        //QuestionPicWithNum.transform.SetParent(GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").transform);
+        //QuestionPicWithNum.transform.position = GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").transform.position;
+        //GameObject QuestionPicWithNum = Instantiate(Question_Prefabs[BlockGameTask._RandomQuestion-1]);
+        QuestionPicWithNum.transform.SetParent(GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").transform.GetChild(0).transform);
+        //QuestionPicWithNum.transform.position = new Vector3(-1.5f, 0.2f, -0.3f);
+        QuestionPicWithNum.transform.position = GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").transform.GetChild(0).transform.position;
+        QuestionPicWithNum.transform.rotation = Quaternion.Euler(-90, 0, -180);
+        QuestionPicWithNum.transform.localScale = new Vector3(30, 30, 30);
     }
 }

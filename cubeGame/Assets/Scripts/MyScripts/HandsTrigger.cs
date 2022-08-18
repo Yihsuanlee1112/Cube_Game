@@ -114,8 +114,8 @@ public class HandsTrigger : MonoBehaviour
                 Debug.Log(PlayerEntity._take);
                 Debug.Log("Put toAns");
                 var parent = GameObject.Find("Answer");
-                var cube = gameObject.transform.GetChild(5).gameObject.GetComponent<BlockEntity>();//hand底下的第6個
-                //var cube = gameObject.transform.GetChild(0).gameObject.GetComponent<BlockEntity>();//FakeHand
+                //var cube = gameObject.transform.GetChild(5).gameObject.GetComponent<BlockEntity>();//hand底下的第6個
+                var cube = gameObject.transform.GetChild(0).gameObject.GetComponent<BlockEntity>();//FakeHand
                 cube.GetComponent<Rigidbody>().useGravity = true;
                 cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                 cube.transform.SetParent(parent.transform);
@@ -179,6 +179,7 @@ public class HandsTrigger : MonoBehaviour
             {
                 Debug.Log("User Celebrate");
                 BlockGameTask._userCelebrate = true;
+                BlockGameTask.RedTriggerBall.SetActive(false);
             }
 
             //猜拳選題目
@@ -449,7 +450,7 @@ public class HandsTrigger : MonoBehaviour
             else if (other.gameObject.tag == "greenTriggerBall")
             {
                 Debug.Log("User Raise Hand");
-                BlockGameTask._userRaiseHand = true;
+                //BlockGameTask._userRaiseHand = true;
                 BlockGameTaskLv2._userRaiseHand = true;
             }
             
@@ -457,8 +458,9 @@ public class HandsTrigger : MonoBehaviour
             else if (other.gameObject.tag == "redTriggerBall")
             {
                 Debug.Log("User Celebrate");
-                BlockGameTask._userCelebrate = true;
+                //BlockGameTask._userCelebrate = true;
                 BlockGameTaskLv2._userCelebrate = true;
+                BlockGameTaskLv2.RedTriggerBall.SetActive(false);
             }
 
             //猜拳選題目
@@ -467,7 +469,7 @@ public class HandsTrigger : MonoBehaviour
             {
                 Debug.Log("LV2!!!!");
                 BlockGameTaskLv2._ShowResult = 1;
-                Debug.Log(BlockGameTask._ShowResult);
+                Debug.Log(BlockGameTaskLv2._ShowResult);
                 GameObject.Find("Rock").GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Rock collider false");
                 GameEventCenter.DispatchEvent("FirstRoundCloseAnimatorP1P3");

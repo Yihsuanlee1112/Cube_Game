@@ -17,7 +17,7 @@ public class BlockGameTask : TaskBase
     private Animator XiaoHua, XiaoMei, Green, Yoyo, Red, Hat;
     private Animator TeacherAnimator2, npc2, XiaoHua2, XiaoMei2, Green2, Yoyo2, Hat2, Red2;
     private GameObject GreenTriggerBall;
-    private GameObject RedTriggerBall;
+    public static GameObject RedTriggerBall;
     private List<BlockEntity> Q1_cube;
     private List<BlockEntity> Q2_cube;
     private List<BlockEntity> Q3_cube;
@@ -179,7 +179,8 @@ public class BlockGameTask : TaskBase
     {
         GameObject ChooseQuestionCanvas = GameObject.Find("ChooseQuestionCanvas");
         GameObject XiaoMeiRaiseHandPic = GameObject.Find("Schematics/UserRightSightCanvas/XiaoMeiRaiseHandPic");
-       
+        GameObject Question1PicWithNum = GameObject.Find("Schematics/UserLeftSightCanvas/QuestionPicsWithNum/Question1PicWithNum");
+        
         ChooseQuestionCanvas.SetActive(true);
         XiaoMeiRaiseHandPic.SetActive(true);
         //語言選擇
@@ -212,13 +213,13 @@ public class BlockGameTask : TaskBase
         yield return new WaitForSeconds(1.5f);
         //老師開場
         yield return Teacher_Opening();
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.5f);
         //老師說明遊戲規則
         yield return Teacher_Introduction();
         yield return new WaitForSeconds(1.5f);
         //主持人請大家一起說剪刀石頭布
         yield return Host_RemindAllToSayRPS();
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
 
         //語音辨識
 
@@ -226,7 +227,7 @@ public class BlockGameTask : TaskBase
         //第一次 小美慢出(NPC生氣)
         userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         GameEventCenter.DispatchEvent("FourPlayerRPS");//猜拳動畫
         GameObject.Find("FourPlayerChoose(Clone)/Canvas2").SetActive(true);
         GameObject.Find("FourPlayerChoose(Clone)/Canvas").SetActive(false);
@@ -238,13 +239,12 @@ public class BlockGameTask : TaskBase
             Debug.Log("User choose RPS");
             yield return new WaitUntil(() => _userChooseRPS);
         } while (!_userChooseRPS);
-        yield return new WaitForSeconds(2);
         userRightHandTrigger.GetComponent<BoxCollider>().enabled = false;
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = false;
         yield return new WaitForSeconds(1);
         GameEventCenter.DispatchEvent("FirstRoundCloseAnimatorP2");//小美慢出
         GameEventCenter.DispatchEvent("FirstRoundFourPlayerShowResultP2");
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
 
         npc.animator.SetBool("isTalk", true);
         //不算～，你慢出，再猜一次！
@@ -260,7 +260,7 @@ public class BlockGameTask : TaskBase
         {
             GameObject.FindWithTag("RPS").SetActive(false);
         }
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
 
         //第二次 User贏
         HostAnimator.SetBool("isStandingAndTalking", true);
@@ -272,7 +272,7 @@ public class BlockGameTask : TaskBase
         HostAnimator.SetBool("isStandingAndTalking", false);
         userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         GameEventCenter.DispatchEvent("FourPlayerRPS");
         GameObject.Find("FourPlayerChoose(Clone)/Canvas").SetActive(true);
         GameObject.Find("FourPlayerChoose(Clone)/Canvas2").SetActive(false);
@@ -288,7 +288,7 @@ public class BlockGameTask : TaskBase
         yield return new WaitForSeconds(2);
         userRightHandTrigger.GetComponent<BoxCollider>().enabled = false;
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = false;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
 
         for (int i = 0; i < 3; i++)
         {
@@ -302,6 +302,7 @@ public class BlockGameTask : TaskBase
         //XXX那一組猜拳贏了，你可以先選一張圖。你要選哪一張圖?
         yield return Teacher_AskUserWhichPic();
         yield return new WaitForSeconds(1.5f);
+
         //讓user選題目
         userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
@@ -315,7 +316,7 @@ public class BlockGameTask : TaskBase
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         TeacherAnimator.SetBool("isTalk", false);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
 
         GameEventCenter.DispatchEvent("InstatiateCube");
         GameEventCenter.DispatchEvent("Find_QuestionCubes");
@@ -324,6 +325,14 @@ public class BlockGameTask : TaskBase
         GameEventCenter.DispatchEvent("CheckOrder");//QuestionCube
         GameEventCenter.DispatchEvent("PutInRightOrder");
         GameEventCenter.DispatchEvent("User_MissingOneCube");
+
+        GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").GetComponent<RawImage>().enabled = true;
+        GameEventCenter.DispatchEvent("InstantiateQuestion");
+        
+        //GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").GetComponent<RawImage>().enabled = true;
+        //GameObject QuestionPicWithNum = Instantiate(Question(Clone));
+        //QuestionPicWithNum.transform.SetParent(GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").transform);
+
         cube_GB[0].GetComponent<MeshRenderer>().enabled = false;//小美少第一顆積木
 
         //Debug.Log(GameObject.Find("Parents/Q1_Parent").transform.GetChild(1));
@@ -354,7 +363,7 @@ public class BlockGameTask : TaskBase
         _userChooseRPS = false;
         userRightHandTrigger.GetComponent<BoxCollider>().enabled = true;
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = true;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         GameEventCenter.DispatchEvent("TwoPlayerRPS");
         GameObject.Find("TwoPlayerChoose(Clone)/Canvas").SetActive(true);
         GameObject.Find("TwoPlayerChoose(Clone)/Canvas2").SetActive(false);
@@ -374,7 +383,7 @@ public class BlockGameTask : TaskBase
         } while (!_userChooseRPS);
         userRightHandTrigger.GetComponent<BoxCollider>().enabled = false;
         userLeftHandTrigger.GetComponent<BoxCollider>().enabled = false;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         //npc.animator.SetBool("isDefault", true);
         GameObject.FindWithTag("Result").SetActive(false);
         for (int i = 0; i < 2; i++)
@@ -386,12 +395,17 @@ public class BlockGameTask : TaskBase
         //框架
         //猜拳之後，小星說你贏了你先
         yield return NPC_YouWin();
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
 
         //小美跟老師拿積木
         yield return XiaoMeiNeedsCube(XiaoMeiRaiseHandPic);
         //cube_GB[0].GetComponent<MeshRenderer>().enabled = true;//小美少第一顆積木
-
+        
+        npc.animator.SetBool("isTalk", true);
+        clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_LetsStart");
+        GameAudioController.Instance.PlayOneShot(clip);
+        yield return new WaitForSeconds(clip.length);
+        
         foreach (BlockEntity cube in AllCubes)
         {
             //cube.getcomponent<meshrenderer>().enabled = true;//***********
@@ -593,6 +607,7 @@ public class BlockGameTask : TaskBase
                 Debug.Log(RemindCelebrate);
 
             }
+            RedTriggerBall.SetActive(false);
             GameEventCenter.DispatchEvent("Text2sec_isEnabled", false); // 2秒計時器關閉
             GameEventCenter.DispatchEvent("Timer2secReset");
         }
@@ -960,6 +975,12 @@ public class BlockGameTask : TaskBase
                     Debug.Log("主持人（提醒）");
                     GameEventCenter.DispatchEvent("Text5sec_isEnabled", false); // 5秒計時器關閉
                     GameEventCenter.DispatchEvent("Timer5secReset");
+                    //老師問USER什麼事?
+                    TeacherAnimator.SetBool("isTalkingToXiaoMei", true);
+                    clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_AskUser");
+                    GameAudioController.Instance.PlayOneShot(clip);
+                    yield return new WaitForSeconds(clip.length + 2);
+                    TeacherAnimator.SetBool("isTalkingToXiaoMei", false);
                     //主持人（提醒1）:我們在上課的時候，遇到問題就可以像小美一樣，先舉手等待老師，然後跟老師說
                     HostAnimator.SetBool("isPointing", true);
                     clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_RaiseHandThenTell");

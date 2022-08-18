@@ -29,7 +29,7 @@ public class MiddleGroupBuildBlock : MonoBehaviour
             for (int i = 0; i < 10; i++)
             {
                 Debug.Log("Mid RoundA: " + _RoundA);
-                if (_RoundA)  //玩家回合
+                if (_RoundA)  //小美
                 {
                     foreach (BlockEntity cube in cube_GB)
                     {

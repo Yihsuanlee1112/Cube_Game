@@ -201,7 +201,7 @@ public class RockPaperScissors : MonoBehaviour
         Debug.Log("AniStop!!!!");
 
         //FourP1Ani.SetBool("isRPS", false);
-        FourP2Ani.SetBool("isRPS", false);
+        FourP2Ani.SetBool("isRPS", false); 
         //FourP3Ani.SetBool("isRPS", false);
         Debug.Log("1Round P2 AniStop");
     }
