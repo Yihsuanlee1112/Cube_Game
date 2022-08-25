@@ -387,16 +387,23 @@ public class HandsTrigger : MonoBehaviour
             //放積木
             else if (other.gameObject.tag == "q" && PlayerEntity._take)
             {
+                
+
                 Debug.Log(PlayerEntity._take);
                 Debug.Log("Put toAns");
                 var parent = GameObject.Find("Answer");
-                var cube = gameObject.transform.GetChild(5).gameObject.GetComponent<BlockEntity>();//hand底下的第6個
-                //var cube = gameObject.transform.GetChild(0).gameObject.GetComponent<BlockEntity>();//FakeHand
+                //var cube = gameObject.transform.GetChild(5).gameObject.GetComponent<BlockEntity>();//hand底下的第6個
+                var cube = gameObject.transform.GetChild(0).gameObject.GetComponent<BlockEntity>();//FakeHand
+                
                 cube.GetComponent<Rigidbody>().useGravity = true;
                 cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-                cube.transform.SetParent(parent.transform); 
+                cube.transform.SetParent(parent.transform);
+
+                SameCube(cube);
+
                 GameEventCenter.DispatchEvent("CubeToAns", cube);
                 GameEventCenter.DispatchEvent("CubeOnAns", cube);
+                cube.ansTransform.GetComponent<CheckCubeAns>()._isUsed = true;//CubeAns isUsed ******
                 cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 Debug.Log(cube.transform.position);
                 Debug.Log("In Hands Trigger:" +BlockGameTaskLv2.RecentOrder);
@@ -635,6 +642,37 @@ public class HandsTrigger : MonoBehaviour
         }
     }
 
+    public void SameCube(BlockEntity cube)
+    {
+        if (BlockGameTaskLv2._RandomQuestion == 2)
+        {
+            if(cube.name == "Q2BlueCuboid3_2(Clone)" && GameObject.Find("Q2_Ans/Q2BlueCuboid3_1").GetComponent<CheckCubeAns>()._isUsed == false 
+                && GameObject.Find("Parents/Q2_Parent/Question(Clone)/Q2BlueCuboid3_2").GetComponent<QuestionCube>().CubeOrder > GameObject.Find("Parents/Q2_Parent/Question(Clone)/Q2BlueCuboid3_1").GetComponent<QuestionCube>().CubeOrder)//先拿第二顆藍色長方體
+            {
+                cube.ansTransform = GameObject.Find("CubeAns/Q2_Ans/Q2BlueCuboid3_1");//第二顆的答案跟第一顆藍色長方體的答案交換
+                GameObject.Find("Parents/Q2_Parent/Q2_CubeParent/Q2BlueCuboid3_1(Clone)").GetComponent<BlockEntity>().ansTransform = GameObject.Find("Q2_Ans/Q2BlueCuboid3_2");
+            }
+            else if(cube.name == "Q2GreenCuboid_2(Clone)" && GameObject.Find("Q2_Ans/Q2GreenCuboid3_1").GetComponent<CheckCubeAns>()._isUsed == false
+                && GameObject.Find("Parents/Q2_Parent/Question(Clone)/Q2GreenCuboid_2").GetComponent<QuestionCube>().CubeOrder > GameObject.Find("Parents/Q2_Parent/Question(Clone)/Q2GreenCuboid_1").GetComponent<QuestionCube>().CubeOrder)//先拿第二顆綠色長方體
+            {
+                cube.ansTransform = GameObject.Find("CubeAns/Q2_Ans/Q2GreenCuboid_1");//第二顆的答案跟第一顆綠色長方體的答案交換
+                GameObject.Find("Parents/Q2_Parent/Q2_CubeParent/Q2GreenCuboid_1(Clone)").GetComponent<BlockEntity>().ansTransform = GameObject.Find("Q2_Ans/Q2GreenCuboid_2");
+            }
+            else if(cube.name == "Q2RedCuboid_2(Clone)" && GameObject.Find("Q2_Ans/Q2RedCuboid3_1").GetComponent<CheckCubeAns>()._isUsed == false
+                && GameObject.Find("Parents/Q2_Parent/Question(Clone)/Q2RedCuboid_2").GetComponent<QuestionCube>().CubeOrder > GameObject.Find("Parents/Q2_Parent/Question(Clone)/Q2RedCuboid_1").GetComponent<QuestionCube>().CubeOrder)//先拿第二顆紅色長方體
+            {
+                cube.ansTransform = GameObject.Find("CubeAns/Q2_Ans/Q2RedCuboid_1");//第二顆的答案跟第一顆紅色長方體的答案交換
+                GameObject.Find("Parents/Q2_Parent/Q2_CubeParent/Q2RedCuboid_1(Clone)").GetComponent<BlockEntity>().ansTransform = GameObject.Find("Q2_Ans/Q2RedCuboid_2");
+            }
+            else if(cube.name == "Q2YellowCube_2(Clone)" && GameObject.Find("Q2_Ans/Q2RedCuboid3_1").GetComponent<CheckCubeAns>()._isUsed == false
+                 && GameObject.Find("Parents/Q2_Parent/Question(Clone)/Q2YellowCube_2").GetComponent<QuestionCube>().CubeOrder > GameObject.Find("Parents/Q2_Parent/Question(Clone)/Q2YellowCube_1").GetComponent<QuestionCube>().CubeOrder)//先拿第二顆紅色長方體
+            {
+                cube.ansTransform = GameObject.Find("CubeAns/Q2_Ans/Q2YellowCube_1");//第二顆的答案跟第一顆紅色長方體的答案交換
+                GameObject.Find("Parents/Q2_Parent/Q2_CubeParent/Q2YellowCube_1(Clone)").GetComponent<BlockEntity>().ansTransform = GameObject.Find("Q2_Ans/Q2YellowCube_2");
+            }
+        }
+    }
+    
     //private void QuestionPicked()
     //{
     //    //判斷哪個題目

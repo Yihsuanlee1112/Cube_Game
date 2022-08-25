@@ -405,7 +405,7 @@ public class BlockGameTask : TaskBase
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_LetsStart");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        
+        npc.animator.SetBool("isTalk", false);
         foreach (BlockEntity cube in AllCubes)
         {
             //cube.getcomponent<meshrenderer>().enabled = true;//***********
@@ -535,15 +535,13 @@ public class BlockGameTask : TaskBase
         npc.animator.SetBool("isClapHand", true);
         yield return new WaitForSeconds(3.5f);
         npc.animator.SetBool("isClapHand", false);
-        //RedTriggerBall
-        RedTriggerBall.SetActive(true);
-
         //if didn't raise hand, RemindCelebrate =1
         //主持人（教學）: 你和小星一起合作完成了積木圖案，很棒喔！小星很開心，想跟你擊掌! （等待2秒）
         clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_CelebrateLv1");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        
+        //RedTriggerBall
+        RedTriggerBall.SetActive(true);
         //wait2Sec
         _userCelebrate = false;
         while (RemindCelebrate < 2)
@@ -571,6 +569,9 @@ public class BlockGameTask : TaskBase
                 GameEventCenter.DispatchEvent("Text2sec_isEnabled", false); // 2秒計時器關閉
                 GameEventCenter.DispatchEvent("Timer2secReset");
                 _userCelebrate = false;
+                npc.animator.SetBool("isClapHand", true);
+                yield return new WaitForSeconds(3.5f);
+                npc.animator.SetBool("isClapHand", false);
                 yield return new WaitForSeconds(1);
                 //主持人：你有跟小星擊掌耶，可以獲得一個愛心喔
                 clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_CelebrateGetHeart");
@@ -975,12 +976,14 @@ public class BlockGameTask : TaskBase
                     Debug.Log("主持人（提醒）");
                     GameEventCenter.DispatchEvent("Text5sec_isEnabled", false); // 5秒計時器關閉
                     GameEventCenter.DispatchEvent("Timer5secReset");
+
                     //老師問USER什麼事?
                     TeacherAnimator.SetBool("isTalkingToXiaoMei", true);
                     clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_AskUser");
                     GameAudioController.Instance.PlayOneShot(clip);
                     yield return new WaitForSeconds(clip.length + 2);
                     TeacherAnimator.SetBool("isTalkingToXiaoMei", false);
+
                     //主持人（提醒1）:我們在上課的時候，遇到問題就可以像小美一樣，先舉手等待老師，然後跟老師說
                     HostAnimator.SetBool("isPointing", true);
                     clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_RaiseHandThenTell");

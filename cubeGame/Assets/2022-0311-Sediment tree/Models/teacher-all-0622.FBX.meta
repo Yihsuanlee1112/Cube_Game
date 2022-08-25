@@ -353,7 +353,7 @@ ModelImporter:
     second: hair
   - first:
       74: 7400000
-    second: Take 001
+    second: "\u6253\u62DB\u547C"
   - first:
       95: 9500000
     second: //RootNode
@@ -367,20 +367,14 @@ ModelImporter:
       137: 13700004
     second: teacher_face
   - first:
-      74: 9185023248898247266
-    second: "\u6253\u62DB\u547C"
-  - first:
-      74: 4854180139978558704
+      74: -3253642047055632776
     second: "\u62CD\u62CD\u624B"
   - first:
-      74: 1389121407789637250
-    second: "\u62FF\u7A4D\u6728\u8D70\u5411 \u5C0F\u7F8E\u5F8C\u8D70\u56DE\u53BB"
+      74: 662711451458212105
+    second: "\u62FF\u7A4D\u6728\u8D70\u5411 \u5C0F\u82B1\u5F8C\u8D70\u56DE\u53BB"
   - first:
-      74: 4353825163953427278
+      74: 2120678792316526642
     second: "\u62FF\u7A4D\u6728\u8D70\u5411 user\u5F8C\u8D70\u56DE\u53BB"
-  - first:
-      74: 3672910778998720083
-    second: Take 001 (5)
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -409,35 +403,6 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations:
-    - serializedVersion: 16
-      name: Take 001
-      takeName: Take 001
-      internalID: 0
-      firstFrame: 0
-      lastFrame: 1200
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: "\u6253\u62DB\u547C"
       takeName: Take 001
@@ -471,7 +436,7 @@ ModelImporter:
       name: "\u62CD\u62CD\u624B"
       takeName: Take 001
       internalID: 0
-      firstFrame: 100
+      firstFrame: 0
       lastFrame: 200
       wrapMode: 0
       orientationOffsetY: 0
@@ -497,7 +462,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: "\u62FF\u7A4D\u6728\u8D70\u5411 \u5C0F\u7F8E\u5F8C\u8D70\u56DE\u53BB"
+      name: "\u62FF\u7A4D\u6728\u8D70\u5411 \u5C0F\u82B1\u5F8C\u8D70\u56DE\u53BB"
       takeName: Take 001
       internalID: 0
       firstFrame: 200
@@ -530,35 +495,6 @@ ModelImporter:
       takeName: Take 001
       internalID: 0
       firstFrame: 700
-      lastFrame: 1200
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Take 001 (5)
-      takeName: Take 001
-      internalID: 0
-      firstFrame: 0
       lastFrame: 1200
       wrapMode: 0
       orientationOffsetY: 0

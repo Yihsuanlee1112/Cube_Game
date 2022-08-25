@@ -336,11 +336,11 @@ public class BlockGameTaskLv2 : TaskBase
         //    GameObject.Find("Parents/Q"+ _RandomQuestion+"_Parent/Question(Clone)").transform.GetChild(i).GetChild(0).GetChild(0).GetComponent<Text>().text = null;
         //}
         //小花: 沒贏也沒關係，每一張圖我都喜歡
-        XiaoHua.SetBool("isTalk", true);
+        XiaoMei.SetBool("isTalk2", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "XiaoMei_ItsOkTolose");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        XiaoHua.SetBool("isTalk", false);
+        XiaoMei.SetBool("isTalk2", false);
         //小朋友，你們可以分配顏色，按照題目上的數字順序輪流完成作品
         yield return Teacher_RemindLv2();
         yield return new WaitForSeconds(2);
@@ -476,7 +476,7 @@ public class BlockGameTaskLv2 : TaskBase
         GameEventCenter.DispatchEvent("PutInRightOrder");
 
         GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").GetComponent<RawImage>().enabled = true;
-        GameEventCenter.DispatchEvent("InstantiateQuestion");
+        GameEventCenter.DispatchEvent("InstantiateQuestionLv2");
         
         //GameEventCenter.DispatchEvent("User_MissingOneCubeLv2");
         foreach (BlockEntity cube in AllCubes)
@@ -486,7 +486,7 @@ public class BlockGameTaskLv2 : TaskBase
             //cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         }
         GameEventCenter.DispatchEvent("User_MissingOneCubeLv2");
-        cube_GB[0].GetComponent<MeshRenderer>().enabled = false;//小花少第一顆積木
+        cube_GB[0].GetComponent<MeshRenderer>().enabled = false;//小美少第一顆積木
         yield return new WaitForSeconds(2);
         //開始堆積木
         //小花跟老師拿積木
@@ -611,6 +611,8 @@ public class BlockGameTaskLv2 : TaskBase
         //結束後語音
         //小星: 耶!我們完成了!（小星雙手舉高）等待2秒
         //npc.animator.Play("坐在椅子上開心 雙手舉高，眼睛跟嘴巴要笑(上揚)");
+        //RedTriggerBall
+        RedTriggerBall.SetActive(true);
         npc.animator.SetBool("isHappy", true);
         yield return new WaitForSeconds(1);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_Hooray");
@@ -620,8 +622,7 @@ public class BlockGameTaskLv2 : TaskBase
         npc.animator.SetBool("isClapHand", true);
         yield return new WaitForSeconds(3.5f);
         npc.animator.SetBool("isClapHand", false);
-        //RedTriggerBall
-        RedTriggerBall.SetActive(true);
+        
         yield return new WaitForSeconds(2);
         //wait2Sec
         _userCelebrate = false;
@@ -1130,7 +1131,7 @@ public class BlockGameTaskLv2 : TaskBase
         clip = Resources.Load<AudioClip>(audioClipRootPath + "NPC_SayRPS");
         GameAudioController.Instance.PlayOneShot(clip);
         //Debug.Log(clip.length);
-        XiaoHua.SetBool("isPlayingRPS", true);
+        XiaoMei.SetBool("isPlayingRPS", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "XiaoMei_SayRPS");
         GameAudioController.Instance.PlayOneShot(clip);
         //Debug.Log(clip.length);
@@ -1145,7 +1146,7 @@ public class BlockGameTaskLv2 : TaskBase
         //Debug.Log(clip.length);
         yield return new WaitForSeconds(clip.length);
         Hat.SetBool("isPlayingRPS", false);
-        XiaoHua.SetBool("isPlayingRPS", false);
+        XiaoMei.SetBool("isPlayingRPS", false);
         Yoyo.SetBool("isPlayingRPS", false);
         yield return new WaitForSeconds(2);
         yield return null;
@@ -1194,11 +1195,11 @@ public class BlockGameTaskLv2 : TaskBase
             TeacherGiveXiaoMeiCube = GameObject.Find("TeacherWithCubes/teacher/BlueCuboid3");
             XiaoMeiColor = Resources.Load<AudioClip>(audioClipRootPath + "XiaoMei_BlueCube");
         }
-        XiaoHua.SetBool("isRaiseHand", true);
+        XiaoMei.SetBool("isRaiseHand", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "XiaoMei_CallTeacher");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-        XiaoHua.SetBool("isRaiseHand", false);
+        XiaoMei.SetBool("isRaiseHand", false);
         yield return new WaitForSeconds(2);
         TeacherAnimator.SetBool("isTalkingToXiaoMei", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_AskXiaoMei");
@@ -1206,13 +1207,13 @@ public class BlockGameTaskLv2 : TaskBase
         yield return new WaitForSeconds(clip.length + 2);
         TeacherAnimator.SetBool("isTalkingToXiaoMei", false);
         yield return new WaitForSeconds(2);
-        XiaoHua.SetBool("isRaiseHandAndTalkToTeacher", true);
+        XiaoMei.SetBool("isRaiseHandAndTalkToTeacher", true);
         clip = Resources.Load<AudioClip>(audioClipRootPath + "XiaoMei_INeedACube");
         GameAudioController.Instance.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         GameAudioController.Instance.PlayOneShot(XiaoMeiColor);
         yield return new WaitForSeconds(XiaoMeiColor.length);
-        XiaoHua.SetBool("isRaiseHandAndTalkToTeacher", false);
+        XiaoMei.SetBool("isRaiseHandAndTalkToTeacher", false);
         yield return new WaitForSeconds(2);
 
         HostAnimator.SetBool("isPointing", true);
@@ -1282,7 +1283,7 @@ public class BlockGameTaskLv2 : TaskBase
     }
     IEnumerator UserNeedsACube()
     {
-        yield return new WaitForSeconds(2);
+        //yield return new WaitForSeconds(2);
         _userRaiseHand = false;
         _userSpeekToTeacher = false;
         KeyWordRecognizer.MissingColor = null;
@@ -1431,6 +1432,14 @@ public class BlockGameTaskLv2 : TaskBase
                     Debug.Log("主持人（提醒）");
                     GameEventCenter.DispatchEvent("Text5sec_isEnabledLv2", false); // 5秒計時器關閉
                     GameEventCenter.DispatchEvent("Timer5secResetLv2");
+
+                    //老師問USER什麼事?
+                    TeacherAnimator.SetBool("isTalkingToXiaoMei", true);
+                    clip = Resources.Load<AudioClip>(audioClipRootPath + "Teacher_AskUser");
+                    GameAudioController.Instance.PlayOneShot(clip);
+                    yield return new WaitForSeconds(clip.length + 2);
+                    TeacherAnimator.SetBool("isTalkingToXiaoMei", false);
+
                     //主持人（提醒1）:我們在上課的時候，遇到問題就可以像小美一樣，先舉手等待老師，再跟老師說
                     HostAnimator.SetBool("isPointing", true);
                     clip = Resources.Load<AudioClip>(audioClipRootPath + "Host_RaiseHandThenTellLikeXiaoMei");

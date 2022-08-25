@@ -101,6 +101,5 @@ public class BlockEntity : GameEntityBase
         gameObject.transform.rotation = ansTransform.transform.rotation;
         gameObject.transform.localScale = ansTransform.transform.localScale;
         gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        
     }
 }

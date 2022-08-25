@@ -58,6 +58,7 @@ public class Instantiate_Cube : MonoBehaviour
         GameEventCenter.AddEvent("InstatiateCubeLv2", InstatiateCubeLv2);
         GameEventCenter.AddEvent("CubeOnDesk", CubeOnDesk);
         GameEventCenter.AddEvent("InstantiateQuestion", InstantiateQuestion);
+        GameEventCenter.AddEvent("InstantiateQuestionLv2", InstantiateQuestionLv2);
     }
     void Start()
     {
@@ -238,6 +239,19 @@ public class Instantiate_Cube : MonoBehaviour
     {
         //GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").GetComponent<RawImage>().enabled = true;
         GameObject QuestionPicWithNum = Instantiate(GameObject.Find("Parents/Q" + BlockGameTask._RandomQuestion + "_Parent/Question(Clone)"));
+        //QuestionPicWithNum.transform.SetParent(GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").transform);
+        //QuestionPicWithNum.transform.position = GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").transform.position;
+        //GameObject QuestionPicWithNum = Instantiate(Question_Prefabs[BlockGameTask._RandomQuestion-1]);
+        QuestionPicWithNum.transform.SetParent(GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").transform.GetChild(0).transform);
+        //QuestionPicWithNum.transform.position = new Vector3(-1.5f, 0.2f, -0.3f);
+        QuestionPicWithNum.transform.position = GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").transform.GetChild(0).transform.position;
+        QuestionPicWithNum.transform.rotation = Quaternion.Euler(-90, 0, -180);
+        QuestionPicWithNum.transform.localScale = new Vector3(30, 30, 30);
+    }
+    public void InstantiateQuestionLv2()
+    {
+        //GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").GetComponent<RawImage>().enabled = true;
+        GameObject QuestionPicWithNum = Instantiate(GameObject.Find("Parents/Q" + BlockGameTaskLv2._RandomQuestion + "_Parent/Question(Clone)"));
         //QuestionPicWithNum.transform.SetParent(GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").transform);
         //QuestionPicWithNum.transform.position = GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").transform.position;
         //GameObject QuestionPicWithNum = Instantiate(Question_Prefabs[BlockGameTask._RandomQuestion-1]);
