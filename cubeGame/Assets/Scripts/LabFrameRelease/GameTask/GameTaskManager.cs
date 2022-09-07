@@ -30,10 +30,20 @@ public class GameTaskManager : MonoSingleton<GameTaskManager>, IGameManager
             StartCoroutine(StartGameTaskEnumerator(_queuetasks[0]));
             task = 0;
         }
-        else
+        else if (GameDataManager.FlowData.Level == Level.Level2)
         {
             StartCoroutine(StartGameTaskEnumerator(_queuetasks[1]));
             task = 1;
+        }
+        else if (GameDataManager.FlowData.Level == Level.Level3)
+        {
+            StartCoroutine(StartGameTaskEnumerator(_queuetasks[2]));
+            task = 2;
+        }
+        else if (GameDataManager.FlowData.Level == Level.Level4)
+        {
+            StartCoroutine(StartGameTaskEnumerator(_queuetasks[3]));
+            task = 3;
         }
     }
 

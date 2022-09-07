@@ -11,6 +11,8 @@ public class TaskFanctory
             // 新增GameTask
             new BlockGameTask(),
             new BlockGameTaskLv2(),
+            new BlockGameTask_Mono(),
+            new BlockGameTaskLv2_Mono(),
         };
         return temptasks;
     }

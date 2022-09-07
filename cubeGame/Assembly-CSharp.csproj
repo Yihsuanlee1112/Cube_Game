@@ -356,7 +356,9 @@
     <Compile Include="Assets\Scripts\LabFrameRelease\GameScene\GameSceneManager.cs" />
     <Compile Include="Assets\Scripts\LabFrameRelease\GameScene\GameSceneResources.cs" />
     <Compile Include="Assets\Scripts\LabFrameRelease\GameTask\BlockGameTask.cs" />
+    <Compile Include="Assets\Scripts\LabFrameRelease\GameTask\BlockGameTask_Mono.cs" />
     <Compile Include="Assets\Scripts\LabFrameRelease\GameTask\BlockGameTaskLv2.cs" />
+    <Compile Include="Assets\Scripts\LabFrameRelease\GameTask\BlockGameTaskLv2_Mono.cs" />
     <Compile Include="Assets\Scripts\LabFrameRelease\GameTask\GameTask.cs" />
     <Compile Include="Assets\Scripts\LabFrameRelease\GameTask\GameTaskManager.cs" />
     <Compile Include="Assets\Scripts\LabFrameRelease\GameTask\ITask.cs" />

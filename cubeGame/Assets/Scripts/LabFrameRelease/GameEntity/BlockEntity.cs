@@ -27,7 +27,7 @@ public class BlockEntity : GameEntityBase
         _isChose = true;
         if (gameObject.GetComponent<BlockEntity>()._isChose && gameObject.GetComponent<BlockEntity>()._isOnUserTable && !gameObject.GetComponent<BlockEntity>()._isUserColor)
         {
-            
+
             //string cubeName = cube.name;
             Debug.Log(gameObject.GetComponent<BlockEntity>()._isChose);
             Debug.Log(gameObject.GetComponent<BlockEntity>()._isOnUserTable);
@@ -40,7 +40,7 @@ public class BlockEntity : GameEntityBase
             //GameObject.Find("desk/block/" + CubeName).GetComponent<Animator>().Play("Take Block");
         }
     }
-    
+
     public void OnAnsLv1()
     {
         gameObject.transform.position = ansTransform.transform.position;
@@ -50,11 +50,52 @@ public class BlockEntity : GameEntityBase
         //GameObject.Find("Parents/Q" + BlockGameTask._RandomQuestion + "_Parent/block/" + cubeName).GetComponent<Animator>().SetBool("isTake", false);
         //GameObject.Find("Parents/Q" + BlockGameTask._RandomQuestion + "_Parent/block/" + cubeName).GetComponent<MeshRenderer>().enabled = false;
         Debug.Log(gameObject.name);
-        Debug.Log("********"+ansTransform.transform.position);
+        Debug.Log("********" + ansTransform.transform.position);
         BlockGameTask.RecentOrder++;
         Debug.Log(BlockGameTask.RecentOrder);
     }
-    
+    public void ToAnsLv1_Mono()
+    {
+        string cubeName;
+        //Get Cube name without "(Clone)"
+        cubeName = gameObject.name;
+        int delStr = cubeName.IndexOf("(Clone)");
+        if (delStr >= 0)
+        {
+            cubeName = cubeName.Remove(delStr);
+        }
+        Debug.Log("In ToAnsLv1 RecentORder: " + BlockGameTask_Mono.RecentOrder);
+        _isChose = true;
+        if (gameObject.GetComponent<BlockEntity>()._isChose && gameObject.GetComponent<BlockEntity>()._isOnUserTable && !gameObject.GetComponent<BlockEntity>()._isUserColor)
+        {
+
+            //string cubeName = cube.name;
+            Debug.Log(gameObject.GetComponent<BlockEntity>()._isChose);
+            Debug.Log(gameObject.GetComponent<BlockEntity>()._isOnUserTable);
+            Debug.Log(gameObject.GetComponent<BlockEntity>()._isUserColor);
+            Debug.Log(GameObject.Find("Parents/Q" + BlockGameTask_Mono._RandomQuestion + "_Parent/block/" + cubeName));
+            GameObject.Find("Parents/Q" + BlockGameTask_Mono._RandomQuestion + "_Parent/block/" + cubeName).GetComponent<MeshRenderer>().enabled = true;
+            GameObject.Find("Parents/Q" + BlockGameTask_Mono._RandomQuestion + "_Parent/block/" + cubeName).GetComponent<Animator>().Play("Take Block");
+            Debug.Log(GameObject.Find("Parents/Q" + BlockGameTask_Mono._RandomQuestion + "_Parent/block/" + cubeName));
+            //GameObject.Find("Parents/Q" + BlockGameTask._RandomQuestion + "_Parent/block/" + cubeName).GetComponent<Animator>().SetBool("isTake", true);
+            //GameObject.Find("desk/block/" + CubeName).GetComponent<Animator>().Play("Take Block");
+        }
+    }
+
+    public void OnAnsLv1_Mono()
+    {
+        gameObject.transform.position = ansTransform.transform.position;
+        gameObject.transform.rotation = ansTransform.transform.rotation;
+        gameObject.transform.localScale = ansTransform.transform.localScale;
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        //GameObject.Find("Parents/Q" + BlockGameTask._RandomQuestion + "_Parent/block/" + cubeName).GetComponent<Animator>().SetBool("isTake", false);
+        //GameObject.Find("Parents/Q" + BlockGameTask._RandomQuestion + "_Parent/block/" + cubeName).GetComponent<MeshRenderer>().enabled = false;
+        Debug.Log(gameObject.name);
+        Debug.Log("********" + ansTransform.transform.position);
+        BlockGameTask_Mono.RecentOrder++;
+        Debug.Log(BlockGameTask_Mono.RecentOrder);
+    }
+
     public void ToAnsLv2()
     {
         string cubeName;
@@ -65,7 +106,7 @@ public class BlockEntity : GameEntityBase
         {
             cubeName = cubeName.Remove(delStr);
         }
-        Debug.Log("In ToAnsLv2 RecentORder: "+BlockGameTaskLv2.RecentOrder);
+        Debug.Log("In ToAnsLv2 RecentORder: " + BlockGameTaskLv2.RecentOrder);
         _isChose = true;
         if (gameObject.GetComponent<BlockEntity>()._isChose && gameObject.GetComponent<BlockEntity>()._isOnUserTable && !gameObject.GetComponent<BlockEntity>()._isUserColor)
         {
@@ -80,7 +121,7 @@ public class BlockEntity : GameEntityBase
             //GameObject.Find("desk/block/" + CubeName).GetComponent<Animator>().Play("Take Block");
         }
     }
-    
+
     public void OnAnsLv2()
     {
         gameObject.transform.position = ansTransform.transform.position;
@@ -92,7 +133,44 @@ public class BlockEntity : GameEntityBase
         BlockGameTaskLv2.RecentOrder++;
         Debug.Log(BlockGameTaskLv2.RecentOrder);
     }
-    
+    public void ToAnsLv2_Mono()
+    {
+        string cubeName;
+        //Get Cube name without "(Clone)"
+        cubeName = gameObject.name;
+        int delStr = cubeName.IndexOf("(Clone)");
+        if (delStr >= 0)
+        {
+            cubeName = cubeName.Remove(delStr);
+        }
+        Debug.Log("In ToAnsLv2 RecentORder: " + BlockGameTaskLv2_Mono.RecentOrder);
+        _isChose = true;
+        if (gameObject.GetComponent<BlockEntity>()._isChose && gameObject.GetComponent<BlockEntity>()._isOnUserTable && !gameObject.GetComponent<BlockEntity>()._isUserColor)
+        {
+
+            //string cubeName = cube.name;
+            Debug.Log(gameObject.GetComponent<BlockEntity>()._isChose);
+            Debug.Log(gameObject.GetComponent<BlockEntity>()._isOnUserTable);
+            Debug.Log(gameObject.GetComponent<BlockEntity>()._isUserColor);
+            GameObject.Find("Parents/Q" + BlockGameTaskLv2_Mono._RandomQuestion + "_Parent/block/" + cubeName).GetComponent<MeshRenderer>().enabled = true;
+            GameObject.Find("Parents/Q" + BlockGameTaskLv2_Mono._RandomQuestion + "_Parent/block/" + cubeName).GetComponent<Animator>().Play("Take Block");
+            //GameObject.Find("Parents/Q" + BlockGameTask._RandomQuestion + "_Parent/block/" + cubeName).GetComponent<Animator>().SetBool("isTake", true);
+            //GameObject.Find("desk/block/" + CubeName).GetComponent<Animator>().Play("Take Block");
+        }
+    }
+
+    public void OnAnsLv2_Mono()
+    {
+        gameObject.transform.position = ansTransform.transform.position;
+        gameObject.transform.rotation = ansTransform.transform.rotation;
+        gameObject.transform.localScale = ansTransform.transform.localScale;
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        Debug.Log(gameObject.name);
+        Debug.Log("********" + ansTransform.transform.position);
+        BlockGameTaskLv2_Mono.RecentOrder++;
+        Debug.Log(BlockGameTaskLv2_Mono.RecentOrder);
+    }
+
     public void OtherGroupToAns()
     {
         //Debug.Log("others put");
@@ -101,5 +179,6 @@ public class BlockEntity : GameEntityBase
         gameObject.transform.rotation = ansTransform.transform.rotation;
         gameObject.transform.localScale = ansTransform.transform.localScale;
         gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
     }
 }

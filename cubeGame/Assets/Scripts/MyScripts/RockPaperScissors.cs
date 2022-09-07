@@ -35,6 +35,11 @@ public class RockPaperScissors : MonoBehaviour
         GameEventCenter.AddEvent("TwoPlayerShowResultLv2", TwoPlayerShowResultLv2);
         GameEventCenter.AddEvent("FirstRoundFourPlayerShowResultP1P3Lv2", FirstRoundFourPlayerShowResultP1P3Lv2);
         GameEventCenter.AddEvent("FirstRoundFourPlayerShowResultP2Lv2", FirstRoundFourPlayerShowResultP2Lv2);
+        //Lv1_Mono
+        GameEventCenter.AddEvent("FourPlayerRPS_Mono", FourPlayerRPS_Mono);
+        GameEventCenter.AddEvent("TwoPlayerRPS_Mono", TwoPlayerRPS_Mono);
+        GameEventCenter.AddEvent("FourPlayerShowResult_Mono", FourPlayerShowResult_Mono);
+        GameEventCenter.AddEvent("TwoPlayerShowResult_Mono", TwoPlayerShowResult_Mono);
     }
 
     // Update is called once per frame
@@ -334,5 +339,93 @@ public class RockPaperScissors : MonoBehaviour
         //position = new Vector3((float)4.325, (float)1.3, (float)3.0);
         //Result = Instantiate(rockPaperScissorsResult[Ran], position, Quaternion.Euler(0, -45, 0));
         //Debug.Log(Result);
+    }
+    public void FourPlayerRPS_Mono()
+    {
+        BlockGameTask_Mono._userChooseRPS = false;
+        //RPS_Animator
+        position = new Vector3((float)-0.1, (float)1.3, (float)1.97);
+        //RPS.Add(Instantiate(rockPaperScissors[0], position, Quaternion.identity));
+        Instantiate(rockPaperScissors[1], position, Quaternion.Euler(0, 15, 0));
+
+        position = new Vector3((float)2.804, (float)1.3, (float)1.75);
+        //RPS.Add(Instantiate(rockPaperScissors[1], position, Quaternion.identity));
+        Instantiate(rockPaperScissors[2], position, Quaternion.Euler(0, -15, 0));
+
+        position = new Vector3((float)4.325, (float)1.3, (float)2.82);
+        //RPS.Add(Instantiate(rockPaperScissors[2], position, Quaternion.identity));
+        Instantiate(rockPaperScissors[3], position, Quaternion.Euler(0, -45, 0));
+
+        //choose
+        position = new Vector3(0, 5, 0);
+        pos = rockPaperScissors[5].transform.position;
+        //RPS.Add(Instantiate(rockPaperScissors[3], position, Quaternion.identity));
+        Instantiate(rockPaperScissors[5], pos, Quaternion.identity);
+
+        FourP1Ani = GameObject.Find("RockPaperScissors4P_1(Clone)").GetComponent<Animator>();
+        FourP2Ani = GameObject.Find("RockPaperScissors4P_2(Clone)").GetComponent<Animator>();
+        FourP3Ani = GameObject.Find("RockPaperScissors4P_3(Clone)").GetComponent<Animator>();
+        FourP1Ani.SetBool("isRPS", true);
+        FourP2Ani.SetBool("isRPS", true);
+        FourP3Ani.SetBool("isRPS", true);
+    }
+    public void TwoPlayerRPS_Mono()
+    {
+        BlockGameTask_Mono._userChooseRPS = false;
+        position = new Vector3((float)1.378, (float)1.144, (float)3.468);
+        //RPS.Add(Instantiate(rockPaperScissors[2], position, Quaternion.identity));
+        Instantiate(rockPaperScissors[0], position, Quaternion.identity);
+
+        //choose
+        position = new Vector3(0, 5, 0);
+        pos = rockPaperScissors[4].transform.position;
+        //RPS.Add(Instantiate(rockPaperScissors[0], position, Quaternion.identity));
+        Instantiate(rockPaperScissors[4], pos, Quaternion.identity);
+
+        TwoPAni = GameObject.Find("RockPaperScissors2P(Clone)").GetComponent<Animator>();
+        TwoPAni.SetBool("isRPS", true);
+        //TwoPAni.GetComponent<Animator>().SetBool("isRPS", true);
+        Debug.Log("StartAni");
+    }
+    public void FourPlayerShowResult_Mono()
+    {
+
+        //Rock
+        //Result = Resources.Load<Sprite>("Animation/RockPaperScissors/RockPaperScissors_0");
+
+        //Paper
+        //Result = Resources.Load<Sprite>("Animation/RockPaperScissors/RockPaperScissors_1");
+
+        //Scissors
+        //Result = Resources.Load<Sprite>("Animation/RockPaperScissors/RockPaperScissors_2");
+        FourP1Ani.SetBool("isRPS", false);
+        FourP2Ani.SetBool("isRPS", false);
+        FourP3Ani.SetBool("isRPS", false);
+
+        position = new Vector3((float)-0.1, (float)1.3, (float)2.0);
+        Result = Instantiate(rockPaperScissorsResult[BlockGameTask_Mono._ShowResult], position, Quaternion.Euler(0, 15, 0));
+        Debug.Log(Result);
+        Debug.Log(rockPaperScissorsResult[BlockGameTask_Mono._ShowResult]);
+        Debug.Log(BlockGameTask_Mono._ShowResult);
+        position = new Vector3((float)2.804, (float)1.3, (float)1.8);
+        Result = Instantiate(rockPaperScissorsResult[BlockGameTask_Mono._ShowResult], position, Quaternion.Euler(0, -15, 0));
+        Debug.Log(Result);
+        Debug.Log(rockPaperScissorsResult[BlockGameTask_Mono._ShowResult]);
+        Debug.Log(BlockGameTask_Mono._ShowResult);
+        position = new Vector3((float)4.325, (float)1.3, (float)3.0);
+        Result = Instantiate(rockPaperScissorsResult[BlockGameTask_Mono._ShowResult], position, Quaternion.Euler(0, -45, 0));
+        Debug.Log(Result);
+        Debug.Log(rockPaperScissorsResult[BlockGameTask_Mono._ShowResult]);
+        Debug.Log(BlockGameTask_Mono._ShowResult);
+    }
+    public void TwoPlayerShowResult_Mono()
+    {
+        TwoPAni.SetBool("isRPS", false);
+
+        position = new Vector3((float)1.378, (float)1.12, (float)3.6);
+        Result = Instantiate(rockPaperScissorsResult[BlockGameTask_Mono._ShowResult], position, Quaternion.identity);
+        Debug.Log(Result);
+        Debug.Log(rockPaperScissorsResult[BlockGameTask_Mono._ShowResult]);
+        Debug.Log(BlockGameTask_Mono._ShowResult);
     }
 }

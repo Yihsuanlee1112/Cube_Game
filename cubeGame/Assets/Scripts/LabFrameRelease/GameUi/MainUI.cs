@@ -27,12 +27,12 @@ public class MainUI : MonoBehaviour
             {
                 gameData.Language = Language.English;
             }
-        }); 
-        
+        });
+
         LevelDropdown.onValueChanged.AddListener(delegate
         {
             Debug.Log("Level:" + LevelDropdown.value);
-            
+
             if (LevelDropdown.value == 0) // LV1
             {
                 gameData.Level = Level.Level1;
@@ -40,6 +40,14 @@ public class MainUI : MonoBehaviour
             else if (LevelDropdown.value == 1) // LV2
             {
                 gameData.Level = Level.Level2;
+            }
+            else if (LevelDropdown.value == 2) // Mono_LV1
+            {
+                gameData.Level = Level.Level3;
+            }
+            else if (LevelDropdown.value == 3) // Mono_LV2
+            {
+                gameData.Level = Level.Level4;
             }
         });
         Start_Btn.onClick.AddListener(delegate

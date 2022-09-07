@@ -55,9 +55,11 @@ public class Instantiate_Cube : MonoBehaviour
     private void Awake()
     {
         GameEventCenter.AddEvent("InstatiateCube", InstatiateCube);
+        GameEventCenter.AddEvent("InstatiateCube_Mono", InstatiateCube_Mono);
         GameEventCenter.AddEvent("InstatiateCubeLv2", InstatiateCubeLv2);
         GameEventCenter.AddEvent("CubeOnDesk", CubeOnDesk);
         GameEventCenter.AddEvent("InstantiateQuestion", InstantiateQuestion);
+        GameEventCenter.AddEvent("InstantiateQuestion_Mono", InstantiateQuestion_Mono);
         GameEventCenter.AddEvent("InstantiateQuestionLv2", InstantiateQuestionLv2);
     }
     void Start()
@@ -109,7 +111,28 @@ public class Instantiate_Cube : MonoBehaviour
     {
         PutCubeOnTables(BlockGameTaskLv2._RandomQuestion - 1);
     }
+    public void InstatiateCube_Mono()
+    {
+        Cube_Prefabs.Add(Q1_Cube_Prefabs);
+        Cube_Prefabs.Add(Q2_Cube_Prefabs);
+        Cube_Prefabs.Add(Q3_Cube_Prefabs);
+        Cube_Prefabs.Add(Q4_Cube_Prefabs);
 
+        Cube_Ans.Add(Q1_Ans);
+        Cube_Ans.Add(Q2_Ans);
+        Cube_Ans.Add(Q3_Ans);
+        Cube_Ans.Add(Q4_Ans);
+
+        for (int i = 0; i < Cube_Prefabs.Count; i++)
+        {
+            // 生成積木和題目
+            //          Q1_CubePrefaabs, Q1_Parent, Q1_CubeParent, Q1_Ans
+            Question(i, Cube_Prefabs[i], Parents[i], CubeParents[i], Cube_Ans[i]);
+        }
+
+        // 題目和積木放到桌上
+        PutCubeOnTables(BlockGameTask_Mono._RandomQuestion - 1);
+    }
     /// <summary>
     /// 生成題目和積木(其位置都是以放在user桌上為基準)，再依據不同題目包在對應的父物件底下(目的是可以改變父物件位置放在NPC桌上)
     /// </summary>
@@ -252,6 +275,19 @@ public class Instantiate_Cube : MonoBehaviour
     {
         //GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").GetComponent<RawImage>().enabled = true;
         GameObject QuestionPicWithNum = Instantiate(GameObject.Find("Parents/Q" + BlockGameTaskLv2._RandomQuestion + "_Parent/Question(Clone)"));
+        //QuestionPicWithNum.transform.SetParent(GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").transform);
+        //QuestionPicWithNum.transform.position = GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").transform.position;
+        //GameObject QuestionPicWithNum = Instantiate(Question_Prefabs[BlockGameTask._RandomQuestion-1]);
+        QuestionPicWithNum.transform.SetParent(GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").transform.GetChild(0).transform);
+        //QuestionPicWithNum.transform.position = new Vector3(-1.5f, 0.2f, -0.3f);
+        QuestionPicWithNum.transform.position = GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").transform.GetChild(0).transform.position;
+        QuestionPicWithNum.transform.rotation = Quaternion.Euler(-90, 0, -180);
+        QuestionPicWithNum.transform.localScale = new Vector3(30, 30, 30);
+    }
+    public void InstantiateQuestion_Mono()
+    {
+        //GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").GetComponent<RawImage>().enabled = true;
+        GameObject QuestionPicWithNum = Instantiate(GameObject.Find("Parents/Q" + BlockGameTask_Mono._RandomQuestion + "_Parent/Question(Clone)"));
         //QuestionPicWithNum.transform.SetParent(GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").transform);
         //QuestionPicWithNum.transform.position = GameObject.Find("UserLeftSightCanvas/QuestionPicsWithNum/UserQuestionPic").transform.position;
         //GameObject QuestionPicWithNum = Instantiate(Question_Prefabs[BlockGameTask._RandomQuestion-1]);
